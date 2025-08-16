@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Badge } from "../components/ui/badge";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -38,7 +39,7 @@ export default function HomePage() {
           </h1>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
             Experience the finest extra virgin olive oil, cold-pressed from centuries-old groves
-            in the heart of the Mediterranean.
+            in the heart of the Tunisia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-green-600 hover:bg-green-700">
@@ -67,29 +68,33 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             { [
               {
-                name: "1L Tuni Olive EVOO",
-                origin: "Kairouan, Tunisie",
+                id: "tuniolive-1l-evoo",
+                name: "Tuni Olive 1L EVOO",
+                origin: "Bouhajla, Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 // price: "$45",
                 badge: "Best Seller"
               },
               {
+                id: "tuniolive-500ml-evoo",
                 name: "500 ML Tuni Olive EVOO",
-                origin: "Kairouan, Tunisie",
+                origin: "Bouhajla, Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 // price: "$25",
                 badge: "Popular"
               },
               {
+                id: "tuniolive-3l-evoo",
                 name: "3 Litre Tuni Olive EVOO",
-                origin: "Kairouan, Tunisie",
+                origin: "Bouhajla, Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 // price: "$25",
                 badge: "Premium"
               },
               {
+                id: "tuniolive-500ml-bio-organic",
                 name: "500 ML Tuni Olive Bio",
-                origin: "Kairouan, Tunisie",
+                origin: "Bouhajla, Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 // price: "$25",
                 badge: "Premium"
@@ -107,7 +112,7 @@ export default function HomePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     { product.name }
-                    {/* <span className="text-green-600">{ product.price }</span> */}
+                    {/* <span className="text-green-600">{ product.price }</span> */ }
                   </CardTitle>
                   <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">{ product.origin }</p>
@@ -120,17 +125,24 @@ export default function HomePage() {
                     </div>
                   </div>
                 </CardHeader>
+                <Link href={ `/products/${product.id}` }>
+                  <CardContent>
+                    <Button className="w-full">
+                      View Details
+                    </Button>
+                  </CardContent>
+                </Link>
                 <CardContent>
-                  <Button className="w-full">Add to Cart</Button>
+                  <Button disabled variant={ "green" } className="w-full">Sold out</Button>
                 </CardContent>
               </Card>
             )) }
           </div>
         </div>
-      </section>
+      </section >
 
       {/* About Section */ }
-      <section id="about" className="py-16">
+      < section id="about" className="py-16" >
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -164,10 +176,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Quality & Benefits */ }
-      <section id="quality" className="py-16 bg-muted/30">
+      < section id="quality" className="py-16 bg-muted/30" >
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl mb-4">Why Choose Our Olive Oil</h2>
@@ -224,10 +236,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Contact Section */ }
-      <section id="contact" className="py-16">
+      < section id="contact" className="py-16" >
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl mb-4">Get In Touch</h2>
@@ -254,10 +266,10 @@ export default function HomePage() {
             </Card>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Footer */ }
-      <footer className="bg-primary text-primary-foreground py-12">
+      < footer className="bg-primary text-primary-foreground py-12" >
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
@@ -301,7 +313,7 @@ export default function HomePage() {
             <p>&copy; 2025 Tuni Olive. All rights reserved.</p>
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 }
