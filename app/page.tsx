@@ -107,7 +107,7 @@ export default function HomePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     { product.name }
-                    <span className="text-green-600">{ product.price }</span>
+                    {/* <span className="text-green-600">{ product.price }</span> */}
                   </CardTitle>
                   <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">{ product.origin }</p>
