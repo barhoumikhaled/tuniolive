@@ -19,6 +19,7 @@ import {
   MapPin
 } from "lucide-react";
 import Link from "next/link";
+import { ImageZoom } from "@/components/image-zoom";
 
 // Product data - in a real app this would come from a database
 const products = {
@@ -62,102 +63,112 @@ const products = {
   "tuniolive-500ml-evoo": {
     id: "tuniolive-500ml-evoo",
     name: "Tuscan Gold",
-    origin: "Tuscany, Italy",
+    origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
     price: 45,
     originalPrice: 55,
     badge: "Best Seller",
     rating: 4.9,
     reviewCount: 127,
-    description: "Our flagship Tuscan Gold extra virgin olive oil embodies the essence of traditional Italian craftsmanship. Harvested from ancient olive groves in the rolling hills of Tuscany, this oil delivers a bold, robust flavor with a distinctive peppery finish that olive oil connoisseurs have treasured for generations.",
+    description: "Tunisian olive oils express a rich Mediterranean character, ranging from the soft, fruity Sehli Chemlali with notes of almond and green apple, to the bold and peppery Chetoui, marked by herbs and artichoke. Smooth in texture with a clean, lingering finish, they balance fruitiness, gentle bitterness, and a pleasant peppery kick — a sign of freshness and healthful polyphenols. Ideal for salads, couscous, grilled fish, meats, and as a finishing touch to elevate any dish.",
     images: [
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGNvb2tpbmclMjBmcmVzaCUyMGhlcmJzfGVufDF8fHx8MTc1NDk2ODIxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     ],
     specifications: {
       volume: "500ml",
-      acidity: "< 0.3%",
-      harvest: "December 2024",
+      acidity: "< 0.5%",
+      harvest: "December 2025",
       extraction: "First Cold Pressed",
       certification: "Organic, PDO",
       storage: "Cool, dark place"
     },
     tastingNotes: [
-      "Initial notes of fresh grass and green apple",
+      "Soft and smooth, medium fruitiness.",
       "Rich, fruity body with hints of artichoke",
-      "Distinctive peppery finish with almond undertones",
-      "Perfect for finishing dishes and salads"
+      "Mild peppery finish, easy to pair with many dishes.",
+      "Perfect for finishing dishes and salads",
+      "More robust and intense."
     ],
     // awards: [
     //   { name: "Gold Medal", event: "International Olive Oil Competition 2024" },
     //   { name: "Best in Class", event: "Tuscany Olive Oil Awards 2024" }
     // ]
   },
-  "greek-heritage": {
-    id: "greek-heritage",
-    name: "Greek Heritage",
-    origin: "Crete, Greece",
-    flavor: "Fruity & Smooth",
-    price: 38,
-    originalPrice: 45,
-    badge: "Organic",
-    rating: 4.8,
-    reviewCount: 89,
-    description: "Sourced from the ancient olive groves of Crete, our Greek Heritage olive oil represents over 4,000 years of Mediterranean tradition. This organic, extra virgin oil offers a perfectly balanced flavor profile with a smooth, fruity character that makes it ideal for both cooking and drizzling.",
+  "tuniolive-3l-evoo": {
+    id: "tuniolive-3l-evoo",
+    name: "3 Litre Tuni Olive EVOO",
+    origin: "Bouhajla, Kairouan, Tunisie",
+    flavor: "Robust & Peppery",
+    price: 45,
+    originalPrice: 55,
+    badge: "Best Seller",
+    rating: 4.9,
+    reviewCount: 127,
+    description: "Tunisian olive oils express a rich Mediterranean character, ranging from the soft, fruity Sehli Chemlali with notes of almond and green apple, to the bold and peppery Chetoui, marked by herbs and artichoke. Smooth in texture with a clean, lingering finish, they balance fruitiness, gentle bitterness, and a pleasant peppery kick — a sign of freshness and healthful polyphenols. Ideal for salads, couscous, grilled fish, meats, and as a finishing touch to elevate any dish.",
     images: [
       "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      "https://images.unsplash.com/photo-1722228097356-bd0202d99367?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMHRyZWVzJTIwZ3JvdmUlMjBsYW5kc2NhcGV8ZW58MXx8fHwxNzU0OTY4MjE2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-    ],
-    specifications: {
-      volume: "500ml",
-      acidity: "< 0.2%",
-      harvest: "November 2024",
-      extraction: "Cold Pressed",
-      certification: "Organic, EU Bio",
-      storage: "Cool, dark place"
-    },
-    tastingNotes: [
-      "Delicate fruity aroma with hints of green banana",
-      "Smooth, well-balanced flavor profile",
-      "Subtle peppery notes with sweet finish",
-      "Excellent for Mediterranean cuisine"
-    ],
-    // awards: [
-    //   { name: "Organic Excellence Award", event: "European Organic Awards 2024" }
-    // ]
-  },
-  "spanish-reserve": {
-    id: "spanish-reserve",
-    name: "Spanish Reserve",
-    origin: "Andalusia, Spain",
-    flavor: "Mild & Buttery",
-    price: 42,
-    originalPrice: 50,
-    badge: "Premium",
-    rating: 4.9,
-    reviewCount: 156,
-    description: "Our Spanish Reserve comes from the sun-soaked hills of Andalusia, where the perfect Mediterranean climate creates olives with exceptional character. This premium extra virgin olive oil offers a mild, buttery flavor profile that's incredibly versatile for both cooking and finishing dishes.",
-    images: [
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGNvb2tpbmclMjBmcmVzaCUyMGhlcmJzfGVufDF8fHx8MTc1NDk2ODIxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
     ],
     specifications: {
       volume: "500ml",
-      acidity: "< 0.25%",
-      harvest: "October 2024",
-      extraction: "Cold Pressed",
-      certification: "PDO, Premium Grade",
+      acidity: "< 0.5%",
+      harvest: "December 2025",
+      extraction: "First Cold Pressed",
+      certification: "Organic, PDO",
       storage: "Cool, dark place"
     },
     tastingNotes: [
-      "Mild, buttery aroma with floral notes",
-      "Smooth, creamy texture with gentle flavor",
-      "Subtle fruit undertones with no bitterness",
-      "Perfect for delicate dishes and baking"
+      "Soft and smooth, medium fruitiness.",
+      "Rich, fruity body with hints of artichoke",
+      "Mild peppery finish, easy to pair with many dishes.",
+      "Perfect for finishing dishes and salads",
+      "More robust and intense."
     ],
     // awards: [
-    //   { name: "Premium Quality Award", event: "Spanish Olive Oil Championship 2024" },
-    //   { name: "Consumer Choice", event: "International Food Awards 2024" }
+    //   { name: "Gold Medal", event: "International Olive Oil Competition 2024" },
+    //   { name: "Best in Class", event: "Tuscany Olive Oil Awards 2024" }
+    // ]
+  },
+  "tuniolive-500ml-bio-organic": {
+    id: "tuniolive-500ml-bio-organic",
+    name: "Spanish Reserve",
+    origin: "Bouhajla, Kairouan, Tunisie",
+    flavor: "Robust & Peppery",
+    price: 45,
+    originalPrice: 55,
+    badge: "Best Seller",
+    rating: 4.9,
+    reviewCount: 127,
+    description: "Tunisian olive oils express a rich Mediterranean character, ranging from the soft, fruity Sehli Chemlali with notes of almond and green apple, to the bold and peppery Chetoui, marked by herbs and artichoke. Smooth in texture with a clean, lingering finish, they balance fruitiness, gentle bitterness, and a pleasant peppery kick — a sign of freshness and healthful polyphenols. Ideal for salads, couscous, grilled fish, meats, and as a finishing touch to elevate any dish.",
+    images: [
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGNvb2tpbmclMjBmcmVzaCUyMGhlcmJzfGVufDF8fHx8MTc1NDk2ODIxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    ],
+    specifications: {
+      volume: "500ml",
+      acidity: "< 0.5%",
+      harvest: "December 2025",
+      extraction: "First Cold Pressed",
+      certification: "Organic, PDO",
+      storage: "Cool, dark place"
+    },
+    tastingNotes: [
+      "Soft and smooth, medium fruitiness.",
+      "Rich, fruity body with hints of artichoke",
+      "Mild peppery finish, easy to pair with many dishes.",
+      "Perfect for finishing dishes and salads",
+      "More robust and intense."
+    ],
+    // awards: [
+    //   { name: "Gold Medal", event: "International Olive Oil Competition 2024" },
+    //   { name: "Best in Class", event: "Tuscany Olive Oil Awards 2024" }
     // ]
   }
 };
@@ -268,7 +279,7 @@ export default async function ProductDetailPage(
             <div className="grid grid-cols-2 gap-4">
               { product.images.slice(1).map((image, index) => (
                 <div key={ index } className="relative h-32 rounded-lg overflow-hidden">
-                  <ImageWithFallback
+                  <ImageZoom
                     src={ image }
                     alt={ `${product.name} ${index + 2}` }
                     className="w-full h-full object-cover"

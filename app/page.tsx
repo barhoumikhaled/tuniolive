@@ -2,28 +2,22 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin } from "lucide-react";
+import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin, Send, Sheet } from "lucide-react";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { toast } from "sonner";
+import Contact from "@/components/contact";
+import Header from "@/components/header";
 
 export default function HomePage() {
+
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */ }
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4 mx-auto">
-          <div className="flex items-center space-x-2">
-            <Leaf className="h-8 w-8 text-green-600" />
-            <span className="text-xl font-bold">Tuni Olive</span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="#products" className="text-sm hover:text-primary transition-colors">Products</a>
-            <a href="#about" className="text-sm hover:text-primary transition-colors">About</a>
-            <a href="#quality" className="text-sm hover:text-primary transition-colors">Quality</a>
-            <a href="#contact" className="text-sm hover:text-primary transition-colors">Contact</a>
-          </nav>
-          <Button>Shop Now</Button>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */ }
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
@@ -148,13 +142,18 @@ export default function HomePage() {
             <div>
               <h2 className="text-3xl md:text-4xl mb-6">Our Heritage</h2>
               <p className="text-muted-foreground mb-6">
-                For centuries, our olive trees have stood under the Tunisian sun,
-                their roots deep in ancient soil, their branches heavy with history.
+                Our story begins with Sadok,
+                who lost his parents at a young age and inherited only a small, barren piece of land in Kairouan, Tunisia.
+                With determination and hard work, he cleared the weeds and began planting olive trees.
               </p>
               <p className="text-muted-foreground mb-8">
-                From the gentle sweetness of Chemlali to the bold spice of Chetoui,
-                every drop of our oil carries the soul of the land and the hands that have tended it for generations.
-                This is not just olive oil—it is the taste of Tunisia’s timeless story
+                While waiting for the olives to grow, he cultivated melons, watermelons, peppers, and other fruits to support his family.
+                Year after year, his efforts bore fruit, and his small plot turned into a thriving farm.
+                As his olive trees matured, he expanded, purchasing more land and planting even more olives.
+                Decades later, Sadok’s dedication has grown into an estate with hundreds of flourishing olive trees in the heart of Tunisia.
+              </p>
+              <p className="text-muted-foreground mb-8">
+                Today, his family proudly shares this heritage, exporting high-quality Tunisian olives and olive oil to the world.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -239,34 +238,18 @@ export default function HomePage() {
       </section >
 
       {/* Contact Section */ }
-      < section id="contact" className="py-16" >
+      <section id="contact" className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl mb-4">Get In Touch</h2>
             <p className="text-muted-foreground">
-              Have questions about our products or want to learn more about our story?
+              Have questions about our products or want to learn more about our story? We'd love to hear from you.
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <Card className="p-6 text-center">
-              <Mail className="h-8 w-8 mx-auto mb-4 text-green-600" />
-              <h3 className="mb-2">Email Us</h3>
-              <p className="text-muted-foreground">tuniolive518@gmail.com</p>
-            </Card>
-            <Card className="p-6 text-center">
-              <Phone className="h-8 w-8 mx-auto mb-4 text-green-600" />
-              <h3 className="mb-2">Call Us</h3>
-              <p className="text-muted-foreground">+1 (514) 601-0603</p>
-            </Card>
-            <Card className="p-6 text-center">
-              <MapPin className="h-8 w-8 mx-auto mb-4 text-green-600" />
-              <h3 className="mb-2">Visit Us</h3>
-              <p className="text-muted-foreground">Bouhajla, Kairouan, Tunisie</p>
-            </Card>
-          </div>
         </div>
-      </section >
+      </section>
+
+      <Contact />
 
       {/* Footer */ }
       < footer className="bg-primary text-primary-foreground py-12" >
