@@ -30,14 +30,12 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       toast.error("Please fill in all required fields");
       setIsSubmitting(false);
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast.error("Please enter a valid email address");
@@ -45,22 +43,30 @@ export default function Contact() {
       return;
     }
 
-    // Simulate form submission
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to send email");
+
       toast.success("Thank you for your message! We'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: ""
-      });
-    } catch (error) {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+      })
     }
-  };
+  }
 
   return (
     <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
