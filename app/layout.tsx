@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import '../styles/globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { LanguageProvider } from '@/contexts/language-context'
+import AppLayout from '@/components/client-layout'
 
 export const metadata: Metadata = {
   title: 'TuniOlive - Premium Mediterranean Olive Oil',

@@ -9,7 +9,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from '@/contexts/language-context';
 
 export default function Header() {
-    const { t, isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavClick = (sectionId: string) => {
@@ -24,11 +24,6 @@ export default function Header() {
   };
 
   const navigationItems = [
-    // { href: "#products", label: "Products" },
-    // { href: "#about", label: "About" },
-    // { href: "#quality", label: "Quality" },
-    // { href: "#contact", label: "Contact" },
-
     { href: "#products", labelKey: "header.products" },
     { href: "#about", labelKey: "header.about" },
     { href: "#quality", labelKey: "header.quality" },
@@ -42,7 +37,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between px-4 mx-auto">
         <a href="/">
           <div className="flex items-center space-x-2">
-            <Image src="/tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+            <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
           </div>
         </a>
         {/* Desktop Navigation */ }
@@ -53,7 +48,7 @@ export default function Header() {
               href={ item.href }
               className="text-sm hover:text-primary transition-colors"
             >
-              {t(item.labelKey!)}
+              { t(item.labelKey!) }
             </a>
           )) }
           <LanguageSwitcher />
@@ -75,7 +70,7 @@ export default function Header() {
               {/* Logo in mobile menu */ }
               <a href="/">
                 <div className="flex items-center space-x-2 pb-4 border-b">
-                  <Image src="/tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+                  <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
                 </div>
               </a>
               {/* Mobile Navigation Links */ }
@@ -86,21 +81,23 @@ export default function Header() {
                     onClick={ () => handleNavClick(item.href) }
                     className="text-left text-lg hover:text-green-600 transition-colors py-2"
                   >
-                    { item.label }
+                    { t(item.labelKey!) }
                   </button>
                 )) }
+                <LanguageSwitcher />
+
               </nav>
 
               {/* Mobile Shop Now Button */ }
-              <div className="pt-4 border-t">
+              {/* <div className="pt-4 border-t">
                 <Button className="w-full bg-green-600 hover:bg-green-700">
                   Shop Now
                 </Button>
-              </div>
+              </div> */}
 
               {/* Contact Info in Mobile Menu */ }
               <div className="pt-4 border-t space-y-3">
-                <h4 className="font-medium text-sm text-muted-foreground">Quick Contact</h4>
+                <h4 className="font-medium text-sm text-muted-foreground">{ t("contact.quickContact") }</h4>
                 <div className="space-y-2">
                   <a
                     href="mailto:hello@olivegrove.com"
@@ -114,7 +111,7 @@ export default function Header() {
                     className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
                   >
                     <Phone className="h-4 w-4" />
-                    <span>+1 (514) 601-0603</span>
+                    <span>0015146010603</span>
                   </a>
                 </div>
               </div>

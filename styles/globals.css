@@ -31,7 +31,7 @@
   --chart-4: 43 74% 66%;
   --chart-5: 27 87% 67%;
   --radius: 0.5rem;
-  
+
   /* Text size variables */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -43,7 +43,7 @@
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
   --text-6xl: 3.75rem;
-  
+
   /* Font weights */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
@@ -80,6 +80,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -142,4 +143,29 @@
 
 html {
   font-size: var(--font-size);
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+/* Adjust spacing for RTL */
+[dir="rtl"] .space-x-2>*+* {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .space-x-4>*+* {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+[dir="rtl"] .space-x-6>*+* {
+  margin-left: 0;
+  margin-right: 1.5rem;
 }

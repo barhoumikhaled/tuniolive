@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -256,8 +257,8 @@ export default function ClientHome() {
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Leaf className="h-6 w-6" />
-                <span className="text-lg font-bold">TuniOlive</span>
+                <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+
               </div>
               <p className="text-sm opacity-80">
                 Premium Mediterranean olive oil from family groves since 1723.
