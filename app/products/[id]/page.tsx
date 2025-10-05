@@ -236,7 +236,7 @@ export default async function ProductDetailPage(
         <div className="container flex h-16 items-center justify-between px-4 mx-auto">
           <div className="flex items-center space-x-2">
             <Leaf className="h-8 w-8 text-green-600" />
-            <Link href="/" className="text-xl font-bold">Olive Grove</Link>
+            <Link href="/" className="text-xl font-bold">TuniOlive</Link>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
             <Link href="/#products" className="text-sm hover:text-primary transition-colors">Products</Link>
@@ -522,7 +522,7 @@ export default async function ProductDetailPage(
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Leaf className="h-6 w-6" />
-                <span className="text-lg font-bold">Olive Grove</span>
+                <span className="text-lg font-bold">TuniOlive</span>
               </div>
               <p className="text-sm opacity-80">
                 Premium Mediterranean olive oil from family groves since 1723.
@@ -557,7 +557,7 @@ export default async function ProductDetailPage(
             </div>
           </div>
           <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm opacity-80">
-            <p>&copy; 2025 Olive Grove. All rights reserved.</p>
+            <p>&copy; 2025 TuniOlive. All rights reserved.</p>
           </div>
         </div>
       </footer>

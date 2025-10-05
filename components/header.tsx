@@ -1,11 +1,15 @@
 'use client'
 
+import Image from 'next/image'
 import { Leaf, Mail, Menu, Phone } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function Header() {
+    const { t, isRTL } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavClick = (sectionId: string) => {
@@ -20,20 +24,27 @@ export default function Header() {
   };
 
   const navigationItems = [
-    { href: "#products", label: "Products" },
-    { href: "#about", label: "About" },
-    { href: "#quality", label: "Quality" },
-    { href: "#contact", label: "Contact" }
+    // { href: "#products", label: "Products" },
+    // { href: "#about", label: "About" },
+    // { href: "#quality", label: "Quality" },
+    // { href: "#contact", label: "Contact" },
+
+    { href: "#products", labelKey: "header.products" },
+    { href: "#about", labelKey: "header.about" },
+    { href: "#quality", labelKey: "header.quality" },
+    { href: "#contact", labelKey: "header.contact" },
+    { href: "admin", label: "Admin" },
+
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 mx-auto">
-        <div className="flex items-center space-x-2">
-          <Leaf className="h-8 w-8 text-green-600" />
-          <span className="text-xl font-bold">Olive Grove</span>
-        </div>
-
+        <a href="/">
+          <div className="flex items-center space-x-2">
+            <Image src="/tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+          </div>
+        </a>
         {/* Desktop Navigation */ }
         <nav className="hidden md:flex items-center space-x-6">
           { navigationItems.map((item) => (
@@ -42,9 +53,10 @@ export default function Header() {
               href={ item.href }
               className="text-sm hover:text-primary transition-colors"
             >
-              { item.label }
+              {t(item.labelKey!)}
             </a>
           )) }
+          <LanguageSwitcher />
         </nav>
 
         {/* Desktop Shop Now Button */ }
@@ -61,11 +73,11 @@ export default function Header() {
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <div className="flex flex-col space-y-6">
               {/* Logo in mobile menu */ }
-              <div className="flex items-center space-x-2 pb-4 border-b">
-                <Leaf className="h-6 w-6 text-green-600" />
-                <span className="text-lg font-bold">Olive Grove</span>
-              </div>
-
+              <a href="/">
+                <div className="flex items-center space-x-2 pb-4 border-b">
+                  <Image src="/tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+                </div>
+              </a>
               {/* Mobile Navigation Links */ }
               <nav className="flex flex-col space-y-4">
                 { navigationItems.map((item) => (
@@ -95,7 +107,7 @@ export default function Header() {
                     className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
                   >
                     <Mail className="h-4 w-4" />
-                    <span>tuniolive518@gmail.com</span>
+                    <span>info@tuniolive.com</span>
                   </a>
                   <a
                     href="tel:+15551234567"

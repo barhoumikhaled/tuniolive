@@ -8,8 +8,10 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function Contact() {
+  const { t, isRTL } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,14 +33,14 @@ export default function Contact() {
     setIsSubmitting(true);
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all required fields");
+      toast.error(t("contact.validationError"));
       setIsSubmitting(false);
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      toast.error("Please enter a valid email address");
+      toast.error(t("contact.emailError"));
       setIsSubmitting(false);
       return;
     }
@@ -75,56 +77,56 @@ export default function Contact() {
         <CardHeader className="px-0 pt-0">
           <CardTitle className="flex items-center space-x-2">
             <Send className="h-5 w-5 text-green-600" />
-            <span>Send us a message</span>
+            <span>{ t("contact.formTitle") }</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="px-0 pb-0">
           <form onSubmit={ handleSubmit } className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name">{ t("contact.name") } *</Label>
                 <Input
                   id="name"
                   name="name"
                   value={ formData.name }
                   onChange={ handleInputChange }
-                  placeholder="Your full name"
+                  placeholder={ t("contact.namePlaceholder") }
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">{ t("contact.email") } *</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
                   value={ formData.email }
                   onChange={ handleInputChange }
-                  placeholder="your.email@example.com"
+                  placeholder={ t("contact.emailPlaceholder") }
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="subject">Subject</Label>
+              <Label htmlFor="subject">{ t("contact.subject") }</Label>
               <Input
                 id="subject"
                 name="subject"
                 value={ formData.subject }
                 onChange={ handleInputChange }
-                placeholder="What can we help you with?"
+                placeholder={ t("contact.subjectPlaceholder") }
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="message">Message *</Label>
+              <Label htmlFor="message">{ t("contact.message") } *</Label>
               <Textarea
                 id="message"
                 name="message"
                 value={ formData.message }
                 onChange={ handleInputChange }
-                placeholder="Tell us more about your inquiry..."
+                placeholder={ t("contact.messagePlaceholder") }
                 rows={ 5 }
                 required
               />
@@ -138,12 +140,12 @@ export default function Contact() {
               { isSubmitting ? (
                 <div className="flex items-center space-x-2">
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Sending...</span>
+                  <span>{ t("common.sending") }</span>
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
                   <Send className="h-4 w-4" />
-                  <span>Send Message</span>
+                  <span>{ t("common.sendMessage") }</span>
                 </div>
               ) }
             </Button>
@@ -154,19 +156,19 @@ export default function Contact() {
       {/* Contact Information */ }
       <div className="space-y-6">
         <div className="space-y-4">
-          <h3 className="text-xl mb-4">Other ways to reach us</h3>
+          <h3 className="text-xl mb-4">{ t("contact.otherWays") }</h3>
           <Card className="p-6">
             <div className="flex items-start space-x-4">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                 <Mail className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <h4 className="mb-1">Email Us</h4>
+                <h4 className="mb-1">{ t("contact.emailUs") }</h4>
                 <p className="text-muted-foreground text-sm mb-2">
-                  For general inquiries and customer support
+                  { t("contact.emailDescription") }
                 </p>
-                <a href="mailto:tuniolive518@gmail.com" className="text-green-600 hover:underline">
-                  tuniolive518@gmail.com
+                <a href="mailto:info@tuniolive.com" className="text-green-600 hover:underline">
+                  info@tuniolive.com
                 </a>
               </div>
             </div>
@@ -178,10 +180,10 @@ export default function Contact() {
                 <Phone className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <h4 className="mb-1">Call Us</h4>
-                <p className="text-muted-foreground text-sm mb-2">
+                <h4 className="mb-1">{ t("contact.callUs") }</h4>
+                {/* <p className="text-muted-foreground text-sm mb-2">
                   Monday to Friday, 9AM - 6PM EST
-                </p>
+                </p> */}
                 <a href="tel:+15551234567" className="text-green-600 hover:underline">
                   +1 (514) 601-0603
                 </a>
@@ -195,22 +197,21 @@ export default function Contact() {
                 <MapPin className="h-6 w-6 text-green-600" />
               </div>
               <div>
-                <h4 className="mb-1">Visit Our Farm</h4>
+                <h4 className="mb-1">{ t("contact.visitFarm") }</h4>
                 <p className="text-muted-foreground text-sm mb-2">
-                  Schedule a tour of our olive groves
+                  { t("contact.visitDescription") }
                 </p>
-                <p className="text-green-600">Bouhajla</p>
-                <p className="text-sm text-muted-foreground">Kairouan, Tunisia</p>
+                <p className="text-green-600">{ t("contact.farmLocation") }</p>
+                {/* <p className="text-sm text-muted-foreground">Kairouan, Tunisia</p> */}
               </div>
             </div>
           </Card>
         </div>
 
         <div className="bg-muted/30 p-6 rounded-lg">
-          <h4 className="mb-2">Response Time</h4>
+          <h4 className="mb-2">{ t("contact.responseTime") }</h4>
           <p className="text-sm text-muted-foreground">
-            We typically respond to all inquiries within 24 hours during business days.
-            For urgent matters, please call us directly.
+            { t("contact.responseDescription") }
           </p>
         </div>
       </div>
