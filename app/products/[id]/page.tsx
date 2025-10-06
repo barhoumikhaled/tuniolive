@@ -232,7 +232,7 @@ export default async function ProductDetailPage(
   return (
     <div className="min-h-screen bg-background">
       {/* Header */ }
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between px-4 mx-auto">
           <div className="flex items-center space-x-2">
             <Leaf className="h-8 w-8 text-green-600" />
@@ -246,7 +246,7 @@ export default async function ProductDetailPage(
           </nav>
           <Button>Shop Now</Button>
         </div>
-      </header>
+      </header> */}
 
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */ }
@@ -516,7 +516,7 @@ export default async function ProductDetailPage(
       </div>
 
       {/* Footer */ }
-      <footer className="bg-primary text-primary-foreground py-12 mt-16">
+      {/* <footer className="bg-primary text-primary-foreground py-12 mt-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -560,7 +560,7 @@ export default async function ProductDetailPage(
             <p>&copy; 2025 TuniOlive. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

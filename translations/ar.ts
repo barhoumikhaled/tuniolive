@@ -108,14 +108,14 @@ export const ar = {
     emailError: "يرجى إدخال عنوان بريد إلكتروني صالح"
   },
   footer: {
-    tagline: "زيت زيتون متوسطي فاخر من بساتين عائلية منذ عام 1723.",
+    tagline: "زيت زيتون متوسطي فاخر من بساتين عائلية منذ عام 1958.",
     products: "المنتجات",
     extraVirgin: "زيت الزيتون البكر الممتاز",
     flavored: "الزيوت المنكهة",
     giftSets: "مجموعات الهدايا",
     bulkOrders: "الطلبات بالجملة",
     company: "الشركة",
-    aboutUs: "عنا",
+    aboutUs: "معلومات عنا",
     ourStory: "قصتنا",
     sustainability: "الاستدامة",
     awards: "الجوائز",
@@ -124,7 +124,7 @@ export const ar = {
     shipping: "الشحن",
     returns: "المرتجعات",
     faq: "الأسئلة الشائعة",
-    copyright: "© 2025 Olive Grove. جميع الحقوق محفوظة."
+    copyright: ".© 2025 زيتون تونس. جميع الحقوق محفوظة"
   },
   mobile: {
     menu: "قائمة التنقل",

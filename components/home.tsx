@@ -17,7 +17,7 @@ export default function ClientHome() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {/* <Header /> */}
 
       {/* Hero Section */ }
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
@@ -252,51 +252,7 @@ export default function ClientHome() {
       <Contact />
 
       {/* Footer */ }
-      < footer className="bg-primary text-primary-foreground py-12" >
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
-
-              </div>
-              <p className="text-sm opacity-80">
-                Premium Mediterranean olive oil from family groves since 1723.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4">Products</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>Extra Virgin Olive Oil</li>
-                <li>Flavored Oils</li>
-                <li>Gift Sets</li>
-                <li>Bulk Orders</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4">Company</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>About Us</li>
-                <li>Our Story</li>
-                <li>Sustainability</li>
-                <li>Awards</li>
-              </ul>
-            </div>
-            {/* <div>
-              <h4 className="mb-4">Support</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>Contact</li>
-                <li>Shipping</li>
-                <li>Returns</li>
-                <li>FAQ</li>
-              </ul>
-            </div> */}
-          </div>
-          <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm opacity-80">
-            <p>&copy; 2025 Tuni Olive. All rights reserved.</p>
-          </div>
-        </div>
-      </footer >
+     
     </div >
   );
 }

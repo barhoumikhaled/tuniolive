@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import { Toaster } from '@/components/ui/sonner'
 import { LanguageProvider } from '@/contexts/language-context'
 import AppLayout from '@/components/client-layout'
+import ClientLayout from './layout.client'
 
 export const metadata: Metadata = {
   title: 'TuniOlive - Premium Mediterranean Olive Oil',
@@ -15,19 +16,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <LanguageProvider>
+        <ClientLayout>
           { children }
-          <Toaster />
-        </LanguageProvider>
+        </ClientLayout>
       </body>
     </html>
-  )
+  );
 }

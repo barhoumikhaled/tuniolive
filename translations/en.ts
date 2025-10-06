@@ -108,7 +108,7 @@ export const en = {
     emailError: "Please enter a valid email address"
   },
   footer: {
-    tagline: "Premium Mediterranean olive oil from family groves since 1723.",
+    tagline: "Premium Mediterranean olive oil from family groves since 1958.",
     products: "Products",
     extraVirgin: "Extra Virgin Olive Oil",
     flavored: "Flavored Oils",
@@ -124,7 +124,7 @@ export const en = {
     shipping: "Shipping",
     returns: "Returns",
     faq: "FAQ",
-    copyright: "© 2025 Olive Grove. All rights reserved."
+    copyright: "© 2025 TuniOlive. All rights reserved."
   },
   mobile: {
     menu: "Navigation Menu",

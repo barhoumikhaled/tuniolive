@@ -108,7 +108,7 @@ export const fr = {
     emailError: "Veuillez entrer une adresse e-mail valide"
   },
   footer: {
-    tagline: "Huile d'olive méditerranéenne premium issue d'oliveraies familiales depuis 1723.",
+    tagline: "Huile d'olive méditerranéenne premium issue d'oliveraies familiales depuis 1958.",
     products: "Produits",
     extraVirgin: "Huile d'olive extra vierge",
     flavored: "Huiles aromatisées",
@@ -124,7 +124,7 @@ export const fr = {
     shipping: "Livraison",
     returns: "Retours",
     faq: "FAQ",
-    copyright: "© 2025 Olive Grove. Tous droits réservés."
+    copyright: "© 2025 TuniOlive. Tous droits réservés."
   },
   mobile: {
     menu: "Menu de navigation",
