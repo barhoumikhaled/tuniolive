@@ -182,5 +182,16 @@ export const ar = {
     noCustomers: "لم يتم العثور على عملاء",
     pdfGenerated: "تم إنشاء PDF بنجاح!",
     pdfError: "خطأ في إنشاء PDF"
+  },
+  share: {
+    share: "مشاركة...",
+    whatsapp: "واتساب",
+    facebook: "فيسبوك",
+    twitter: "تويتر",
+    linkedin: "لينكد إن",
+    copyLink: "نسخ الرابط",
+    copied: "تم النسخ!",
+    linkCopied: "تم نسخ الرابط إلى الحافظة!",
+    copyFailed: "فشل نسخ الرابط"
   }
 };

@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ImageZoom } from "@/components/image-zoom";
+import { ShareButton } from "@/components/share-button";
+import { NextSeo } from "next-seo";
 
 // Product data - in a real app this would come from a database
 const products = {
@@ -231,22 +233,25 @@ export default async function ProductDetailPage(
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */ }
-      {/* <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4 mx-auto">
-          <div className="flex items-center space-x-2">
-            <Leaf className="h-8 w-8 text-green-600" />
-            <Link href="/" className="text-xl font-bold">TuniOlive</Link>
-          </div>
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/#products" className="text-sm hover:text-primary transition-colors">Products</Link>
-            <Link href="/#about" className="text-sm hover:text-primary transition-colors">About</Link>
-            <Link href="/#quality" className="text-sm hover:text-primary transition-colors">Quality</Link>
-            <Link href="/#contact" className="text-sm hover:text-primary transition-colors">Contact</Link>
-          </nav>
-          <Button>Shop Now</Button>
-        </div>
-      </header> */}
+
+      {/* <NextSeo
+        title={ `${product.name} - Premium ${product.origin} Olive Oil` }
+        description={ product.description }
+        openGraph={ {
+          title: `${product.name} - Premium ${product.origin} Olive Oil`,
+          description: product.description,
+          url: `https://yourdomain.com/products/${product.id}`,
+          images: [
+            {
+              url: product.images[0],
+              width: 800,
+              height: 600,
+              alt: product.name,
+            },
+          ],
+          site_name: "TuniOlive",
+        } }
+      /> */}
 
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */ }
@@ -344,9 +349,13 @@ export default async function ProductDetailPage(
                   <Heart className="h-4 w-4 mr-2" />
                   Save
                 </Button>
-                <Button variant="outline" size="lg">
-                  <Share2 className="h-4 w-4" />
-                </Button>
+                <ShareButton
+                  url={ `/products/${product.id}` }
+                  title={ `${product.name} - Premium ${product.origin} Olive Oil` }
+                  description={ product.description }
+                  variant="outline"
+                  size="lg"
+                />
               </div>
             </div>
 
@@ -378,7 +387,7 @@ export default async function ProductDetailPage(
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="tasting">Tasting Notes</TabsTrigger>
             {/* <TabsTrigger value="awards">Awards</TabsTrigger> */ }
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            {/* <TabsTrigger value="reviews">Reviews</TabsTrigger> */ }
           </TabsList>
 
           <TabsContent value="details" className="space-y-4">
@@ -388,12 +397,12 @@ export default async function ProductDetailPage(
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-4">
-                  { Object.entries(product.specifications).map(([key, value]) => (
+                  {/* { Object.entries(product.specifications).map(([key, value]) => (
                     <div key={ key } className="flex justify-between">
                       <span className="capitalize text-muted-foreground">{ key.replace(/([A-Z])/g, ' $1') }:</span>
                       <span>{ value }</span>
                     </div>
-                  )) }
+                  )) } */}
                 </div>
               </CardContent>
             </Card>
@@ -438,7 +447,7 @@ export default async function ProductDetailPage(
             </Card>
           </TabsContent> */}
 
-          <TabsContent value="reviews" className="space-y-4">
+          {/* <TabsContent value="reviews" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Customer Reviews</CardTitle>
@@ -471,7 +480,7 @@ export default async function ProductDetailPage(
                 )) }
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
 
         {/* Related Products */ }
@@ -514,53 +523,6 @@ export default async function ProductDetailPage(
           </div>
         </section>
       </div>
-
-      {/* Footer */ }
-      {/* <footer className="bg-primary text-primary-foreground py-12 mt-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Leaf className="h-6 w-6" />
-                <span className="text-lg font-bold">TuniOlive</span>
-              </div>
-              <p className="text-sm opacity-80">
-                Premium Mediterranean olive oil from family groves since 1723.
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4">Products</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>Extra Virgin Olive Oil</li>
-                <li>Flavored Oils</li>
-                <li>Gift Sets</li>
-                <li>Bulk Orders</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4">Company</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>About Us</li>
-                <li>Our Story</li>
-                <li>Sustainability</li>
-                <li>Awards</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4">Support</h4>
-              <ul className="space-y-2 text-sm opacity-80">
-                <li>Contact</li>
-                <li>Shipping</li>
-                <li>Returns</li>
-                <li>FAQ</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm opacity-80">
-            <p>&copy; 2025 TuniOlive. All rights reserved.</p>
-          </div>
-        </div>
-      </footer> */}
     </div>
   );
 }

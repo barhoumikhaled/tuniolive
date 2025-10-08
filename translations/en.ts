@@ -182,5 +182,16 @@ export const en = {
     noCustomers: "No customers found",
     pdfGenerated: "PDF generated successfully!",
     pdfError: "Error generating PDF"
+  },
+  share: {
+    share: "Share...",
+    whatsapp: "WhatsApp",
+    facebook: "Facebook",
+    twitter: "Twitter",
+    linkedin: "LinkedIn",
+    copyLink: "Copy Link",
+    copied: "Copied!",
+    linkCopied: "Link copied to clipboard!",
+    copyFailed: "Failed to copy link"
   }
 };

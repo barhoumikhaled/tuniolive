@@ -182,5 +182,16 @@ export const fr = {
     noCustomers: "Aucun client trouvé",
     pdfGenerated: "PDF généré avec succès !",
     pdfError: "Erreur lors de la génération du PDF"
+  },
+  share: {
+    share: "Partager...",
+    whatsapp: "WhatsApp",
+    facebook: "Facebook",
+    twitter: "Twitter",
+    linkedin: "LinkedIn",
+    copyLink: "Copier le lien",
+    copied: "Copié !",
+    linkCopied: "Lien copié dans le presse-papiers !",
+    copyFailed: "Échec de la copie du lien"
   }
 };
