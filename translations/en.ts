@@ -214,9 +214,9 @@ export const en = {
     copyFailed: "Failed to copy link"
   },
   productDetails:{
-    tab1: "TuniOlive Details",
-    tab2: "TuniOlive Tasting Notes",
-    tab3: "TuniOlive Key Features",
+    tab1: "Details",
+    tab2: "Tasting Notes",
+    tab3: "Key Features",
     youMayLike:"You Might Also Like",
     oliveoil1l: {
       name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",

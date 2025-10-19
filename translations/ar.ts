@@ -208,9 +208,9 @@ export const ar = {
     copyFailed: "فشل نسخ الرابط"
   },
   productDetails: {
-    tab1: "TuniOlive تفاصيل",
-    tab2: "TuniOlive ملاحظات التذوق",
-    tab3: "TuniOlive الميزات الرئيسية",
+    tab1: "تفاصيل",
+    tab2: "ملاحظات التذوق",
+    tab3: "الميزات الرئيسية",
     youMayLike: "منتجات أخرى",
     oliveoil1l: {
       name: "زيت زيتون بكر ممتاز TuniOlive توني أوليف – 1 لتر",

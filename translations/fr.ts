@@ -209,9 +209,9 @@ export const fr = {
     copyFailed: "Échec de la copie du lien"
   },
   productDetails: {
-    tab1: "TuniOlive Détails",
-    tab2: "TuniOlive dégustation",
-    tab3: "TuniOlive Caractéristiques principales",
+    tab1: "Détails",
+    tab2: "dégustation",
+    tab3: "Caractéristiques principales",
     youMayLike: "Autres produits",
     oliveoil1l: {
       name: "TuniOlive Huile d'Olive Extra Vierge – 1 L",
