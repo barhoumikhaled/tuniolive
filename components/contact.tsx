@@ -184,7 +184,7 @@ export default function Contact() {
                 {/* <p className="text-muted-foreground text-sm mb-2">
                   Monday to Friday, 9AM - 6PM EST
                 </p> */}
-                <a href="tel:+15551234567" className="text-green-600 hover:underline">
+                <a href="tel:+1 (514) 601-0603" className="text-green-600 hover:underline">
                   +1 (514) 601-0603
                 </a>
               </div>
@@ -209,7 +209,7 @@ export default function Contact() {
         </div>
 
         <div className="bg-muted/30 p-6 rounded-lg">
-          <h4 className="mb-2">{ t("contact.responseTime") }</h4>
+          {/* <h4 className="mb-2">{ t("contact.responseTime") }</h4> */}
           <p className="text-sm text-muted-foreground">
             { t("contact.responseDescription") }
           </p>

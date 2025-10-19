@@ -24,11 +24,11 @@ export default function Header() {
   };
 
   const navigationItems = [
-    { href: "#products", labelKey: "header.products" },
-    { href: "#about", labelKey: "header.about" },
-    { href: "#quality", labelKey: "header.quality" },
-    { href: "#contact", labelKey: "header.contact" },
-    { href: "admin", label: "Admin" },
+    { href: "/#products", labelKey: "header.products" },
+    { href: "/#about", labelKey: "header.about" },
+    { href: "/#quality", labelKey: "header.quality" },
+    { href: "/#contact", labelKey: "header.contact" },
+    { href: "/admin", label: "Admin" },
 
   ];
 
@@ -55,7 +55,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop Shop Now Button */ }
-        <Button className="hidden md:flex">Shop Now</Button>
+        {/* <Button className="hidden md:flex">Shop Now</Button> */}
 
         {/* Mobile Menu */ }
         <Sheet open={ isMobileMenuOpen } onOpenChange={ setIsMobileMenuOpen }>
@@ -100,18 +100,18 @@ export default function Header() {
                 <h4 className="font-medium text-sm text-muted-foreground">{ t("contact.quickContact") }</h4>
                 <div className="space-y-2">
                   <a
-                    href="mailto:hello@olivegrove.com"
+                    href="mailto:info@tuniolive.com"
                     className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
                   >
                     <Mail className="h-4 w-4" />
                     <span>info@tuniolive.com</span>
                   </a>
                   <a
-                    href="tel:+15551234567"
+                    href="tel:+1 (514) 601-0603"
                     className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
                   >
                     <Phone className="h-4 w-4" />
-                    <span>0015146010603</span>
+                    <span>+1 (514) 601-0603</span>
                   </a>
                 </div>
               </div>

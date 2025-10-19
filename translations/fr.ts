@@ -16,40 +16,50 @@ export const fr = {
     contact: "Contact"
   },
   hero: {
-    title: "Excellence Méditerranéenne Pure",
-    description: "Découvrez la meilleure huile d'olive extra vierge, pressée à froid dans des oliveraies centenaires au cœur de la Méditerranée.",
-    explore: "Découvrir la collection",
+    title: "La pure excellence tunisienne dans chaque goutte",
+    description: "Huile d'olive extra vierge pressée à froid provenant des anciennes plantations de Kairouan — livrée a vos tables avec soin.",
+    explore: "Découvrir nos collections",
     story: "Notre histoire"
   },
   products: {
-    title: "Produits phares",
-    description: "Découvrez notre sélection premium d'huiles d'olive extra vierges, chacune avec des caractéristiques et des saveurs uniques des différentes régions méditerranéennes.",
-    tuscanGold: {
-      name: "Or de Toscane",
-      origin: "Toscane, Italie",
-      flavor: "Robuste et poivrée",
-      price: "45€",
-      badge: "Meilleure vente"
+    title: "Produits en vedette",
+    description: `Découvrez notre sélection artisanale d'huiles d'olive vierges extra et biologiques, 
+    chaque bouteille racontant l'histoire d'un lieu et d'une tradition. 
+    D'une note audacieuse et poivrée à une note soyeuse et douce, TuniOlive capture la richesse méditerranéenne dans chaque goutte.`,
+    tunioliveevoo1l: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 1 L",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      price: "42€",
+      badge: "Premium"
     },
-    greekHeritage: {
-      name: "Héritage grec",
-      origin: "Crète, Grèce",
+    tunioliveevoo500ml: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 500 ML",
+      origin: "Kairouan, Tunisie",
       flavor: "Fruitée et douce",
       price: "38€",
       badge: "Bio"
     },
-    spanishReserve: {
-      name: "Réserve espagnole",
-      origin: "Andalousie, Espagne",
-      flavor: "Douce et beurrée",
+    tuniolive3l: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 3 L",
+      origin: "Bouhajla, Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      price: "45€",
+      badge: "Meilleure vente"
+    },
+    tuniolivebio500ml: {
+      name: "TuniOlive Huile d'Olive Bio – 500 ML",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
       price: "42€",
       badge: "Premium"
     }
   },
   about: {
     title: "Notre héritage",
-    paragraph1: "Depuis plus de 300 ans, notre famille cultive des oliviers sur les collines ensoleillées de la Méditerranée. Notre engagement envers les méthodes traditionnelles et les pratiques agricoles durables garantit que chaque bouteille capture l'essence de notre terre ancestrale.",
-    paragraph2: "Nous récoltons nos olives à maturité optimale et les pressons à froid dans les heures qui suivent, préservant la valeur nutritionnelle maximale et la saveur exceptionnelle qui ont fait de notre huile d'olive un ingrédient précieux dans les cuisines du monde entier.",
+    paragraph1: `Notre voyage commence avec Sadok, un jeune orphelin qui hérite d'une modeste parcelle à Kairouan.
+À force de courage, de persévérance et d'un profond respect pour la terre, il a débroussaillé, planté des oliviers et nourri une vision. Pour subvenir aux besoins de sa famille, il a d'abord cultivé des melons, des pastèques, des poivrons et d'autres produits. Au fil des décennies, sa modeste parcelle s'est transformée en un domaine florissant de centaines d'oliviers.`,
+    paragraph2: `Aujourd'hui, la famille Sadok perpétue l'héritage de Sadok. Ancrés dans le terroir kairouanais, nous cultivons des variétés d'olives centenaires et les partageons avec le monde entier, avec fierté, authenticité et une qualité irréprochable.`,
     yearsOfHeritage: "Années d'héritage",
     oliveTrees: "Oliviers"
   },
@@ -57,23 +67,27 @@ export const fr = {
     title: "Pourquoi choisir notre huile d'olive",
     description: "Chaque bouteille représente notre engagement indéfectible envers la qualité, la durabilité et le goût authentique de la Méditerranée.",
     organic: {
-      title: "100% Bio",
-      description: "Agriculture biologique certifiée sans pesticides ni produits chimiques"
+      title: "100% Agriculture Biologique et Propre",
+      description: "Sans pesticides chimiques. Sans additifs synthétiques. Juste une culture pure et naturelle."
     },
     coldPressed: {
-      title: "Pressée à froid",
-      description: "La première extraction à froid préserve les nutriments et la saveur"
+      title: "Première pression à froid",
+      description: "Nous extrayons l’huile à basse température pour préserver les nutriments, l’arôme et la fraîcheur."
     },
     award: {
-      title: "Primée",
-      description: "Reconnue par les concours internationaux d'huile d'olive"
+      title: "Récompenses",
+      description: "Nos huiles d’olive sont jugées et honorées lors de concours internationaux, reflétant une reconnaissance mondiale."
     },
     delivery: {
-      title: "Livraison fraîche",
-      description: "De l'oliveraie à votre table dans des conditions optimales"
+      title: "Fraîcheur du bosquet à la table",
+      description: "Nous gérons la chaîne d'approvisionnement de manière rigoureuse afin que vous receviez une huile en parfait état : vibrante, parfumée et savoureuse."
+    },
+    taste: {
+      title: "Goûtez la différence",
+      description: "Des notes robustes et poivrées aux textures douces et beurrées, nous avons une expression pour chaque palais et chaque cuisine."
     },
     tasteDifference: "Goûtez la différence",
-    tasteDescription: "Découvrez les saveurs riches et complexes que seule l'huile d'olive méditerranéenne authentique peut offrir"
+    taseDescription: "Des notes robustes et poivrées aux textures douces et beurrées, nous avons une expression pour chaque palais et chaque cuisine."
   },
   contact: {
     title: "Contactez-nous",
@@ -193,5 +207,137 @@ export const fr = {
     copied: "Copié !",
     linkCopied: "Lien copié dans le presse-papiers !",
     copyFailed: "Échec de la copie du lien"
+  },
+  productDetails: {
+    tab1: "TuniOlive Détails",
+    tab2: "TuniOlive dégustation",
+    tab3: "TuniOlive Caractéristiques principales",
+    youMayLike: "Autres produits",
+    oliveoil1l: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 1 L",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      description: `Née dans les oliveraies baignées de soleil de Bouhajla, cette huile d'olive vierge extra incarne l'esprit audacieux et authentique de la Tunisie. 
+      Récoltée à la main et pressée à froid en quelques heures, notre bouteille de 1 L offre une fraîcheur remarquable, une profondeur aromatique et une touche poivrée finale qui rehausse chaque plat, des trempettes rustiques aux pâtes raffinées.
+`,
+      specifications: {
+        volume: "1L",
+        acidity: "< 0.5%",
+        harvest: "Saison 2025",
+        extraction: "Première pression à froid",
+        certification: "Biologique, PDO",
+        storage: "Endroit frais et sombre, bouteille en verre"
+      },
+      tastingNotes: [
+        "Doux et onctueux, fruité moyen.",
+        "Corps riche et fruité avec des notes d'artichaut.",
+        "Une touche poivrée douce, facile à marier avec de nombreux plats.",
+        "Parfaite pour sublimer les plats et les salades.",
+        "Plus robuste et intense."
+      ],
+      features: [
+        { name: "Première pression à froid", value: "Extraite à moins de 27 °C pour préserver toute la saveur et la valeur nutritive." },
+        { name: "Un seul Origine", value: "Cultivée exclusivement à Kairouan, en Tunisie." },
+        { name: "Riche en polyphénols", value: "Une source naturelle d'antioxydants." },
+        { name: " Goût authentique", value: "Doux, légèrement poivré, avec des notes d’artichaut et d’amande." },
+        { name: "Emballage en bouteille en verre", value: "Protégée des UV pour préserver la fraîcheur et la durabilité." }
+      ]
+    },
+    oliveoil500ml: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 500 ML",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      description: `Our 500 mL format is perfect for daily cooking or gifting. Every drop embodies generations of
+care — olives nurtured under Tunisian sun, pressed the traditional way, and bottled at peak
+freshness.Taste the golden balance between fruitiness and a subtle bite.
+`,
+      specifications: {
+        volume: "500ml",
+        acidity: "< 0.5%",
+        harvest: "December 2025",
+        extraction: "First Cold Pressed",
+        certification: "Organic, PDO",
+        storage: "Cool, dark place"
+      },
+      tastingNotes: [
+        "Doux et onctueux, fruité moyen.",
+        "Corps riche et fruité avec des notes d'artichaut.",
+        "Une touche poivrée douce, facile à marier avec de nombreux plats.",
+        "Parfaite pour sublimer les plats et les salades.",
+        "Plus robuste et intense."
+      ],
+      features: [
+        { name: "Première pression à froid", value: "Extraite à moins de 27 °C pour préserver toute la saveur et la valeur nutritive." },
+        { name: "Un seul Origine", value: "Cultivée exclusivement à Kairouan, en Tunisie." },
+        { name: "Riche en polyphénols", value: "Une source naturelle d'antioxydants." },
+        { name: " Goût authentique", value: "Doux, légèrement poivré, avec des notes d’artichaut et d’amande." },
+        { name: "Emballage en bouteille en verre", value: "Protégée des UV pour préserver la fraîcheur et la durabilité." }
+      ]
+    },
+    oliveoil3l: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 3 L",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      description: `Notre boîte de 3 L allie commodité et rapport qualité-prix sans compromis. 
+      Conçue pour les familles, les restaurants et les chefs qui apprécient la qualité et la constance, elle offre la même richesse dorée et le caractère authentique de la Tunisie — dans un format qui dure.
+`,
+      specifications: {
+        volume: "3 L",
+        acidity: "< 0.5%",
+        harvest: "December 2025",
+        extraction: "First Cold Pressed",
+        certification: "Organic, PDO",
+        storage: "Cool, dark place"
+      },
+      tastingNotes: [
+        "Doux et onctueux, fruité moyen.",
+        "Corps riche et fruité avec des notes d'artichaut.",
+        "Une touche poivrée douce, facile à marier avec de nombreux plats.",
+        "Parfaite pour sublimer les plats et les salades.",
+        "Plus robuste et intense."
+      ],
+      features: [
+        { name: "Gran format", value: "Format plus grand, même qualité « de la ferme à la table »." },
+        { name: "Idéal pour les restaurants et les familles.", value: "Emballage économique et écologique" },
+        { name: "Première pression à froid", value: "Extraite à moins de 27 °C pour préserver toute la saveur et la valeur nutritive." },
+        { name: "Un seul Origine", value: "Cultivée exclusivement à Kairouan, en Tunisie." },
+        { name: "Riche en polyphénols", value: "Une source naturelle d'antioxydants." },
+        { name: " Goût authentique", value: "Doux, légèrement poivré, avec des notes d’artichaut et d’amande." },
+      ]
+    },
+    oliveoilbio500ml: {
+      name: "TuniOlive Huile d'Olive Biologique – 1 L",
+      origin: "Kairouan, Tunisie",
+      flavor: "Fruitée et douce",
+      description: `Notre gamme biologique rend hommage à l’équilibre ancestral entre l’homme et la nature. 
+      Récoltée à la main dans des oliveraies certifiées biologiques à Kairouan, cette bouteille de 500 mL exprime l’essence la plus pure de la Méditerranée — soyeuse, aromatique et pleine de vitalité.
+    `,
+      specifications: {
+        volume: "500ml",
+        acidity: "< 0.5%",
+        harvest: "December 2025",
+        extraction: "First Cold Pressed",
+        certification: "Organic, PDO",
+        storage: "Cool, dark place"
+      },
+      tastingNotes: [
+        "Doux et onctueux, fruité moyen.",
+        "Corps riche et fruité avec des notes d'artichaut.",
+        "Une touche poivrée douce, facile à marier avec de nombreux plats.",
+        "Parfaite pour sublimer les plats et les salades.",
+        "Plus robuste et intense."
+      ],
+      features: [
+        { name: "Agriculture Biologique Certifiée", value: "Cultivé sans pesticides ni engrais synthétiques." },
+        { name: "Extrait à froid en quelques heures.", value: "Préserve les antioxydants et les vitamines." },
+        { name: "Délicat mais distinct.", value: "Fruité doux avec une finale fraîche et herbacée." },
+        { name: "Parfait pour les consommateurs responsables.", value: "Un choix durable sans compromis." },
+        { name: "Première pression à froid", value: "Extraite à moins de 27 °C pour préserver toute la saveur et la valeur nutritive." },
+        { name: "Un seul Origine", value: "Cultivée exclusivement à Kairouan, en Tunisie." },
+        { name: "Riche en polyphénols", value: "Une source naturelle d'antioxydants." },
+        { name: " Goût authentique", value: "Doux, légèrement poivré, avec des notes d’artichaut et d’amande." },
+        { name: "Emballage en bouteille en verre", value: "Protégée des UV pour préserver la fraîcheur et la durabilité." }
+      ]
+    },
   }
 };

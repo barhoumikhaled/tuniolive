@@ -75,7 +75,7 @@ export default function LoginPage() {
         } } />
       </div>
 
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 max-w-md">
         {/* Header with Logo */ }
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-3 mb-6 hover:opacity-80 transition-opacity">
