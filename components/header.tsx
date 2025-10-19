@@ -55,7 +55,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop Shop Now Button */ }
-        {/* <Button className="hidden md:flex">Shop Now</Button> */}
+        {/* <Button className="hidden md:flex">Shop Now</Button> */ }
 
         {/* Mobile Menu */ }
         <Sheet open={ isMobileMenuOpen } onOpenChange={ setIsMobileMenuOpen }>
@@ -74,7 +74,7 @@ export default function Header() {
                 </div>
               </a>
               {/* Mobile Navigation Links */ }
-              <nav className="flex flex-col space-y-4">
+              <nav style={ { marginLeft: '20px' } } className="flex flex-col space-y-4">
                 { navigationItems.map((item) => (
                   <button
                     key={ item.href }
@@ -96,7 +96,7 @@ export default function Header() {
               </div> */}
 
               {/* Contact Info in Mobile Menu */ }
-              <div className="pt-4 border-t space-y-3">
+              <div style={ { marginLeft: '20px' } } className="pt-4 border-t space-y-3">
                 <h4 className="font-medium text-sm text-muted-foreground">{ t("contact.quickContact") }</h4>
                 <div className="space-y-2">
                   <a

@@ -96,19 +96,19 @@ export default function ProductDetail(
 
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */ }
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
+        {/* <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
           <Link href="/" className="hover:text-primary">Home</Link>
           <span>/</span>
           <Link href="/#products" className="hover:text-primary">Products</Link>
           <span>/</span>
           <span className="text-foreground">{ product.name }{ t(`${translateString}.name`) }</span>
-        </div>
+        </div> */}
 
         {/* Back Button */ }
-        <Link href="/" className="inline-flex items-center space-x-2 text-sm hover:text-primary mb-6">
+        {/* <Link href="/" className="inline-flex items-center space-x-2 text-sm hover:text-primary mb-6">
           <ArrowLeft className="h-4 w-4" />
           <span>Back to Products</span>
-        </Link>
+        </Link> */}
 
         {/* Product Details */ }
         <div className="grid lg:grid-cols-2 gap-12 mb-16">

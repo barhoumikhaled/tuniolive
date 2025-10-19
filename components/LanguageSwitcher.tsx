@@ -13,7 +13,7 @@ import { Languages } from "lucide-react";
 const languages = [
   { code: "en", label: "EN" },
   { code: "fr", label: "FR" },
-  { code: "ar", label: "AR" },
+  { code: "ar", label: "عربيّة" },
 ];
 
 export function LanguageSwitcher() {
@@ -23,12 +23,12 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2">
-          {/* <Languages className="h-4 w-4" /> */}
+        <Button variant="ghost" size="sm" className="gap-2" style={ { justifyContent: 'flex-start' } }>
+          {/* <Languages className="h-4 w-4" /> */ }
           <span className="text-sm">{ currentLanguage?.label }</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         { languages.map((lang) => (
           <DropdownMenuItem
             key={ lang.code }
