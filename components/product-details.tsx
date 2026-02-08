@@ -40,19 +40,15 @@ export default function ProductDetail(
 
   const { product, products } = params
   let translateString = "productDetails.oliveoil1l"
-  console.log(products)
   switch (product.id) {
     case "tuniolive-1l-evoo":
       translateString = "productDetails.oliveoil1l"
       break;
-    case "tuniolive-500ml-evoo":
-      translateString = "productDetails.oliveoil500ml"
+    case "tuniolive-750ml-evoo":
+      translateString = "productDetails.oliveoil750ml"
       break;
     case "tuniolive-3l-evoo":
       translateString = "productDetails.oliveoil3l"
-      break;
-    case "tuniolive-500ml-bio-organic":
-      translateString = "productDetails.oliveoilbio500ml"
       break;
 
     default:
@@ -311,64 +307,64 @@ export default function ProductDetail(
         </Tabs>
 
         {/* Related Products */ }
-        <section>
-          <h2 className="text-2xl mb-8">{ t(`productDetails.youMayLike`) }</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            { products.map((relatedProduct) => {
-              let translateString = "productDetails.oliveoil1l"
-              switch (relatedProduct.id) {
-                case "tuniolive-1l-evoo":
-                  translateString = "productDetails.oliveoil1l"
-                  break;
-                case "tuniolive-500ml-evoo":
-                  translateString = "productDetails.oliveoil500ml"
-                  break;
-                case "tuniolive-3l-evoo":
-                  translateString = "productDetails.oliveoil3l"
-                  break;
-                case "tuniolive-500ml-bio-organic":
-                  translateString = "productDetails.oliveoilbio500ml"
-                  break;
+        <section className="py-16 bg-muted/30 flex justify-center">
+          <div className="container max-w-6xl px-4">
 
-                default:
-                  break;
-              }
-              console.log(product.id)
-              return (
-                <Card key={ relatedProduct.id } className="overflow-hidden group hover:shadow-lg transition-all duration-300">
-                  <div className="relative h-64 overflow-hidden">
-                    <ImageWithFallback
-                      src={ relatedProduct.images[0] }
-                      alt={ relatedProduct.name }
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {/* <Badge className="absolute top-4 left-4">{ relatedProduct.badge }</Badge> */ }
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      { t(`${translateString}.name`) }
-                      {/* <span className="text-green-600">${ relatedProduct.price }</span> */ }
-                    </CardTitle>
-                    <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">{ t(`${translateString}.origin`) }</p>
-                      <p className="text-sm">{ t(`${translateString}.flavor`) }</p>
-                      {/* <div className="flex items-center space-x-1">
+            <h2 className="text-2xl mb-8">{ t(`productDetails.youMayLike`) }</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              { products.map((relatedProduct) => {
+                let translateString = "productDetails.oliveoil1l"
+                switch (relatedProduct.id) {
+                  case "tuniolive-1l-evoo":
+                    translateString = "productDetails.oliveoil1l"
+                    break;
+                  case "tuniolive-750ml-evoo":
+                    translateString = "productDetails.oliveoil750ml"
+                    break;
+                  case "tuniolive-3l-evoo":
+                    translateString = "productDetails.oliveoil3l"
+                    break;
+
+                  default:
+                    break;
+                }
+                return (
+                  <Card key={ relatedProduct.id } className="overflow-hidden group hover:shadow-lg transition-all duration-300">
+                    <div className="relative overflow-hidden">
+                      <ImageWithFallback
+                        src={ relatedProduct.images[0] }
+                        alt={ relatedProduct.name }
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {/* <Badge className="absolute top-4 left-4">{ relatedProduct.badge }</Badge> */ }
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        { t(`${translateString}.name`) }
+                        {/* <span className="text-green-600">${ relatedProduct.price }</span> */ }
+                      </CardTitle>
+                      <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">{ t(`${translateString}.origin`) }</p>
+                        <p className="text-sm">{ t(`${translateString}.flavor`) }</p>
+                        {/* <div className="flex items-center space-x-1">
                       { [...Array(5)].map((_, i) => (
                         <Star key={ i } className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       )) }
                       <span className="text-sm text-muted-foreground ml-2">({ relatedProduct.rating })</span>
                     </div> */}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <Link href={ `/products/${relatedProduct.id}` }>
-                      <Button className="w-full">{ t(`common.viewDetails`) }</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )
-            }) }
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <Link href={ `/products/${relatedProduct.id}` }>
+                        <Button className="w-full">{ t(`common.viewDetails`) }</Button>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                )
+              }) }
+            </div>
           </div>
+
         </section>
       </div>
     </div>

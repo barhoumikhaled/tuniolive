@@ -33,8 +33,8 @@ export const en = {
       price: "$42",
       badge: "Premium"
     },
-    tunioliveevoo500ml: {
-      name: "TuniOlive Extra Virgin Olive Oil - 500 ML",
+    tunioliveevoo750ml: {
+      name: "TuniOlive Extra Virgin Olive Oil - 750 ML",
       origin: "Kairouan, Tunisie",
       flavor: "Fruity & Smooth",
       price: "$38",
@@ -47,8 +47,8 @@ export const en = {
       price: "$45",
       badge: "Best Seller"
     },
-    tuniolivebio500ml: {
-      name: "TuniOlive Bio 500 ML – 500 ML",
+    tuniolivebio750ml: {
+      name: "TuniOlive Bio 750 ML – 750 ML",
       origin: "Kairouan, Tunisie",
       flavor: "Fruity & Smooth",
       price: "42€",
@@ -213,11 +213,11 @@ export const en = {
     linkCopied: "Link copied to clipboard!",
     copyFailed: "Failed to copy link"
   },
-  productDetails:{
+  productDetails: {
     tab1: "Details",
     tab2: "Tasting Notes",
     tab3: "Key Features",
-    youMayLike:"You Might Also Like",
+    youMayLike: "You Might Also Like",
     oliveoil1l: {
       name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
       origin: "Bouhajla, Kairouan, Tunisie",
@@ -250,16 +250,16 @@ pastas.
         { name: "Glass Bottle Packaging", value: "UV-protected for freshness and sustainability." }
       ]
     },
-    oliveoil500ml: {
-      name: "TuniOlive Extra Virgin Olive Oil – 500 mL Bottle",
+    oliveoil750ml: {
+      name: "TuniOlive Extra Virgin Olive Oil – 750 ML Bottle",
       origin: "Bouhajla, Kairouan, Tunisie",
       flavor: "Robust & Peppery",
-      description: `Our 500 mL format is perfect for daily cooking or gifting. Every drop embodies generations of
+      description: `Our 750 ML format is perfect for daily cooking or gifting. Every drop embodies generations of
 care — olives nurtured under Tunisian sun, pressed the traditional way, and bottled at peak
 freshness.Taste the golden balance between fruitiness and a subtle bite.
 `,
       specifications: {
-        volume: "500ml",
+        volume: "750ml",
         acidity: "< 0.5%",
         harvest: "December 2025",
         extraction: "First Cold Pressed",
@@ -314,16 +314,16 @@ richness and authentic Tunisian character — in a format that lasts.
         { name: "Glass Bottle Packaging", value: "UV-protected for freshness and sustainability." }
       ]
     },
-    oliveoilbio500ml: {
-      name: "TuniOlive Organic Extra Virgin Olive Oil – 500 mL",
+    oliveoilbio750ml: {
+      name: "TuniOlive Organic Extra Virgin Olive Oil – 750 ML",
       origin: "Bouhajla, Kairouan, Tunisie",
       flavor: "Robust & Peppery",
       description: `Our organic line honors the ancient balance between people and nature. Hand-harvested from
-certified organic groves in Kairouan, this 500 mL bottle expresses the purest essence of the
+certified organic groves in Kairouan, this 750 ML bottle expresses the purest essence of the
 Mediterranean — silky, aromatic, and bursting with life.
     `,
       specifications: {
-        volume: "500ml",
+        volume: "750ml",
         acidity: "< 0.5%",
         harvest: "December 2025",
         extraction: "First Cold Pressed",

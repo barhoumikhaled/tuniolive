@@ -105,9 +105,7 @@ export default function Invoices
       const response = await fetch("/api/data");
       const data = await response.json();
       setCustomers(data.clients);
-      console.log("data.invoices: ", data.invoices)
       const invoicesWithItemLine = groupInvoices(data.invoices)
-      console.log("invoicesWithItemLine: ", invoicesWithItemLine)
 
       setInvoiceLoaded(invoicesWithItemLine)
       // setInvoiceLoaded(data.invoices)
@@ -219,7 +217,6 @@ export default function Invoices
         return item;
       });
 
-      console.log("Updated Line Items:", updatedLineItems);
       const totals = calculateTotals(updatedLineItems, prev.taxRate);
 
       return {
@@ -234,7 +231,6 @@ export default function Invoices
     setInvoiceData(prev => {
       const updatedLineItems = prev.lineItems.filter(item => item.id !== id);
       const totals = calculateTotals(updatedLineItems, prev.taxRate);
-      console.log("Updated Line Items:", updatedLineItems);
       return {
         ...prev,
         lineItems: updatedLineItems,
@@ -290,7 +286,6 @@ export default function Invoices
   }
 
   const generatePDF = async () => {
-    console.log("invoiceData: ", invoiceData)
 
     if (!invoiceData.item || !customer?.email) {
       toast.error("Please fill in customer name and email");

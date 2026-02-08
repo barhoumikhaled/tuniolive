@@ -33,8 +33,8 @@ export const fr = {
       price: "42€",
       badge: "Premium"
     },
-    tunioliveevoo500ml: {
-      name: "TuniOlive Huile d'Olive Extra Vierge – 500 ML",
+    tunioliveevoo750ml: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 750 ML",
       origin: "Kairouan, Tunisie",
       flavor: "Fruitée et douce",
       price: "38€",
@@ -47,8 +47,8 @@ export const fr = {
       price: "45€",
       badge: "Meilleure vente"
     },
-    tuniolivebio500ml: {
-      name: "TuniOlive Huile d'Olive Bio – 500 ML",
+    tuniolivebio750ml: {
+      name: "TuniOlive Huile d'Olive Bio – 750 ML",
       origin: "Kairouan, Tunisie",
       flavor: "Fruitée et douce",
       price: "42€",
@@ -243,16 +243,16 @@ export const fr = {
         { name: "Emballage en bouteille en verre", value: "Protégée des UV pour préserver la fraîcheur et la durabilité." }
       ]
     },
-    oliveoil500ml: {
-      name: "TuniOlive Huile d'Olive Extra Vierge – 500 ML",
+    oliveoil750ml: {
+      name: "TuniOlive Huile d'Olive Extra Vierge – 750 ML",
       origin: "Kairouan, Tunisie",
       flavor: "Fruitée et douce",
-      description: `Our 500 mL format is perfect for daily cooking or gifting. Every drop embodies generations of
+      description: `Our 750 ML format is perfect for daily cooking or gifting. Every drop embodies generations of
 care — olives nurtured under Tunisian sun, pressed the traditional way, and bottled at peak
 freshness.Taste the golden balance between fruitiness and a subtle bite.
 `,
       specifications: {
-        volume: "500ml",
+        volume: "750ml",
         acidity: "< 0.5%",
         harvest: "December 2025",
         extraction: "First Cold Pressed",
@@ -305,15 +305,15 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
         { name: " Goût authentique", value: "Doux, légèrement poivré, avec des notes d’artichaut et d’amande." },
       ]
     },
-    oliveoilbio500ml: {
+    oliveoilbio750ml: {
       name: "TuniOlive Huile d'Olive Biologique – 1 L",
       origin: "Kairouan, Tunisie",
       flavor: "Fruitée et douce",
       description: `Notre gamme biologique rend hommage à l’équilibre ancestral entre l’homme et la nature. 
-      Récoltée à la main dans des oliveraies certifiées biologiques à Kairouan, cette bouteille de 500 mL exprime l’essence la plus pure de la Méditerranée — soyeuse, aromatique et pleine de vitalité.
+      Récoltée à la main dans des oliveraies certifiées biologiques à Kairouan, cette bouteille de 750 ML exprime l’essence la plus pure de la Méditerranée — soyeuse, aromatique et pleine de vitalité.
     `,
       specifications: {
-        volume: "500ml",
+        volume: "750ml",
         acidity: "< 0.5%",
         harvest: "December 2025",
         extraction: "First Cold Pressed",

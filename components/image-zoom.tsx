@@ -15,7 +15,6 @@ interface ImageZoomProps {
 
 export function ImageZoom({ src, alt, className }: ImageZoomProps) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("IN HERE")
   return (
     <>
       <div

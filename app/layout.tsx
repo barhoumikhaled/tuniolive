@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   description: 'Experience the finest extra virgin olive oil, cold-pressed from centuries-old groves in the heart of the Mediterranean.',
   keywords: 'olive oil, extra virgin, Mediterranean, organic, premium, Tuscan, Greek, Spanish',
   icons: {
-    icon: "/tuniolive-favicn-24.png",
-    shortcut: "/favicon-32x32.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/TuniOlive-favicon.png",
+    shortcut: "/TuniOlive-favicon.png",
+    apple: "/TuniOlive-favicon.png",
   },
 }
 

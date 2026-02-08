@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <a href="/">
               <div className="flex items-center space-x-2 mb-4">
-                <Image src="/logo tuniolive footer.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+                <Image src="/tuniolive-white.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
               </div>
             </a>
             <p className="text-sm opacity-80">

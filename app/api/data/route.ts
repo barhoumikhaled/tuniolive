@@ -49,7 +49,6 @@ export async function POST(
 
   const clients = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[4]]);
   const invoices = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[3]]);
-  console.log('invoices: ', invoices)
   return new NextResponse(buf, {
     headers: {
       "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

@@ -37,7 +37,7 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between px-4 mx-auto">
         <a href="/">
           <div className="flex items-center space-x-2">
-            <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+            <Image src="/tuniolive-black.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
           </div>
         </a>
         {/* Desktop Navigation */ }

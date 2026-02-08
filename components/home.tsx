@@ -8,7 +8,6 @@ import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin, Send, Sheet } from "luc
 import Link from "next/link";
 
 import Contact from "@/components/contact";
-import Header from "@/components/header";
 import { useLanguage } from "@/contexts/language-context";
 
 export default function ClientHome() {
@@ -22,7 +21,7 @@ export default function ClientHome() {
       {/* Hero Section */ }
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
-          src="https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+          src="/sadok-tuniolive.jpg"
           alt="Premium olive oil bottle"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -46,8 +45,8 @@ export default function ClientHome() {
       </section>
 
       {/* Featured Products */ }
-      <section id="products" className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section id="products" className="py-16 bg-muted/30 flex justify-center">
+        <div className="container max-w-6xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl mb-4"> { t("products.title") }</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -62,14 +61,16 @@ export default function ClientHome() {
                 name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
+                image: "/tuniolive-1l/tuniolive-1l-main.jpeg"
                 // price: "$45",
                 // badge: "Best Seller"
               },
               {
-                id: "tuniolive-500ml-evoo",
-                name: "TuniOlive Extra Virgin Olive Oil - 500 ML",
+                id: "tuniolive-750ml-evoo",
+                name: "TuniOlive Extra Virgin Olive Oil - 750 ML",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
+                image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
                 // price: "$25",
                 badge: "Popular"
               },
@@ -78,41 +79,35 @@ export default function ClientHome() {
                 name: "3 Litre Tuni Olive EVOO",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
-                // price: "$25",
-                badge: "Premium"
-              },
-              {
-                id: "tuniolive-500ml-bio-organic",
-                name: "500 ML Tuni Olive Bio",
-                origin: "Kairouan, Tunisie",
-                flavor: "Robust & Peppery",
+                image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
                 // price: "$25",
                 badge: "Premium"
               }
             ].map((product, index) => {
-              var translateString ="products.tunioliveevoo1l"
+              var translateString = "products.tunioliveevoo1l"
               switch (index) {
                 case 0:
                   translateString = "products.tunioliveevoo1l"
                   break;
                 case 1:
-                  translateString = "products.tunioliveevoo500ml"
+                  translateString = "products.tunioliveevoo750ml"
                   break;
                 case 2:
                   translateString = "products.tuniolive3l"
                   break;
                 case 3:
-                  translateString = "products.tuniolivebio500ml"
+                  translateString = "products.tuniolivebio750ml"
                   break;
                 default:
                   break;
               }
               return (
                 <Card key={ index } className="overflow-hidden group hover:shadow-lg transition-all duration-300">
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative overflow-hidden">
                     <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1644604088797-a55fcf880d51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhvbGl2ZSUyMG9pbCUyMGJvdHRsZSUyMG1lZGl0ZXJyYW5lYW58ZW58MXx8fHwxNzU0OTY4MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                      src={ product.image }
                       alt={ t("products.name") }
+
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {/* <Badge className="absolute top-4 left-4">{ product.badge }</Badge> */ }
@@ -243,14 +238,15 @@ export default function ClientHome() {
                   break;
               }
               return (
-              <Card key={ index } className="text-center p-3">
-                <div className="w-12 h-12 mx-auto mb-5 bg-green-100 rounded-full flex items-center justify-center">
-                  <feature.icon className="h-6 w-6 text-green-600" />
-                </div>
+                <Card key={ index } className="text-center p-3">
+                  <div className="w-12 h-12 mx-auto mb-5 bg-green-100 rounded-full flex items-center justify-center">
+                    <feature.icon className="h-6 w-6 text-green-600" />
+                  </div>
                   <h3 className="mb-2"> { t(`${translateString}.title`) }</h3>
                   <p className="text-sm text-muted-foreground"> { t(`${translateString}.description`) }</p>
-              </Card>
-            )}) }
+                </Card>
+              )
+            }) }
           </div>
 
           <div className="mt-16 relative h-64 rounded-lg overflow-hidden">
