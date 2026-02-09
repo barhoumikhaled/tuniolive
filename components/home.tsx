@@ -35,10 +35,14 @@ export default function ClientHome() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-green-600 hover:bg-green-700">
-              { t("hero.explore") }
+              <a href="/#products">
+                { t("hero.explore") }
+              </a>
             </Button>
             <Button size="lg" variant="outline" className="bg-yellow-400 hover:bg-yellow-300 hover:text-black">
-              { t("hero.story") }
+              <a href="/#about">
+                { t("hero.story") }
+              </a>
             </Button>
           </div>
         </div>

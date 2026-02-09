@@ -4,23 +4,25 @@ import Image from 'next/image'
 import { Leaf, Mail, Menu, Phone } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from './ui/button';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useLanguage } from '@/contexts/language-context';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
+
 
 export default function Header() {
   const { t, isRTL } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
-  const handleNavClick = (sectionId: string) => {
-    setIsMobileMenuOpen(false);
-    // Small delay to allow menu to close before scrolling
-    setTimeout(() => {
-      const element = document.getElementById(sectionId.replace('#', ''));
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 300);
+  const handleNavClick = (href: string) => {
+    if (href.startsWith("/#")) {
+      router.push(href);
+    } else {
+      router.push(href);
+    }
   };
 
   const navigationItems = [
@@ -28,7 +30,6 @@ export default function Header() {
     { href: "/#about", labelKey: "header.about" },
     { href: "/#quality", labelKey: "header.quality" },
     { href: "/#contact", labelKey: "header.contact" },
-    { href: "/admin", label: "Admin" },
 
   ];
 
@@ -66,27 +67,35 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            {/* ✅ Accessibility fix */ }
+            <VisuallyHidden>
+              <DialogTitle>Mobile navigation</DialogTitle>
+            </VisuallyHidden>
             <div className="flex flex-col space-y-6">
               {/* Logo in mobile menu */ }
               <a href="/">
                 <div className="flex items-center space-x-2 pb-4 border-b">
-                  <Image src="/logo tuniolive.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+                  <Image src="/tuniolive-black.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
                 </div>
               </a>
-              {/* Mobile Navigation Links */ }
-              <nav style={ { marginLeft: '20px' } } className="flex flex-col space-y-4">
-                { navigationItems.map((item) => (
-                  <button
-                    key={ item.href }
-                    onClick={ () => handleNavClick(item.href) }
-                    className="text-left text-lg hover:text-green-600 transition-colors py-2"
-                  >
-                    { t(item.labelKey!) }
-                  </button>
-                )) }
-                <LanguageSwitcher />
 
+              {/* Navigation */ }
+              <nav className="ml-5 flex flex-col space-y-4">
+                { navigationItems.map((item) => (
+                  <SheetClose asChild key={ item.href }>
+                    <button
+                      onClick={ () => handleNavClick(item.href) }
+
+                      className="text-left text-lg hover:text-green-600 transition-colors py-2"
+                    >
+                      { t(item.labelKey!) }
+                    </button>
+                  </SheetClose>
+                )) }
+
+                <LanguageSwitcher />
               </nav>
+
 
               {/* Mobile Shop Now Button */ }
               {/* <div className="pt-4 border-t">
