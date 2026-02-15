@@ -28,7 +28,7 @@ pastas.
       acidity: "< 0.5%",
       harvest: "2025 Season",
       extraction: "First Cold Pressed",
-      certification: "Organic, PDO",
+      certification: "Organic",
       storage: "Cool, Dark place, Glass bottle"
     },
     tastingNotes: [
@@ -66,18 +66,18 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
 `,
     images: [
       "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
-      "/tuniolive-750-ml/tuniolive-1l-750-ml-main-1.jpeg",
-      "/tuniolive-750-ml/tuniolive-3l-1l-750-ml-2.jpeg",
+      // "/tuniolive-750-ml/tuniolive-1l-750-ml-main-1.jpeg",
       "/tuniolive-750-ml/tuniolive-750-ml-olive.jpeg",
-      "/tuniolive-750-ml/tuniolive-750-ml-wood.jpeg",
-      "/tuniolive-750-ml/tuniolive-750-ml-wood-1.jpeg",
+      "/tuniolive-750-ml/tuniolive-3l-1l-750-ml-2.jpeg",
+      // "/tuniolive-750-ml/tuniolive-750-ml-wood.jpeg",
+      // "/tuniolive-750-ml/tuniolive-750-ml-wood-1.jpeg",
     ],
     specifications: {
       volume: "500ml",
       acidity: "< 0.5%",
       harvest: "December 2025",
       extraction: "First Cold Pressed",
-      certification: "Organic, PDO",
+      certification: "Organic",
       storage: "Cool, dark place"
     },
     tastingNotes: [
@@ -101,7 +101,7 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
   },
   "tuniolive-3l-evoo": {
     id: "tuniolive-3l-evoo",
-    name: "3 Litre Tuni Olive EVOO",
+    name: "TuniOlive Extra Virgin Olive Oil – 3L Tinc",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
     price: 45,
@@ -122,7 +122,7 @@ richness and authentic Tunisian character — in a format that lasts.
       acidity: "< 0.5%",
       harvest: "December 2025",
       extraction: "First Cold Pressed",
-      certification: "Organic, PDO",
+      certification: "Organic",
       storage: "Cool, dark place"
     },
     tastingNotes: [

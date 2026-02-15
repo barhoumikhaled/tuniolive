@@ -71,7 +71,7 @@ export default function ClientHome() {
               },
               {
                 id: "tuniolive-750ml-evoo",
-                name: "TuniOlive Extra Virgin Olive Oil - 750 ML",
+                name: "TuniOlive Extra Virgin Olive Oil - 750 ML Bottle",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
@@ -79,8 +79,8 @@ export default function ClientHome() {
                 badge: "Popular"
               },
               {
-                id: "tuniolive3l",
-                name: "3 Litre Tuni Olive EVOO",
+                id: "tuniolive-3l-evoo",
+                name: "TuniOlive Extra Virgin Olive Oil - 3 L Tinc",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-3l/tuniolive-3l-main.jpeg",

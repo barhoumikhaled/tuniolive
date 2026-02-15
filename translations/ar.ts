@@ -137,7 +137,7 @@ export const ar = {
     shipping: "الشحن",
     returns: "المرتجعات",
     faq: "الأسئلة الشائعة",
-    copyright: ".© 2025 زيتون تونس. جميع الحقوق محفوظة"
+    copyright: "2026 زيتون تونس. جميع الحقوق محفوظة"
   },
   mobile: {
     menu: "قائمة التنقل",
@@ -221,7 +221,7 @@ export const ar = {
       specifications: {
         volume: "1L",
         acidity: "< 0.5%",
-        harvest: "موسم 2025",
+        harvest: "حصاد يدوي",
         extraction: "عصرة أولى على البارد",
         certification: "عضوي، حاصل على حماية المنشأ الجغرافي",
         storage: "مكان بارد ومظلم وزجاجة زجاجية"
@@ -250,7 +250,7 @@ export const ar = {
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "موسم 2025",
+        harvest: "حصاد يدوي",
         extraction: "عصرة أولى على البارد",
         certification: "عضوي،",
         storage: "مكان بارد ومظلم"
@@ -279,7 +279,7 @@ export const ar = {
       specifications: {
         volume: "3 L",
         acidity: "< 0.5%",
-        harvest: "موسم 2025",
+        harvest: "حصاد يدوي",
         extraction: "عصرة أولى على البارد",
         certification: "عضوي،",
         storage: "مكان بارد ومظلم"
@@ -309,7 +309,7 @@ export const ar = {
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "موسم 2025",
+        harvest: "حصاد يدوي",
         extraction: "عصرة أولى على البارد",
         certification: "عضوي",
         storage: "مكان بارد ومظلم"

@@ -143,7 +143,7 @@ export const en = {
     shipping: "Shipping",
     returns: "Returns",
     faq: "FAQ",
-    copyright: "© 2025 TuniOlive. All rights reserved."
+    copyright: "2026 TuniOlive. All rights reserved."
   },
   mobile: {
     menu: "Navigation Menu",
@@ -230,9 +230,9 @@ pastas.
       specifications: {
         volume: "1L",
         acidity: "< 0.5%",
-        harvest: "2025 Season",
+        harvest: "Hand picked",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, Dark place, Glass bottle"
       },
       tastingNotes: [
@@ -261,9 +261,9 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Hand picked",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [
@@ -292,9 +292,9 @@ richness and authentic Tunisian character — in a format that lasts.
       specifications: {
         volume: "3 L",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Hand picked",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [
@@ -325,9 +325,9 @@ Mediterranean — silky, aromatic, and bursting with life.
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Hand picked",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [

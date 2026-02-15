@@ -138,7 +138,7 @@ export const fr = {
     shipping: "Livraison",
     returns: "Retours",
     faq: "FAQ",
-    copyright: "© 2025 TuniOlive. Tous droits réservés."
+    copyright: "2026 TuniOlive. Tous droits réservés."
   },
   mobile: {
     menu: "Menu de navigation",
@@ -223,9 +223,9 @@ export const fr = {
       specifications: {
         volume: "1L",
         acidity: "< 0.5%",
-        harvest: "Saison 2025",
+        harvest: "Cueillete à la main",
         extraction: "Première pression à froid",
-        certification: "Biologique, PDO",
+        certification: "Biologique",
         storage: "Endroit frais et sombre, bouteille en verre"
       },
       tastingNotes: [
@@ -254,9 +254,9 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Cueillete à la main",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [
@@ -284,9 +284,9 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
       specifications: {
         volume: "3 L",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Cueillete à la main",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [
@@ -315,9 +315,9 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
       specifications: {
         volume: "750ml",
         acidity: "< 0.5%",
-        harvest: "December 2025",
+        harvest: "Cueillete à la main",
         extraction: "First Cold Pressed",
-        certification: "Organic, PDO",
+        certification: "Organic",
         storage: "Cool, dark place"
       },
       tastingNotes: [
