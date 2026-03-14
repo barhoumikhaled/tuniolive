@@ -2,13 +2,27 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, ShoppingBag, ArrowLeft } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { CheckCircle, ShoppingBag, ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
 import { useCart } from "@/contexts/cart-context";
-import { useEffect, useRef } from "react";
+
+interface OrderLineItem {
+  name: string;
+  quantity: number;
+  amount: number;
+}
+
+interface OrderSummary {
+  customerName: string;
+  customerEmail: string;
+  amountTotal: number;
+  currency: string;
+  items: OrderLineItem[];
+}
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -16,6 +30,8 @@ function SuccessContent() {
   const { t } = useLanguage();
   const { clearCart } = useCart();
   const hasCleared = useRef(false);
+  const [order, setOrder] = useState<OrderSummary | null>(null);
+  const [loading, setLoading] = useState(!!sessionId);
 
   useEffect(() => {
     if (!hasCleared.current) {
@@ -24,9 +40,20 @@ function SuccessContent() {
     }
   }, [clearCart]);
 
+  useEffect(() => {
+    if (!sessionId) return;
+    fetch(`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setOrder(data);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [sessionId]);
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Card className="max-w-md w-full">
+      <Card className="max-w-lg w-full">
         <CardContent className="pt-8 pb-8 text-center space-y-6">
           <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
             <CheckCircle className="h-10 w-10 text-green-600" />
@@ -35,6 +62,40 @@ function SuccessContent() {
             <h1 className="text-2xl font-semibold mb-2">{t("checkout.successTitle")}</h1>
             <p className="text-muted-foreground">{t("checkout.successMessage")}</p>
           </div>
+
+          {loading && (
+            <div className="flex justify-center py-4">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          )}
+
+          {order && (
+            <div className="text-left space-y-3">
+              <Separator />
+              <h2 className="font-semibold">{t("checkout.orderSummary")}</h2>
+              {order.items.map((item, idx) => (
+                <div key={idx} className="flex justify-between text-sm">
+                  <span>
+                    {item.name} x{item.quantity}
+                  </span>
+                  <span>${item.amount.toFixed(2)}</span>
+                </div>
+              ))}
+              <Separator />
+              <div className="flex justify-between font-semibold">
+                <span>{t("cart.total")}</span>
+                <span>
+                  ${order.amountTotal.toFixed(2)} {order.currency.toUpperCase()}
+                </span>
+              </div>
+              {order.customerEmail !== "N/A" && (
+                <p className="text-xs text-muted-foreground">
+                  {t("checkout.confirmationSentTo")} {order.customerEmail}
+                </p>
+              )}
+            </div>
+          )}
+
           {sessionId && (
             <p className="text-xs text-muted-foreground">
               {t("checkout.orderId")}: {sessionId.slice(-8).toUpperCase()}

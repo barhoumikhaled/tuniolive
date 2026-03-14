@@ -366,5 +366,8 @@ Mediterranean — silky, aromatic, and bursting with life.
     orderId: "Order Reference",
     continueShopping: "Continue Shopping",
     backHome: "Back to Home",
+    orderSummary: "Order Summary",
+    securePayment: "Secure payment powered by Stripe",
+    confirmationSentTo: "Confirmation sent to",
   },
 };

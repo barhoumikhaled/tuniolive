@@ -356,5 +356,8 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
     orderId: "Référence de commande",
     continueShopping: "Continuer les achats",
     backHome: "Retour à l'accueil",
+    orderSummary: "Résumé de la commande",
+    securePayment: "Paiement sécurisé via Stripe",
+    confirmationSentTo: "Confirmation envoyée à",
   },
 };

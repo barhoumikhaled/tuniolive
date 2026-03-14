@@ -350,5 +350,8 @@ export const ar = {
     orderId: "رقم الطلب",
     continueShopping: "متابعة التسوق",
     backHome: "العودة إلى الرئيسية",
+    orderSummary: "ملخص الطلب",
+    securePayment: "دفع آمن عبر Stripe",
+    confirmationSentTo: "تم إرسال التأكيد إلى",
   },
 };

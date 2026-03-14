@@ -13,8 +13,10 @@ A Next.js 15 marketing, e-commerce, and admin website for TuniOlive, a premium o
 
 ## Key Directories
 - `app/` — Next.js App Router pages and API routes
-  - `app/api/checkout/` — Stripe Checkout Session creation API
+  - `app/api/checkout/route.ts` — Stripe Checkout Session creation API
+  - `app/api/checkout/session/route.ts` — Retrieve Stripe session details for order summary
   - `app/api/webhook/` — Stripe webhook handler for order completion
+  - `app/checkout/page.tsx` — Cart review and checkout page
   - `app/api/send-email/` — Nodemailer contact form email API
   - `app/api/data/` — Excel file read/write API for admin panel
   - `app/checkout/success/` — Post-payment success page
@@ -48,11 +50,15 @@ A Next.js 15 marketing, e-commerce, and admin website for TuniOlive, a premium o
 
 ## E-commerce Flow
 1. Customer adds products to cart from homepage or product detail pages
-2. Cart drawer shows items with quantity controls
-3. "Proceed to Checkout" creates a Stripe Checkout Session and redirects
-4. After payment, Stripe sends a webhook to `/api/webhook`
-5. Webhook triggers an order notification email to the store owner
-6. Customer sees success/cancel page
+2. Cart state persists to localStorage (key: "tuniolive-cart") across page reloads
+3. Cart drawer shows items with quantity controls
+4. "Proceed to Checkout" navigates to `/checkout` review page
+5. Checkout page shows full cart with quantity controls and order summary
+6. Clicking "Proceed to Checkout" on the checkout page creates a Stripe Checkout Session and redirects to Stripe
+7. After payment, Stripe sends a webhook to `/api/webhook`
+8. Webhook triggers an order notification email to the store owner
+9. Customer sees success page with order summary (retrieved via `/api/checkout/session`)
+10. Cart is cleared after successful payment
 
 ## Replit Configuration
 - **Port**: 5000 (dev and production)

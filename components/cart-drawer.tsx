@@ -9,44 +9,18 @@ import {
 } from "@/components/ui/sheet";
 import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/language-context";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useState } from "react";
 
 export default function CartDrawer() {
   const { items, removeItem, updateQuantity, totalItems, totalPrice, isCartOpen, setIsCartOpen } = useCart();
   const { t } = useLanguage();
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-
-  const handleCheckout = async () => {
-    if (items.length === 0) return;
-    setIsCheckingOut(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: items.map((item) => ({
-            id: item.id,
-            quantity: item.quantity,
-          })),
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Checkout failed");
-      }
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (err: any) {
-      console.error("Checkout error:", err);
-      const { toast } = await import("sonner");
-      toast.error(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setIsCheckingOut(false);
-    }
+  const router = useRouter();
+  const handleCheckout = () => {
+    setIsCartOpen(false);
+    router.push("/checkout");
   };
 
   return (
@@ -133,9 +107,8 @@ export default function CartDrawer() {
                 className="w-full bg-green-600 hover:bg-green-700"
                 size="lg"
                 onClick={handleCheckout}
-                disabled={isCheckingOut}
               >
-                {isCheckingOut ? t("cart.processing") : t("cart.checkout")}
+                {t("cart.checkout")}
               </Button>
             </div>
           </>

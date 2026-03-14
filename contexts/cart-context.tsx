@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 
 export interface CartItem {
   id: string;
@@ -22,11 +22,49 @@ interface CartContextType {
   setIsCartOpen: (open: boolean) => void;
 }
 
+const CART_STORAGE_KEY = "tuniolive-cart";
+
+function loadCartFromStorage(): CartItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {}
+  return [];
+}
+
+function saveCartToStorage(items: CartItem[]) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch {}
+}
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const initialized = useRef(false);
+
+  useEffect(() => {
+    if (!initialized.current) {
+      const stored = loadCartFromStorage();
+      if (stored.length > 0) {
+        setItems(stored);
+      }
+      initialized.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialized.current) {
+      saveCartToStorage(items);
+    }
+  }, [items]);
 
   const addItem = useCallback((item: Omit<CartItem, "quantity">, quantity: number = 1) => {
     setItems((prev) => {
