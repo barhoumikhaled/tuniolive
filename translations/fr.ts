@@ -339,5 +339,22 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
         { name: "Emballage en bouteille en verre", value: "Protégée des UV pour préserver la fraîcheur et la durabilité." }
       ]
     },
-  }
+  },
+  cart: {
+    title: "Panier",
+    empty: "Votre panier est vide",
+    total: "Total",
+    checkout: "Passer la commande",
+    processing: "Traitement...",
+    addedToCart: "Ajouté au panier !",
+  },
+  checkout: {
+    successTitle: "Commande confirmée !",
+    successMessage: "Merci pour votre achat. Vous recevrez un email de confirmation sous peu.",
+    cancelTitle: "Commande annulée",
+    cancelMessage: "Votre commande a été annulée. Aucun frais n'a été appliqué.",
+    orderId: "Référence de commande",
+    continueShopping: "Continuer les achats",
+    backHome: "Retour à l'accueil",
+  },
 };

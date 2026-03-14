@@ -10,6 +10,7 @@ import { useLanguage } from '@/contexts/language-context';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useRouter } from "next/navigation";
+import CartDrawer from './cart-drawer';
 
 
 export default function Header() {
@@ -30,7 +31,6 @@ export default function Header() {
     { href: "/#about", labelKey: "header.about" },
     { href: "/#quality", labelKey: "header.quality" },
     { href: "/#contact", labelKey: "header.contact" },
-
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function Header() {
             <Image src="/tuniolive-black.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
           </div>
         </a>
-        {/* Desktop Navigation */ }
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           { navigationItems.map((item) => (
             <a
@@ -53,80 +53,67 @@ export default function Header() {
             </a>
           )) }
           <LanguageSwitcher />
+          <CartDrawer />
         </nav>
 
-        {/* Desktop Shop Now Button */ }
-        {/* <Button className="hidden md:flex">Shop Now</Button> */ }
+        {/* Mobile: Cart + Menu */}
+        <div className="flex items-center gap-2 md:hidden">
+          <CartDrawer />
+          <Sheet open={ isMobileMenuOpen } onOpenChange={ setIsMobileMenuOpen }>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <VisuallyHidden>
+                <DialogTitle>Mobile navigation</DialogTitle>
+              </VisuallyHidden>
+              <div className="flex flex-col space-y-6">
+                <a href="/">
+                  <div className="flex items-center space-x-2 pb-4 border-b">
+                    <Image src="/tuniolive-black.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
+                  </div>
+                </a>
 
-        {/* Mobile Menu */ }
-        <Sheet open={ isMobileMenuOpen } onOpenChange={ setIsMobileMenuOpen }>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-            {/* ✅ Accessibility fix */ }
-            <VisuallyHidden>
-              <DialogTitle>Mobile navigation</DialogTitle>
-            </VisuallyHidden>
-            <div className="flex flex-col space-y-6">
-              {/* Logo in mobile menu */ }
-              <a href="/">
-                <div className="flex items-center space-x-2 pb-4 border-b">
-                  <Image src="/tuniolive-black.png" alt="Tunisian Olive oil" width={ 140 } height={ 10 } />
-                </div>
-              </a>
+                <nav className="ml-5 flex flex-col space-y-4">
+                  { navigationItems.map((item) => (
+                    <SheetClose asChild key={ item.href }>
+                      <button
+                        onClick={ () => handleNavClick(item.href) }
+                        className="text-left text-lg hover:text-green-600 transition-colors py-2"
+                      >
+                        { t(item.labelKey!) }
+                      </button>
+                    </SheetClose>
+                  )) }
+                  <LanguageSwitcher />
+                </nav>
 
-              {/* Navigation */ }
-              <nav className="ml-5 flex flex-col space-y-4">
-                { navigationItems.map((item) => (
-                  <SheetClose asChild key={ item.href }>
-                    <button
-                      onClick={ () => handleNavClick(item.href) }
-
-                      className="text-left text-lg hover:text-green-600 transition-colors py-2"
+                <div style={ { marginLeft: '20px' } } className="pt-4 border-t space-y-3">
+                  <h4 className="font-medium text-sm text-muted-foreground">{ t("contact.quickContact") }</h4>
+                  <div className="space-y-2">
+                    <a
+                      href="mailto:info@tuniolive.com"
+                      className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
                     >
-                      { t(item.labelKey!) }
-                    </button>
-                  </SheetClose>
-                )) }
-
-                <LanguageSwitcher />
-              </nav>
-
-
-              {/* Mobile Shop Now Button */ }
-              {/* <div className="pt-4 border-t">
-                <Button className="w-full bg-green-600 hover:bg-green-700">
-                  Shop Now
-                </Button>
-              </div> */}
-
-              {/* Contact Info in Mobile Menu */ }
-              <div style={ { marginLeft: '20px' } } className="pt-4 border-t space-y-3">
-                <h4 className="font-medium text-sm text-muted-foreground">{ t("contact.quickContact") }</h4>
-                <div className="space-y-2">
-                  <a
-                    href="mailto:info@tuniolive.com"
-                    className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
-                  >
-                    <Mail className="h-4 w-4" />
-                    <span>info@tuniolive.com</span>
-                  </a>
-                  <a
-                    href="tel:+1 (514) 601-0603"
-                    className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
-                  >
-                    <Phone className="h-4 w-4" />
-                    <span>+1 (514) 601-0603</span>
-                  </a>
+                      <Mail className="h-4 w-4" />
+                      <span>info@tuniolive.com</span>
+                    </a>
+                    <a
+                      href="tel:+1 (514) 601-0603"
+                      className="flex items-center space-x-2 text-sm hover:text-green-600 transition-colors"
+                    >
+                      <Phone className="h-4 w-4" />
+                      <span>+1 (514) 601-0603</span>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   )

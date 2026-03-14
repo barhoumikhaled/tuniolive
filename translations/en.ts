@@ -349,5 +349,22 @@ Mediterranean — silky, aromatic, and bursting with life.
         { name: "Glass Bottle Packaging", value: "UV-protected for freshness and sustainability." }
       ]
     },
-  }
+  },
+  cart: {
+    title: "Shopping Cart",
+    empty: "Your cart is empty",
+    total: "Total",
+    checkout: "Proceed to Checkout",
+    processing: "Processing...",
+    addedToCart: "Added to cart!",
+  },
+  checkout: {
+    successTitle: "Order Confirmed!",
+    successMessage: "Thank you for your purchase. You will receive a confirmation email shortly.",
+    cancelTitle: "Order Cancelled",
+    cancelMessage: "Your order was cancelled. No charges were made.",
+    orderId: "Order Reference",
+    continueShopping: "Continue Shopping",
+    backHome: "Back to Home",
+  },
 };

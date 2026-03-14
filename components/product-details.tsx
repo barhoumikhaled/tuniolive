@@ -12,7 +12,6 @@ import {
   Snowflake,
   Sun,
   HeartPulse,
-  // HeartPlus,
   ArrowLeft,
   MapPinCheck,
   Heart,
@@ -21,7 +20,8 @@ import {
   Minus,
   CheckCircle,
   Award,
-  MapPin
+  MapPin,
+  ShoppingCart,
 } from "lucide-react";
 import Link from "next/link";
 import { ImageZoom } from "@/components/image-zoom";
@@ -29,7 +29,10 @@ import { ShareButton } from "@/components/share-button";
 import { NextSeo } from "next-seo";
 import CustomImage from "@/components/custom-image";
 import { useLanguage } from "@/contexts/language-context";
+import { useCart } from "@/contexts/cart-context";
+import { toast } from "sonner";
 import { Product } from "@/models/product";
+import { useState } from "react";
 export default function ProductDetail(
   {
     params
@@ -37,6 +40,8 @@ export default function ProductDetail(
     params: { product: Product, products: Product[] }
   }) {
   const { t, isRTL } = useLanguage();
+  const { addItem } = useCart();
+  const [quantity, setQuantity] = useState(1);
 
   const { product, products } = params
   let translateString = "productDetails.oliveoil1l"
@@ -142,29 +147,55 @@ export default function ProductDetail(
 
             <p className="text-muted-foreground leading-relaxed">{ t(`${translateString}.description`) }</p>
 
-            {/* Quantity and Add to Cart */ }
+            <div className="flex items-center space-x-4 mb-4">
+              <span className="text-3xl font-bold text-green-600">${product.price}</span>
+              {product.originalPrice && (
+                <span className="text-lg text-muted-foreground line-through">${product.originalPrice}</span>
+              )}
+            </div>
+
             <div className="space-y-4">
-              {/* <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4">
                 <span className="text-sm">Quantity:</span>
                 <div className="flex items-center border rounded-md">
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  >
                     <Minus className="h-4 w-4" />
                   </Button>
-                  <span className="px-4 py-2 text-sm">1</span>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <span className="px-4 py-2 text-sm">{quantity}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setQuantity(quantity + 1)}
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-              </div> */}
+              </div>
 
               <div className="flex space-x-4">
-                {/* <Button disabled size="lg" className="flex-1 bg-green-600 hover:bg-green-700">
-                  Sold out
+                <Button
+                  size="lg"
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                  onClick={() => {
+                    addItem({
+                      id: product.id,
+                      name: t(`${translateString}.name`) || product.name,
+                      price: product.price,
+                      image: product.images[0],
+                    }, quantity);
+                    toast.success(t("cart.addedToCart"));
+                    setQuantity(1);
+                  }}
+                >
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                  {t("common.addToCart")}
                 </Button>
-                <Button variant="outline" size="lg">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Save
-                </Button> */}
                 <ShareButton
                   url={ `/products/${product.id}` }
                   title={ `${product.name} - Premium ${product.origin} Olive Oil` }
