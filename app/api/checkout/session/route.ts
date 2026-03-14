@@ -1,25 +1,42 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY is not configured");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2025-04-30.basil",
 });
+
+function maskEmail(email: string): string {
+  const [local, domain] = email.split("@");
+  if (!domain) return "***";
+  const masked = local.length > 2 ? local[0] + "***" + local[local.length - 1] : "***";
+  return `${masked}@${domain}`;
+}
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const sessionId = searchParams.get("session_id");
 
-  if (!sessionId) {
-    return NextResponse.json({ error: "Missing session_id" }, { status: 400 });
+  if (!sessionId || !sessionId.startsWith("cs_")) {
+    return NextResponse.json({ error: "Invalid session_id" }, { status: 400 });
   }
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    if (session.payment_status !== "paid") {
+      return NextResponse.json({ error: "Session not completed" }, { status: 404 });
+    }
+
     const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
 
+    const email = session.customer_details?.email;
+
     return NextResponse.json({
-      customerName: session.customer_details?.name || "N/A",
-      customerEmail: session.customer_details?.email || "N/A",
+      customerEmail: email ? maskEmail(email) : "N/A",
       amountTotal: (session.amount_total || 0) / 100,
       currency: session.currency || "usd",
       items: lineItems.data.map((item) => ({

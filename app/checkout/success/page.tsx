@@ -17,7 +17,6 @@ interface OrderLineItem {
 }
 
 interface OrderSummary {
-  customerName: string;
   customerEmail: string;
   amountTotal: number;
   currency: string;

@@ -2,11 +2,20 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendOrderNotification } from "@/utils/send-order-email";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("STRIPE_SECRET_KEY is not configured");
+}
+if (!process.env.STRIPE_WEBHOOK_SECRET) {
+  throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2025-04-30.basil",
 });
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+const processedEvents = new Set<string>();
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -30,6 +39,11 @@ export async function POST(req: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
+    if (processedEvents.has(event.id)) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+    processedEvents.add(event.id);
+
     const session = event.data.object as Stripe.Checkout.Session;
 
     if (session.payment_status !== "paid") {
