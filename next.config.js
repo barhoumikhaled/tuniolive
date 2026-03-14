@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.unsplash.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  allowedDevOrigins: ['*.replit.dev', '*.kirk.replit.dev'],
 }
 
 module.exports = nextConfig
