@@ -110,7 +110,7 @@ export const PROVINCES: ProvinceShipping[] = [
     methods: [
       { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "5-7 business days", price: 28.99 },
       { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "3-5 business days", price: 42.50 },
-      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.5.00 },
+      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.500 },
     ],
   },
   {
@@ -128,7 +128,7 @@ export const PROVINCES: ProvinceShipping[] = [
     methods: [
       { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "5-7 business days", price: 27.99 },
       { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "3-5 business days", price: 40.50 },
-      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.5.00 },
+      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.500 },
     ],
   },
 ];
