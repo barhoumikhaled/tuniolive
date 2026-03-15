@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle, ShoppingBag, ArrowLeft, Loader2 } from "lucide-react";
+import { CheckCircle, ShoppingBag, ArrowLeft, Loader2, Truck } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
@@ -16,11 +16,21 @@ interface OrderLineItem {
   amount: number;
 }
 
+interface ShippingInfo {
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  method: string;
+  cost: number;
+}
+
 interface OrderSummary {
   customerEmail: string;
   amountTotal: number;
   currency: string;
   items: OrderLineItem[];
+  shipping: ShippingInfo | null;
 }
 
 function SuccessContent() {
@@ -87,6 +97,29 @@ function SuccessContent() {
                   ${order.amountTotal.toFixed(2)} {order.currency.toUpperCase()}
                 </span>
               </div>
+
+              {order.shipping && (
+                <>
+                  <Separator />
+                  <div className="space-y-2">
+                    <h3 className="font-semibold flex items-center gap-2 text-sm">
+                      <Truck className="h-4 w-4" />
+                      {t("shipping.title")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {order.shipping.address}, {order.shipping.city},{" "}
+                      {order.shipping.province} {order.shipping.postalCode}
+                    </p>
+                    <p className="text-sm">
+                      {order.shipping.method}
+                      {order.shipping.cost > 0
+                        ? ` — $${order.shipping.cost.toFixed(2)}`
+                        : ` — ${t("shipping.free")}`}
+                    </p>
+                  </div>
+                </>
+              )}
+
               {order.customerEmail !== "N/A" && (
                 <p className="text-xs text-muted-foreground">
                   {t("checkout.confirmationSentTo")} {order.customerEmail}

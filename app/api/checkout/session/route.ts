@@ -34,16 +34,37 @@ export async function GET(req: Request) {
     const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
 
     const email = session.customer_details?.email;
+    const metadata = session.metadata || {};
+
+    function maskAddress(addr: string): string {
+      if (addr.length <= 6) return "***";
+      return addr.slice(0, 3) + "***" + addr.slice(-3);
+    }
+
+    function maskPostalCode(pc: string): string {
+      if (pc.length <= 3) return "***";
+      return pc.slice(0, 3) + " ***";
+    }
 
     return NextResponse.json({
       customerEmail: email ? maskEmail(email) : "N/A",
       amountTotal: (session.amount_total || 0) / 100,
-      currency: session.currency || "usd",
+      currency: session.currency || "cad",
       items: lineItems.data.map((item) => ({
         name: item.description || "Product",
         quantity: item.quantity || 1,
         amount: (item.amount_total || 0) / 100,
       })),
+      shipping: metadata.shipping_address
+        ? {
+            address: maskAddress(metadata.shipping_address),
+            city: metadata.shipping_city || "",
+            province: metadata.shipping_province || "",
+            postalCode: maskPostalCode(metadata.shipping_postal_code || ""),
+            method: metadata.shipping_method || "N/A",
+            cost: parseFloat(metadata.shipping_cost || "0"),
+          }
+        : null,
     });
   } catch (err: unknown) {
     console.error("Failed to retrieve session:", err);

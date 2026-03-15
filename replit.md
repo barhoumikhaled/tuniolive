@@ -31,7 +31,8 @@ A Next.js 15 marketing, e-commerce, and admin website for TuniOlive, a premium o
   - `contexts/language-context.tsx` — i18n language provider
 - `utils/` — Utility functions
   - `utils/send-order-email.ts` — Order notification email sender
-- `data/` — Local Excel data file (TuniOlive.xlsx)
+- `data/` — Local Excel data file (TuniOlive.xlsx) + shipping rates
+  - `data/shipping-rates.ts` — Canadian shipping rates by province/territory (13 regions, 3 methods each)
 - `translations/` — i18n translation files (en, fr, ar)
 - `models/` — TypeScript type definitions
 - `public/` — Static assets
@@ -53,12 +54,22 @@ A Next.js 15 marketing, e-commerce, and admin website for TuniOlive, a premium o
 2. Cart state persists to localStorage (key: "tuniolive-cart") across page reloads
 3. Cart drawer shows items with quantity controls
 4. "Proceed to Checkout" navigates to `/checkout` review page
-5. Checkout page shows full cart with quantity controls and order summary
-6. Clicking "Proceed to Checkout" on the checkout page creates a Stripe Checkout Session and redirects to Stripe
-7. After payment, Stripe sends a webhook to `/api/webhook`
-8. Webhook triggers an order notification email to the store owner
-9. Customer sees success page with order summary (retrieved via `/api/checkout/session`)
-10. Cart is cleared after successful payment
+5. Checkout page shows full cart with quantity controls, shipping address form, and order summary
+6. Customer fills in Canadian shipping address (street, city, province, postal code)
+7. Province selection reveals shipping method options with per-province pricing
+8. Orders >= $80 CAD qualify for free shipping; otherwise customer picks a method
+9. Clicking "Proceed to Checkout" creates a Stripe Checkout Session (shipping validated server-side) and redirects to Stripe
+10. After payment, Stripe sends a webhook to `/api/webhook`
+11. Webhook triggers an order notification email (includes shipping details) to the store owner
+12. Customer sees success page with order summary and masked shipping address
+13. Cart is cleared after successful payment
+
+## Shipping
+- **Rates file**: `data/shipping-rates.ts` — all 13 Canadian provinces/territories
+- **Methods per province**: Canada Post Expedited, Canada Post Priority, Standard (prices vary by region)
+- **Free shipping threshold**: $80 CAD (`FREE_SHIPPING_THRESHOLD`)
+- **Server-side validation**: API route validates province, method, and free-shipping eligibility; never trusts client-provided cost
+- **PII protection**: Success page API masks address and postal code before returning to client
 
 ## Replit Configuration
 - **Port**: 5000 (dev and production)

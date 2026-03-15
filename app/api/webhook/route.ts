@@ -55,17 +55,27 @@ export async function POST(req: Request) {
         session.id
       );
 
+      const metadata = session.metadata || {};
+
       await sendOrderNotification({
         sessionId: session.id,
         customerEmail: session.customer_details?.email || "N/A",
         customerName: session.customer_details?.name || "N/A",
         amountTotal: (session.amount_total || 0) / 100,
-        currency: session.currency || "usd",
+        currency: session.currency || "cad",
         items: lineItems.data.map((item) => ({
           name: item.description || "Product",
           quantity: item.quantity || 1,
           amount: (item.amount_total || 0) / 100,
         })),
+        shipping: {
+          address: metadata.shipping_address || "",
+          city: metadata.shipping_city || "",
+          province: metadata.shipping_province || "",
+          postalCode: metadata.shipping_postal_code || "",
+          method: metadata.shipping_method || "N/A",
+          cost: parseFloat(metadata.shipping_cost || "0"),
+        },
       });
     } catch (emailErr) {
       console.error("Failed to send order notification email:", emailErr);

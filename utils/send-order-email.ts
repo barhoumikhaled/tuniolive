@@ -6,6 +6,15 @@ interface OrderItem {
   amount: number;
 }
 
+interface ShippingDetails {
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  method: string;
+  cost: number;
+}
+
 interface OrderDetails {
   sessionId: string;
   customerEmail: string;
@@ -13,6 +22,7 @@ interface OrderDetails {
   amountTotal: number;
   currency: string;
   items: OrderItem[];
+  shipping?: ShippingDetails;
 }
 
 export async function sendOrderNotification(order: OrderDetails) {
@@ -37,6 +47,38 @@ export async function sendOrderNotification(order: OrderDetails) {
     )
     .join("");
 
+  const shippingSection = order.shipping
+    ? `
+        <h2 style="color:#333;margin-top:20px;">Shipping Details</h2>
+        <table style="width:100%;border-collapse:collapse;margin:10px 0;">
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;width:140px;">Address</td>
+            <td style="padding:8px;border:1px solid #ddd;">${order.shipping.address}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;">City</td>
+            <td style="padding:8px;border:1px solid #ddd;">${order.shipping.city}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Province</td>
+            <td style="padding:8px;border:1px solid #ddd;">${order.shipping.province}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Postal Code</td>
+            <td style="padding:8px;border:1px solid #ddd;">${order.shipping.postalCode}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Shipping Method</td>
+            <td style="padding:8px;border:1px solid #ddd;">${order.shipping.method}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Shipping Cost</td>
+            <td style="padding:8px;border:1px solid #ddd;">$${order.shipping.cost.toFixed(2)} ${order.shipping.cost === 0 ? "(Free)" : ""}</td>
+          </tr>
+        </table>
+      `
+    : "";
+
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
       <div style="background:#16a34a;color:white;padding:20px;text-align:center;">
@@ -60,6 +102,8 @@ export async function sendOrderNotification(order: OrderDetails) {
             ${itemRows}
           </tbody>
         </table>
+        
+        ${shippingSection}
         
         <div style="background:#f3f4f6;padding:15px;border-radius:8px;text-align:right;">
           <strong style="font-size:18px;">Total: $${order.amountTotal.toFixed(2)} ${order.currency.toUpperCase()}</strong>
