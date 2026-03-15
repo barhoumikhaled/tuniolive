@@ -32,3 +32,10 @@ outputType = "webview"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[userenv]
+
+[userenv.shared]
+SMTP_HOST = "smtp.gmail.com"
+APP_USER = "info@tuniolive.com"
+APP_SEND_TO = "info@tuniolive.com, barhoumi.khaled86@hotmail.com"
