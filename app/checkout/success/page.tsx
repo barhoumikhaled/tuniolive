@@ -82,7 +82,9 @@ function SuccessContent() {
             <div className="text-left space-y-3">
               <Separator />
               <h2 className="font-semibold">{t("checkout.orderSummary")}</h2>
-              {order.items.map((item, idx) => (
+              {order.items
+                .filter((item) => !item.name.startsWith("Shipping —"))
+                .map((item, idx) => (
                 <div key={idx} className="flex justify-between text-sm">
                   <span>
                     {item.name} x{item.quantity}

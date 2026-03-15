@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { PROVINCES, FREE_SHIPPING_THRESHOLD, getShippingCost } from "@/data/shipping-rates";
+import { PROVINCES, FREE_SHIPPING_THRESHOLD } from "@/data/shipping-rates";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("STRIPE_SECRET_KEY is not configured");
