@@ -69,7 +69,7 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
-                price: 45,
+                price: 0.5,
                 badge: "Best Seller"
               },
               {
@@ -78,7 +78,7 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
-                price: 45,
+                price: 0.5,
                 badge: "Popular"
               },
               {
@@ -87,7 +87,7 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
-                price: 45,
+                price: 0.5,
                 badge: "Premium"
               }
             ].map((product, index) => {

@@ -14,17 +14,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 const PRODUCT_CATALOG: Record<string, { name: string; price: number; image: string }> = {
   "tuniolive-1l-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
-    price: 45,
+    price: 0.5,
     image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
   },
   "tuniolive-750ml-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 750 mL Bottle",
-    price: 45,
+    price: 0.5,
     image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
   },
   "tuniolive-3l-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 3L Tin",
-    price: 45,
+    price: 0.5,
     image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
   },
 };

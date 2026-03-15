@@ -8,7 +8,7 @@ const products = {
     name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
-    price: 45,
+    price: 0.5,
     originalPrice: 55,
     badge: "Best Seller",
     rating: 4.9,
@@ -55,7 +55,7 @@ pastas.
     name: "TuniOlive Extra Virgin Olive Oil – 750 mL Bottle",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
-    price: 45,
+    price: 0.5,
     originalPrice: 55,
     badge: "Best Seller",
     rating: 4.9,
@@ -104,7 +104,7 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
     name: "TuniOlive Extra Virgin Olive Oil – 3L Tinc",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
-    price: 45,
+    price: 0.5,
     originalPrice: 55,
     badge: "Best Seller",
     rating: 4.9,
@@ -194,5 +194,5 @@ export default async function ProductDetailPage(
     product: product,
     products: relatedProducts
   } } />)
- 
+
 }
