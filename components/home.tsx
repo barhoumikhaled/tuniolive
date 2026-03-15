@@ -4,14 +4,17 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin, Send, Sheet } from "lucide-react";
+import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin, Send, Sheet, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 import Contact from "@/components/contact";
 import { useLanguage } from "@/contexts/language-context";
+import { useCart } from "@/contexts/cart-context";
+import { toast } from "sonner";
 
 export default function ClientHome() {
   const { t, isRTL } = useLanguage();
+  const { addItem } = useCart();
 
 
   return (
@@ -65,9 +68,9 @@ export default function ClientHome() {
                 name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
-                image: "/tuniolive-1l/tuniolive-1l-main.jpeg"
-                // price: "$45",
-                // badge: "Best Seller"
+                image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
+                price: 45,
+                badge: "Best Seller"
               },
               {
                 id: "tuniolive-750ml-evoo",
@@ -75,7 +78,7 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
-                // price: "$25",
+                price: 45,
                 badge: "Popular"
               },
               {
@@ -84,7 +87,7 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
-                // price: "$25",
+                price: 45,
                 badge: "Premium"
               }
             ].map((product, index) => {
@@ -132,16 +135,32 @@ export default function ClientHome() {
                     </div> */}
                     </div>
                   </CardHeader>
-                  <Link href={ `/products/${product.id}` }>
-                    <CardContent>
+                  <CardContent className="space-y-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-lg font-bold text-green-600">${ product.price }</span>
+                    </div>
+                    <Link href={ `/products/${product.id}` }>
                       <Button variant={ "green" } className="w-full">
                         { t("common.viewDetails") }
                       </Button>
-                    </CardContent>
-                  </Link>
-                  {/* <CardContent>
-                  <Button disabled variant={ "green" } className="w-full">Sold out</Button>
-                </CardContent> */}
+                    </Link>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={ () => {
+                        addItem({
+                          id: product.id,
+                          name: t(`${translateString}.name`) || product.name,
+                          price: product.price,
+                          image: product.image,
+                        });
+                        toast.success(t("cart.addedToCart"));
+                      } }
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      { t("common.addToCart") }
+                    </Button>
+                  </CardContent>
                 </Card>
               )
             }) }

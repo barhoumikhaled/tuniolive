@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-const appPwd = "ujodtmgjbqjyykbz"
 export async function POST(
   req: Request,
 
