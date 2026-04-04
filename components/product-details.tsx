@@ -367,6 +367,10 @@ export default function ProductDetail(
                         alt={ relatedProduct.name }
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
+                      { relatedProduct.originalPrice && (<div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md">
+                        -{ Math.round((1 - relatedProduct.price / relatedProduct.originalPrice) * 100) }%
+                      </div>
+                      ) }
                       {/* <Badge className="absolute top-4 left-4">{ relatedProduct.badge }</Badge> */ }
                     </div>
                     <CardHeader>
@@ -386,9 +390,56 @@ export default function ProductDetail(
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <Link href={ `/products/${relatedProduct.id}` }>
-                        <Button className="w-full">{ t(`common.viewDetails`) }</Button>
-                      </Link>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-lg font-bold text-green-600">${ relatedProduct.price }</span>
+                        {/* Discount badge */ }
+                        { relatedProduct.originalPrice && (<span className="text-xs text-red-500 font-medium">
+                          Save ${ relatedProduct.originalPrice - relatedProduct.price }
+                        </span>
+                        ) }
+                      </div>
+                      <div className="flex flex-col space-y-4">
+
+                        {/* Row 1 - Add to Cart (FULL WIDTH) */ }
+                        <Button
+                          size="lg"
+                          className="w-full bg-green-600 hover:bg-green-700"
+                          onClick={ () => {
+                            addItem(
+                              {
+                                id: relatedProduct.id,
+                                name: t(`${translateString}.name`) || relatedProduct.name,
+                                price: relatedProduct.price,
+                                image: relatedProduct.images[0],
+                              },
+                              quantity
+                            );
+                            toast.success(t("cart.addedToCart"));
+                            setQuantity(1);
+                          } }
+                        >
+                          <ShoppingCart className="h-4 w-4 mr-2" />
+                          { t("common.addToCart") }
+                        </Button>
+
+                        {/* Row 2 - View + Share */ }
+                        <div className="flex gap-4">
+                          <Link href={ `/products/${relatedProduct.id}` } className="flex-1">
+                            <Button className="w-full">
+                              { t("common.viewDetails") }
+                            </Button>
+                          </Link>
+
+                          <ShareButton
+                            url={ `/products/${relatedProduct.id}` }
+                            title={ `${relatedProduct.name} - Premium ${relatedProduct.origin} Olive Oil` }
+                            description={ relatedProduct.description }
+                            variant="outline"
+                            size="lg"
+                          />
+                        </div>
+
+                      </div>
                     </CardContent>
                   </Card>
                 )
