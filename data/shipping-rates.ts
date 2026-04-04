@@ -11,16 +11,16 @@ export interface ProvinceShipping {
   methods: ShippingMethod[];
 }
 
-export const FREE_SHIPPING_THRESHOLD = 0;
+export const FREE_SHIPPING_THRESHOLD = 80;
 
 export const PROVINCES: ProvinceShipping[] = [
   {
     name: "Quebec",
     code: "QC",
     methods: [
-      { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "2-3 business days", price: 0.79 },
-      { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "1-2 business days", price: 0.25 },
-      { id: "standard", name: "Standard", estimatedDays: "5-10 business days", price: 0.00 },
+      { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "2-5 business days", price: 15.79 },
+      { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "5-7 business days", price: 20.25 },
+      { id: "standard", name: "Standard", estimatedDays: "7-10 business days", price: 25.00 },
     ],
   },
   {
@@ -110,7 +110,7 @@ export const PROVINCES: ProvinceShipping[] = [
     methods: [
       { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "5-7 business days", price: 28.99 },
       { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "3-5 business days", price: 42.50 },
-      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.500 },
+      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 45.00 },
     ],
   },
   {
@@ -128,7 +128,7 @@ export const PROVINCES: ProvinceShipping[] = [
     methods: [
       { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "5-7 business days", price: 27.99 },
       { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "3-5 business days", price: 40.50 },
-      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 0.500 },
+      { id: "standard", name: "Standard", estimatedDays: "7-14 business days", price: 45.00 },
     ],
   },
 ];
