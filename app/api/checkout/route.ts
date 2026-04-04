@@ -2,15 +2,6 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { PROVINCES, FREE_SHIPPING_THRESHOLD } from "@/data/shipping-rates";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY is not configured");
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2026-02-25.clover",
-});
-
-
 const PRODUCT_CATALOG: Record<string, { name: string; price: number; image: string }> = {
   "tuniolive-1l-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
@@ -44,6 +35,14 @@ interface ShippingInfo {
 }
 
 export async function POST(req: Request) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-02-25.clover",
+  });
+
   try {
     const { items, shipping } = (await req.json()) as {
       items: CheckoutRequestItem[];

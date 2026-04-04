@@ -2,24 +2,25 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendOrderNotification } from "@/utils/send-order-email";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("STRIPE_SECRET_KEY is not configured");
-}
-
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2026-02-25.clover",
-});
-
-
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
 const processedEvents = new Set<string>();
 
 export async function POST(req: Request) {
+
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+
+  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+    throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2026-02-25.clover",
+  });
+
+
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
   const body = await req.text();
   const sig = req.headers.get("stripe-signature");
 
