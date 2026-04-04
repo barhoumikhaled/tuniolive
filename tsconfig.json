@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "types"
-, "google.js"  ],
+, "google.js", "app/api/checkout/ro"  ],
   "exclude": [
     "node_modules"
   ]
