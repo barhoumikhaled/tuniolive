@@ -11,7 +11,7 @@ export interface ProvinceShipping {
   methods: ShippingMethod[];
 }
 
-export const FREE_SHIPPING_THRESHOLD = 80;
+export const FREE_SHIPPING_THRESHOLD = 100;
 
 export const PROVINCES: ProvinceShipping[] = [
   {

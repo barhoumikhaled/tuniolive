@@ -373,6 +373,8 @@ export const ar = {
     subtotal: "المجموع الفرعي",
     shippingFee: "الشحن",
     completeAddress: "يرجى إكمال عنوان الشحن للمتابعة",
+    addMoreForFree: "أضف ${amount} $ للحصول على شحن مجاني!",
+    youQualify: "أنت مؤهل للشحن المجاني!",
   },
   policyDocument: {
     title: "وثيقة السياسات"

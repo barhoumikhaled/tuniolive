@@ -389,6 +389,8 @@
       subtotal: "Subtotal",
       shippingFee: "Shipping",
       completeAddress: "Please complete your shipping address to proceed",
+      addMoreForFree: "Add $${amount} more for free shipping!",
+      youQualify: "You qualify for free shipping!",
     },
     policyDocument: {
       title: "Policy Document"

@@ -12,6 +12,7 @@
   import Link from "next/link";
   import { useState } from "react";
   import { PROVINCES, FREE_SHIPPING_THRESHOLD, getShippingCost } from "@/data/shipping-rates";
+  import FreeShippingProgress from "@/components/free-shipping-progress";
 
   export default function CheckoutPage() {
     const { items, removeItem, updateQuantity, totalPrice } = useCart();
@@ -287,6 +288,7 @@
                       <span>${ (item.price * item.quantity).toFixed(2) }</span>
                     </div>
                   )) }
+                  <FreeShippingProgress totalPrice={totalPrice} />
                   <Separator />
                   <div className="flex justify-between text-sm">
                     <span>{ t("shipping.subtotal") }</span>

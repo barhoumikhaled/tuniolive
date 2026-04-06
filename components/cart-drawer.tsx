@@ -13,6 +13,7 @@
   import { useLanguage } from "@/contexts/language-context";
   import { DialogTitle } from "@radix-ui/react-dialog";
   import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+  import FreeShippingProgress from "@/components/free-shipping-progress";
 
   export default function CartDrawer() {
     const { items, removeItem, updateQuantity, totalItems, totalPrice, isCartOpen, setIsCartOpen } = useCart();
@@ -99,6 +100,7 @@
               </div>
 
               <div className="border-t pt-4 space-y-4">
+                <FreeShippingProgress totalPrice={totalPrice} />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>{ t("cart.total") }</span>
                   <span>${ totalPrice.toFixed(2) }</span>
