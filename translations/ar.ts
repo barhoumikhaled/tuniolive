@@ -375,6 +375,7 @@ export const ar = {
     completeAddress: "يرجى إكمال عنوان الشحن للمتابعة",
     addMoreForFree: "أضف ${amount} $ للحصول على شحن مجاني!",
     youQualify: "أنت مؤهل للشحن المجاني!",
+    progressLabel: "شحن مجاني",
   },
   policyDocument: {
     title: "وثيقة السياسات"

@@ -381,6 +381,7 @@
       completeAddress: "Veuillez compléter votre adresse de livraison pour continuer",
       addMoreForFree: "Ajoutez ${amount} $ de plus pour la livraison gratuite !",
       youQualify: "Vous bénéficiez de la livraison gratuite !",
+      progressLabel: "Livraison gratuite",
     },
     policyDocument: {
       title: "Document de politique"

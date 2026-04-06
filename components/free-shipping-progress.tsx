@@ -15,7 +15,10 @@ export default function FreeShippingProgress({ totalPrice }: FreeShippingProgres
   const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
 
   return (
-    <div className={`rounded-lg p-3 ${isFreeShipping ? "bg-green-50 border border-green-200" : "bg-gray-50 border border-gray-200"}`}>
+    <div
+      className={`rounded-lg p-3 ${isFreeShipping ? "bg-green-50 border border-green-200" : "bg-gray-50 border border-gray-200"}`}
+      aria-label={t("shipping.progressLabel")}
+    >
       <div className="flex items-center gap-2 mb-2">
         {isFreeShipping ? (
           <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />

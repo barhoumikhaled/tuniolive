@@ -391,6 +391,7 @@
       completeAddress: "Please complete your shipping address to proceed",
       addMoreForFree: "Add $${amount} more for free shipping!",
       youQualify: "You qualify for free shipping!",
+      progressLabel: "Free shipping",
     },
     policyDocument: {
       title: "Policy Document"
