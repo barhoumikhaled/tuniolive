@@ -138,7 +138,8 @@ export const fr = {
     shipping: "Livraison",
     returns: "Retours",
     faq: "FAQ",
-    copyright: "2026 TuniOlive. Tous droits réservés."
+    copyright: "2026 TuniOlive. Tous droits réservés.",
+    policies: "Politiques de TuniOlive"
   },
   mobile: {
     menu: "Menu de navigation",
