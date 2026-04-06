@@ -455,8 +455,8 @@ function renderPolicyContent(id: string, t: (key: string) => string) {
           </div>
 
           <div className="space-y-2">
-            <h3 className="text-base font-semibold text-foreground">8. { t("termsPolicy.changeToTerms.title") }</h3>
-            <p className="text-muted-foreground text-sm">{ t("termsPolicy.changeToTerms.description") }:</p>
+            <h3 className="text-base font-semibold text-foreground">8. { t("termsPolicy.contact.title") }</h3>
+            <p className="text-muted-foreground text-sm">{ t("termsPolicy.contact.contactAt") }:</p>
           </div>
 
           <ContactBlock />

@@ -666,6 +666,10 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
     changeToTerms: {
       title: "Modification des conditions",
       description: "Nous nous réservons le droit de modifier ces Conditions à tout moment. Les modifications prennent effet immédiatement après leur publication sur le site. La poursuite de l’utilisation du site après ces modifications constitue votre acceptation des nouvelles conditions",
+    },
+    contact: {
+      title: "Contact",
+      contactAt: "Pour toute question d'ordre juridique ou pour exercer vos droits, veuillez nous contacter à l'adresse suivante"
     }
   },
 
