@@ -18,9 +18,9 @@ export const PROVINCES: ProvinceShipping[] = [
     name: "Quebec",
     code: "QC",
     methods: [
-      { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "2-3 business days", price: 12.79 },
-      { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "1-2 business days", price: 19.25 },
-      { id: "standard", name: "Standard", estimatedDays: "5-10 business days", price: 35.00 },
+      { id: "cp-expedited", name: "Canada Post Expedited Parcel", estimatedDays: "2-5 business days", price: 15.79 },
+      { id: "cp-priority", name: "Canada Post Priority", estimatedDays: "5-7 business days", price: 20.25 },
+      { id: "standard", name: "Standard", estimatedDays: "7-10 business days", price: 25.00 },
     ],
   },
   {

@@ -69,7 +69,8 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
-                price: 45,
+                price: 20.99,
+                originalPrice: 24.99,
                 badge: "Best Seller"
               },
               {
@@ -78,7 +79,8 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
-                price: 45,
+                originalPrice: 23.99,
+                price: 18.99,
                 badge: "Popular"
               },
               {
@@ -87,7 +89,8 @@ export default function ClientHome() {
                 origin: "Kairouan, Tunisie",
                 flavor: "Robust & Peppery",
                 image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
-                price: 45,
+                price: 55.00,
+                originalPrice: 75.00,
                 badge: "Premium"
               }
             ].map((product, index) => {
@@ -117,12 +120,15 @@ export default function ClientHome() {
 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
+                    { product.originalPrice && (<div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md">
+                      -{ Math.round((1 - product.price / product.originalPrice) * 100) }%
+                    </div>
+                    ) }
                     {/* <Badge className="absolute top-4 left-4">{ product.badge }</Badge> */ }
                   </div>
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
                       { t(`${translateString}.name`) }
-                      {/* <span className="text-green-600">{ product.price }</span> */ }
                     </CardTitle>
                     <div className="space-y-2">
                       <p className="text-sm text-muted-foreground">{ t(`${translateString}.origin`) }</p>
@@ -137,7 +143,12 @@ export default function ClientHome() {
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-lg font-bold text-green-600">${product.price}</span>
+                      <span className="text-lg font-bold text-green-600">${ product.price }</span>
+                      {/* Discount badge */ }
+                      { product.originalPrice && (<span className="text-xs text-red-500 font-medium">
+                        Save ${ product.originalPrice - product.price }
+                      </span>
+                      ) }
                     </div>
                     <Link href={ `/products/${product.id}` }>
                       <Button variant={ "green" } className="w-full">
@@ -147,7 +158,7 @@ export default function ClientHome() {
                     <Button
                       variant="outline"
                       className="w-full"
-                      onClick={() => {
+                      onClick={ () => {
                         addItem({
                           id: product.id,
                           name: t(`${translateString}.name`) || product.name,
@@ -155,7 +166,7 @@ export default function ClientHome() {
                           image: product.image,
                         });
                         toast.success(t("cart.addedToCart"));
-                      }}
+                      } }
                     >
                       <ShoppingCart className="h-4 w-4 mr-2" />
                       { t("common.addToCart") }

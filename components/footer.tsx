@@ -35,6 +35,7 @@ export default function Footer() {
               <li>{ t("footer.ourStory") }</li>
               <li>{ t("footer.sustainability") }</li>
               <li>{ t("footer.awards") }</li>
+              <li><a href='/policies'>{ t("footer.policies") }</a></li>
             </ul>
           </div>
           {/* <div>
