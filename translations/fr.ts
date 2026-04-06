@@ -379,4 +379,308 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
     shippingFee: "Livraison",
     completeAddress: "Veuillez compléter votre adresse de livraison pour continuer",
   },
+  policyDocument: {
+    title: "Document de politique"
+  },
+  policies: {
+    policyDocument: {
+      title: "Document de politique",
+      details: "Politique de confidentialité"
+    },
+    contact: "Contactez-nous pour toute question",
+    legalandpolicy: "Mentions légales et politiques",
+    title: "Politiques TuniOlive",
+    description: "La transparence est au cœur de tout ce que nous faisons. Vous trouverez ici des informations claires et honnêtes sur la manière dont nous gérons vos données, vos commandes, vos livraisons et bien plus encore.",
+    sections: "Sections",
+    privacy: {
+      title: "Politique de confidentialité",
+      privacyPolicy: "Dernière mise à jour : 4 avril 2026",
+      description: "Chez TuniOlive, nous nous engageons à protéger vos informations personnelles et votre droit à la vie privée. Cette politique explique comment nous collectons, utilisons et protégeons vos données lorsque vous visitez notre site web ou effectuez un achat.",
+      informationWeCollect: {
+        title: "Informations que nous collectons",
+        personalIdentifiers: "Identifiants personnels",
+        collectedInfo: "nom, adresse e-mail, adresse de facturation et de livraison, numéro de téléphone",
+        paymentInfo: "Informations de paiement",
+        collectedPayment: "traitées de manière sécurisée via Stripe — nous ne stockons jamais les détails de votre carte",
+        usageData: "Données d'utilisation",
+        usageCollect: "pages visitées, temps passé sur le site, type de navigateur, adresse IP (anonymisée)",
+        communicationData: "Données de communication",
+        communicationCollect: "messages que vous envoyez via notre formulaire de contact ou par e-mail au support"
+      },
+      howWeUseInformation: {
+        title: "Comment nous utilisons vos informations",
+        processFulfil: "Traiter et exécuter vos commandes et envoyer des confirmations",
+        respondInquireies: "Répondre aux demandes et fournir un support client",
+        transactionalEmail: "Envoyer des e-mails transactionnels (confirmations de commande, mises à jour d'expédition)",
+        improveWebsite: "Améliorer l'expérience de notre site web et nos produits",
+        comply: "Se conformer aux obligations légales"
+      },
+      sharingData: {
+        title: "Partage de vos informations",
+        description: "Nous ne vendons, n'échangeons ni ne louons vos données personnelles. Nous pouvons les partager avec des prestataires tiers de confiance uniquement pour exploiter notre activité (ex. : Stripe pour les paiements, Resend pour les e-mails, transporteurs). Tous nos partenaires sont soumis à des accords stricts de protection des données."
+      },
+      cookies: {
+        title: "Cookies",
+        description: "Nous utilisons des cookies essentiels pour assurer le bon fonctionnement du site. Des cookies analytiques peuvent être utilisés (avec votre consentement) pour comprendre comment les visiteurs interagissent avec le site. Vous pouvez gérer vos préférences via les paramètres de votre navigateur."
+      },
+      dataRetention: {
+        title: "Conservation des données",
+        description: "Nous conservons les données personnelles uniquement le temps nécessaire pour atteindre les objectifs mentionnés ci-dessus ou comme l'exige la loi. Les enregistrements de commandes sont généralement conservés pendant 7 ans pour des raisons comptables et légales."
+      },
+      rights: {
+        title: "Vos droits",
+        right1: "Droit d'accéder aux données personnelles que nous détenons sur vous",
+        right2: "Droit de corriger des données inexactes ou incomplètes",
+        right3: "Droit de demander la suppression de vos données (« droit à l'oubli »)",
+        right4: "Droit de s'opposer ou de limiter le traitement",
+        description: "Pour exercer ces droits, contactez-nous ci-dessous"
+      }
+    }
+  },
+
+  shippingPolicies: {
+    policyDocument: {
+      details: "Politique d'expédition"
+    },
+    title: "Politique d'expédition",
+    lastUpdate: "Dernière mise à jour : 4 avril 2026",
+    description: "Nous prenons grand soin de garantir que votre huile d'olive premium arrive en toute sécurité et en parfait état. Veuillez lire attentivement cette politique avant de passer commande.",
+    processingTime: {
+      title: "Délai de traitement",
+      part1: "Toutes les commandes sont traitées sous",
+      part2: "1 à 2 jours ouvrables",
+      part3: "(du lundi au vendredi, hors jours fériés). Vous recevrez un e-mail de confirmation une fois votre commande expédiée."
+    },
+    shippingDestination: {
+      title: "Destinations d'expédition",
+      shiprRegion: "Nous expédions actuellement vers les régions suivantes",
+      region1: "Amérique du Nord (États-Unis et Canada)",
+      description: "Si votre pays n'est pas listé, veuillez nous contacter — nous ferons de notre mieux pour vous accommoder."
+    },
+    shippingMethod: {
+      title: "Méthodes d'expédition et délais estimés",
+      method: "Méthode",
+      estimatedTime: "Délai estimé",
+      cost: "Coût",
+      standard: "Livraison standard",
+      express: "Livraison express",
+      international: "Livraison internationale",
+      free: "Livraison gratuite",
+      sday: "5 à 8 jours ouvrables",
+      eday: "2 à 3 jours ouvrables",
+      iday: "7 à 14 jours ouvrables",
+      fday: "5 à 8 jours ouvrables",
+      from: "À partir de",
+      ordersOver: "Commandes supérieures à"
+    },
+    packaging: {
+      title: "Emballage",
+      description: "Toutes les bouteilles sont soigneusement emballées avec des protections pour éviter tout dommage pendant le transport. Notre emballage protège votre commande de la lumière et des variations de température."
+    },
+    tracking: {
+      title: "Suivi",
+      description: "Une fois expédiée, vous recevrez un numéro de suivi par e-mail. Veuillez prévoir jusqu'à 24 heures pour que les informations soient disponibles."
+    },
+    damageLost: {
+      title: "Colis endommagés ou perdus",
+      part1: "Dans le cas rare où votre commande arrive endommagée ou est perdue, veuillez nous contacter dans les",
+      part2: "48 heures",
+      part3: "suivant la date de livraison prévue avec des photos (si applicable). Nous organiserons un remplacement sans frais."
+    }
+  },
+
+  subscriptionPolicy: {
+    policyDocument: {
+      details: "Politique d'abonnement"
+    },
+    title: "Politique d'abonnement",
+    lastUpdate: "Dernière mise à jour : 4 avril 2026",
+    description: "Notre programme d'abonnement est conçu pour que vous ne manquiez jamais de votre huile d'olive préférée, livrée automatiquement selon votre fréquence avec des économies exclusives.",
+    subcription: {
+      title: "Fonctionnement des abonnements",
+      choose: "Choisissez votre produit, la quantité et la fréquence de livraison (mensuelle, bimensuelle ou trimestrielle)",
+      card: "Votre carte est débitée automatiquement à chaque renouvellement",
+      receive: "Vous recevez un e-mail de rappel",
+      receiveDay: "5 jours",
+      receiveAfter: "avant chaque paiement"
+    },
+    pricing: {
+      title: "Tarification des abonnements",
+      part1: "Les abonnés bénéficient d'une",
+      part2: "réduction de 10 %",
+      part3: "sur chaque commande par rapport au prix standard."
+    },
+    pausing: {
+      title: "Pause ou report",
+      part1: "Vous pouvez suspendre ou reporter une livraison en nous contactant au moins",
+      part2: "3 jours ouvrables avant",
+      part3: "la date prévue"
+    },
+    cancellation: {
+      title: "Annulation",
+      part1: "Vous pouvez annuler à tout moment sans frais jusqu'à",
+      part2: "3 jours avant",
+      part3: "le prochain renouvellement"
+    },
+    product: {
+      title: "Changement de produit",
+      description: "Si un produit n'est plus disponible, nous vous proposerons une alternative équivalente."
+    }
+  },
+
+  refundPolicy: {
+    policyDocument: {
+      details: "Politique de remboursement"
+    },
+    title: "Politique de remboursement",
+    lastUpdate: "Dernière mise à jour : 4 avril 2026",
+    importantNotice: "Avis important — Produit alimentaire naturel",
+    noticePart1: "L'huile d'olive est un",
+    noticePart2: "produit naturel périssable à 100 %",
+    noticePart3: "Pour des raisons de santé et de sécurité, nous ne pouvons pas",
+    noticePart4: "accepter les retours ni effectuer de remboursements",
+    noticePart5: "une fois le produit expédié ou ouvert",
+    description: "Nous sommes très fiers de la qualité de nos produits et restons engagés à résoudre tout problème rapidement.",
+    noRefunds: {
+      title: "Pourquoi nous ne proposons pas de remboursement",
+      why1Part1: "L'huile d'olive est une",
+      why1Part2: "produit périssable de qualité alimentaire",
+      why1Part3: "régi par des règles strictes en matière de sécurité alimentaire",
+      why2: "Nous ne pouvons pas garantir les conditions de stockage après livraison",
+      why3: "Les retours alimentaires présentent des risques sanitaires",
+      why4: "Notre production est artisanale et contrôlée"
+    },
+    weResolve: {
+      title: "Situations prises en charge",
+      descriptionPart1: "Même sans remboursement, nous",
+      descriptionPart2: "ferons toujours le nécessaire",
+      descriptionPart3: "dans les cas suivants",
+      why1Part1: "Endommagé pendant le transport",
+      why1Part2: "la bouteille est arrivée cassée ou fuit — nous la remplacerons sans frais",
+      why2Part1: "Mauvais produit envoyé",
+      why2Part2: "vous avez reçu un produit différent de celui commandé — nous enverrons le bon produit",
+      why3Part1: "Défaut de qualité",
+      why3Part2: "l'huile présente un goût ou une odeur anormale — nous enquêterons et remplacerons le produit",
+      why4Part1: "Commande non reçue",
+      why4Part2: "confirmée comme perdue par le transporteur — nous enverrons un remplacement ou un crédit en magasin"
+    },
+    report: {
+      title: "Comment signaler un problème",
+      desriptionPart1: "Veuillez nous contacter",
+      desriptionPart2: "dans les 48 heures suivant la réception de votre commande",
+      desriptionPart3: "et inclure les éléments suivants",
+      report1: "Votre numéro de commande",
+      report2: "Une description claire du problème",
+      report3: "Des photos du produit et de l'emballage (si endommagé)",
+      notePart1: "Notre équipe examinera votre demande et vous répondra sous",
+      notePart2: "2 jours ouvrables"
+    },
+    credit: {
+      title: "Crédit en magasin",
+      creditPart1: "Dans les cas où un remplacement ne peut pas être organisé (par exemple, produit en rupture de stock), nous pouvons offrir",
+      creditPart2: "un crédit en magasin",
+      creditPart3: "équivalent à la valeur de l'article concerné, valable pendant 12 mois à compter de la date d'émission",
+    }
+  },
+
+  delivryPolicy: {
+    policyDocument: {
+      details: "Politique de livraison"
+    },
+    title: "Politique de livraison",
+    lastUpdate: "Dernière mise à jour : 4 avril 2026",
+    description: "Nous collaborons avec des transporteurs fiables pour livrer votre huile d'olive en toute sécurité et dans les délais.",
+    deliveryPartner: {
+      title: "Partenaires de livraison",
+      description: "Nous travaillons avec Poste Canada, FedEx, DHL, UPS et des services postaux régionaux."
+    },
+    deliveryAdresse: {
+      title: "Adresse de livraison",
+      description: "Veuillez vérifier que votre adresse est correcte lors du paiement."
+    },
+    deliveryAttempt: {
+      title: "Tentatives de livraison",
+      descriptionPart1: "Les transporteurs effectuent généralement",
+      descriptionPart2: "deux tentatives de livraison",
+      descriptionPart3: "avant de déposer ou rediriger le colis"
+    },
+    deliveryTimeFrame: {
+      title: "Délais de livraison",
+      region: {
+        usa: "États-Unis",
+        canada: "Canada"
+      },
+      time: {
+        day515: "5 à 15 jours ouvrables",
+        day510: "5 à 10 jours ouvrables"
+      },
+      description: "* Les délais peuvent varier selon la période"
+    },
+    customDuties: {
+      title: "Droits de douane et taxes d'importation",
+      description: "Pour les livraisons internationales, des droits de douane, taxes d'importation et frais peuvent s'appliquer et sont à la charge du destinataire. Nous déclarons toutes les expéditions avec précision et conformément aux réglementations du commerce international. Nous ne pouvons pas marquer les commandes comme 'cadeaux' afin d’éviter les frais de douane"
+    },
+    handling: {
+      title: "Température et manipulation",
+      description: "L’huile d’olive extra vierge doit être conservée à l’abri de la chaleur et de la lumière directe du soleil. Bien que nous utilisions un emballage protecteur, nous recommandons de conserver votre commande dans un endroit frais et sombre dès réception. Nous ne sommes pas responsables de la dégradation de la qualité résultant d’un stockage inapproprié après la livraison"
+    }
+  },
+
+  termsPolicy: {
+    policyDocument: {
+      details: "Politique des conditions d'utilisation"
+    },
+    title: "Conditions d'utilisation",
+    lastUpdate: "Dernière mise à jour : 4 avril 2026",
+    description: "En utilisant ce site, vous acceptez ces conditions.",
+    accpetanceTerms: {
+      title: "Acceptation des conditions",
+      description: "Accord légal entre vous et TuniOlive."
+    },
+    productPricing: {
+      title: "Produits et tarification",
+      point1: "Tous les produits sont soumis à disponibilité. Nous nous réservons le droit de retirer tout produit à tout moment",
+      point2: "Les prix sont indiqués en USD et peuvent être modifiés sans préavis. Votre commande sera facturée au prix affiché au moment du paiement",
+      point3: "Nous faisons tout notre possible pour afficher des informations produits exactes, mais nous ne pouvons pas garantir que toutes les descriptions soient exemptes d’erreurs",
+      point4: "Les images sont fournies à titre illustratif ; l’emballage réel peut varier légèrement",
+    },
+    ordersPayment: {
+      title: "Commandes et paiement",
+      point1: "En passant une commande, vous confirmez que vous avez au moins 18 ans et êtes légalement autorisé à effectuer cet achat",
+      point2: "Tous les paiements sont traités de manière sécurisée via Stripe. Nous acceptons les principales cartes de crédit et de débit",
+      point3: "Nous nous réservons le droit de refuser ou d’annuler toute commande à notre discrétion, auquel cas un remboursement complet sera effectué",
+      point4: "Les confirmations de commande sont envoyées par e-mail. Veuillez vérifier votre dossier spam si vous ne recevez pas de confirmation",
+    },
+    intellictualProperty: {
+      title: "Propriété intellectuelle",
+      description: "Tout le contenu de ce site — y compris les textes, images, logos et éléments de marque — est la propriété de Olive Grove et est protégé par le droit d’auteur. Vous ne pouvez pas reproduire, distribuer ou utiliser notre contenu sans autorisation écrite préalable"
+    },
+    limitations: {
+      title: "Limitation de responsabilité",
+      description: "Dans toute la mesure permise par la loi, Olive Grove ne pourra être tenu responsable de tout dommage indirect, accessoire, spécial ou consécutif résultant de l’utilisation de nos produits ou de notre site, y compris, mais sans s’y limiter, la perte de profits, de données ou de clientèle. Notre responsabilité totale ne pourra excéder le montant payé pour la commande concernée"
+    },
+    governing: {
+      title: "Droit applicable",
+      description: "Les présentes Conditions sont régies et interprétées conformément aux lois de la République tunisienne, sans égard à ses principes de conflits de lois. Tout litige sera soumis à la compétence exclusive des tribunaux compétents en Tunisie"
+    },
+    changeToTerms: {
+      title: "Modification des conditions",
+      description: "Nous nous réservons le droit de modifier ces Conditions à tout moment. Les modifications prennent effet immédiatement après leur publication sur le site. La poursuite de l’utilisation du site après ces modifications constitue votre acceptation des nouvelles conditions",
+    }
+  },
+
+  policyContact: {
+    contactUs: "Contactez-nous pour toute question",
+    weAim: "Nous répondons sous 24 à 48 heures ouvrables",
+    needHelp: "Besoin d'aide ?"
+  },
+
+  navigationLabel: {
+    privacy: "Confidentialité",
+    shipping: "Expédition",
+    subscription: "Abonnement",
+    refund: "Remboursement",
+    delivery: "Livraison",
+    terms: "Conditions"
+  }
 };

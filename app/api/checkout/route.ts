@@ -5,17 +5,17 @@ import { PROVINCES, FREE_SHIPPING_THRESHOLD } from "@/data/shipping-rates";
 const PRODUCT_CATALOG: Record<string, { name: string; price: number; image: string }> = {
   "tuniolive-1l-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
-    price: 21.99,
+    price: 20.99,
     image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
   },
   "tuniolive-750ml-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 750 mL Bottle",
-    price: 19.99,
+    price: 18.99,
     image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
   },
   "tuniolive-3l-evoo": {
     name: "TuniOlive Extra Virgin Olive Oil – 3L Tin",
-    price: 65.99,
+    price: 55.00,
     image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
   },
 };
