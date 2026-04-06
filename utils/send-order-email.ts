@@ -1,54 +1,54 @@
-  import nodemailer from "nodemailer";
+import nodemailer from "nodemailer";
 
-  interface OrderItem {
-    name: string;
-    quantity: number;
-    amount: number;
-  }
+interface OrderItem {
+  name: string;
+  quantity: number;
+  amount: number;
+}
 
-  interface ShippingDetails {
-    address: string;
-    city: string;
-    province: string;
-    postalCode: string;
-    method: string;
-    cost: number;
-  }
+interface ShippingDetails {
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  method: string;
+  cost: number;
+}
 
-  interface OrderDetails {
-    sessionId: string;
-    customerEmail: string;
-    customerName: string;
-    amountTotal: number;
-    currency: string;
-    items: OrderItem[];
-    shipping?: ShippingDetails;
-  }
+interface OrderDetails {
+  sessionId: string;
+  customerEmail: string;
+  customerName: string;
+  amountTotal: number;
+  currency: string;
+  items: OrderItem[];
+  shipping?: ShippingDetails;
+}
 
-  export async function sendOrderNotification(order: OrderDetails) {
-    const transporter = nodemailer.createTransport({
-      port: 465,
-      host: process.env.SMTP_HOST,
-      auth: {
-        user: process.env.APP_USER,
-        pass: process.env.APP_PASSWORD,
-      },
-      secure: true,
-    });
+export async function sendOrderNotification(order: OrderDetails) {
+  const transporter = nodemailer.createTransport({
+    port: 465,
+    host: process.env.SMTP_HOST,
+    auth: {
+      user: process.env.APP_USER,
+      pass: process.env.APP_PASSWORD,
+    },
+    secure: true,
+  });
 
-    const itemRows = order.items
-      .map(
-        (item) =>
-          `<tr>
+  const itemRows = order.items
+    .map(
+      (item) =>
+        `<tr>
             <td style="padding:8px;border:1px solid #ddd;">${item.name}</td>
             <td style="padding:8px;border:1px solid #ddd;text-align:center;">${item.quantity}</td>
             <td style="padding:8px;border:1px solid #ddd;text-align:right;">$${item.amount.toFixed(2)}</td>
-          </tr>`
-      )
-      .join("");
+          </tr>`,
+    )
+    .join("");
 
-    const shippingSection = order.shipping
-      ? `
+  const shippingSection = order.shipping
+    ? `
           <h2 style="color:#333;margin-top:20px;">Shipping Details</h2>
           <table style="width:100%;border-collapse:collapse;margin:10px 0;">
             <tr>
@@ -77,9 +77,9 @@
             </tr>
           </table>
         `
-      : "";
+    : "";
 
-    const html = `
+  const html = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
         <div style="background:#16a34a;color:white;padding:20px;text-align:center;">
           <h1 style="margin:0;">New Order Received!</h1>
@@ -112,11 +112,11 @@
       </div>
     `;
 
-    await transporter.sendMail({
-      from: process.env.APP_USER,
-      to: process.env.APP_SEND_TO,
+  await transporter.sendMail({
+    from: process.env.APP_USER,
+    to: process.env.APP_SEND_TO,
 
-      subject: `TuniOlive - New Order from ${order.customerName} ($${order.amountTotal.toFixed(2)})`,
-      html,
-    });
-  }
+    subject: `TuniOlive - New Order from ${order.customerName} ($${order.amountTotal.toFixed(2)})`,
+    html,
+  });
+}
