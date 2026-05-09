@@ -29,8 +29,8 @@ function ContactBlock() {
         <a href="mailto:support@tuniolive.com" className="block text-green-700 hover:underline text-sm font-medium">
           support@tuniolive.com
         </a>
-        <a href="mailto:onlinesales@hotmail.com" className="block text-green-700 hover:underline text-sm font-medium">
-          onlinesales@hotmail.com
+        <a href="mailto:onlinesales@tuniolive.com" className="block text-green-700 hover:underline text-sm font-medium">
+          onlinesales@tuniolive.com
         </a>
       </div>
       <p className="text-xs text-green-700 opacity-80">{ t("policyContact.weAim") }.</p>
@@ -599,8 +599,8 @@ export default function PoliciesPage() {
                   <a href="mailto:support@tuniolive.com" className="block text-xs text-green-700 hover:underline">
                     support@tuniolive.com
                   </a>
-                  <a href="mailto:onlinesales@hotmail.com" className="block text-xs text-green-700 hover:underline">
-                    onlinesales@hotmail.com
+                  <a href="mailto:onlinesales@tuniolive.com" className="block text-xs text-green-700 hover:underline">
+                    onlinesales@tuniolive.com
                   </a>
                 </div>
               </div>
