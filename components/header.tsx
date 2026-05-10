@@ -1,7 +1,7 @@
   'use client'
 
   import Image from 'next/image'
-  import { Leaf, Mail, Menu, Phone } from 'lucide-react'
+  import { Mail, Menu, Phone } from 'lucide-react'
   import React, { useState } from 'react'
   import { Button } from './ui/button';
   import { Sheet, SheetClose, SheetContent, SheetTrigger } from './ui/sheet';

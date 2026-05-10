@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Languages } from "lucide-react";
 
 const languages = [
   { code: "en", label: "EN" },

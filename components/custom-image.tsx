@@ -11,7 +11,6 @@ export default function CustomImage({ product }: { product: any }) {
   return (
     <div className="space-y-4">
       {/* MAIN IMAGE */ }
-      {/* <div className="relative h-[600px] rounded-lg overflow-hidden"> */ }
       <div className="w-full flex justify-center items-center rounded-lg p-4">
         <Image
           src={ selectedImage }
@@ -23,18 +22,6 @@ export default function CustomImage({ product }: { product: any }) {
           priority
         />
       </div>
-
-      {/* <div className="w-full flex justify-center items-center bg-gray-100 rounded-lg p-4">
-        <Image
-          src={ selectedImage }
-          alt={ product.name }
-          width={ 1100 }
-          height={ 1100 }
-          className="max-h-[491px] w-auto object-contain"
-          sizes="(max-width: 768px) 100vw, 491px"
-          priority
-        />
-      </div> */}
 
       {/* THUMBNAILS */ }
       <div className="grid grid-cols-6 gap-4">

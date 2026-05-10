@@ -49,11 +49,26 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        // ERP sidebar colors
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar, 142 42% 21%))",
+          foreground: "hsl(var(--sidebar-foreground, 40 33% 97%))",
+          border: "hsl(var(--sidebar-border, 142 42% 18%))",
+          accent: "hsl(var(--sidebar-accent, 142 42% 17%))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground, 40 33% 97%))",
+          primary: "hsl(var(--sidebar-primary, 41 52% 55%))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground, 142 42% 10%))",
+          ring: "hsl(var(--sidebar-ring, 41 52% 55%))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "DM Sans", "sans-serif"],
+        serif: ["var(--font-serif)", "Playfair Display", "serif"],
       },
     },
   },

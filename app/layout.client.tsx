@@ -3,8 +3,6 @@
   import Layout from '@/components/client-layout'
   import { Toaster } from '@/components/ui/sonner'
   import { LanguageProvider } from '@/contexts/language-context'
-  import { DefaultSeo } from "next-seo";
-  import defaultSEO from "../next-seo.config";
   import { CartProvider } from '@/contexts/cart-context'
   import React from 'react'
 
@@ -13,7 +11,6 @@
       <LanguageProvider>
         <CartProvider>
           <Layout>
-            {/* <DefaultSeo { ...defaultSEO } /> */ }
             { children }
           </Layout>
           <Toaster />

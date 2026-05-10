@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Leaf, Shield, Truck, RotateCcw, Package, FileText, ScrollText, Mail, ChevronRight, ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { Button } from "../../components/ui/button";
+import { Shield, Truck, RotateCcw, Package, ScrollText, Mail, ChevronRight, ArrowLeft } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Separator } from "../../components/ui/separator";
-import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 import { useLanguage } from "@/contexts/language-context";
 
 const policies = [

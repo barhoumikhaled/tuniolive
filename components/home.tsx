@@ -1,8 +1,6 @@
 'use client'
-import Image from 'next/image'
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Leaf, Star, Shield, Truck, Mail, Phone, MapPin, Send, Sheet, ShoppingCart } from "lucide-react";
 import Link from "next/link";

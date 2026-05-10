@@ -1,21 +1,13 @@
                             'use client'
                             import { Button } from "../components/ui/button";
                             import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-                            import { Badge } from "../components/ui/badge";
-                            import { Separator } from "../components/ui/separator";
                             import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
                             import { ImageWithFallback } from "../components/figma/ImageWithFallback";
                             import {
-                              Leaf,
-                              Star,
-                              Shield,
                               Snowflake,
                               Sun,
                               HeartPulse,
-                              ArrowLeft,
                               MapPinCheck,
-                              Heart,
-                              Share2,
                               Plus,
                               Minus,
                               CheckCircle,
@@ -24,9 +16,7 @@
                               ShoppingCart,
                             } from "lucide-react";
                             import Link from "next/link";
-                            import { ImageZoom } from "@/components/image-zoom";
                             import { ShareButton } from "@/components/share-button";
-                            import { NextSeo } from "next-seo";
                             import CustomImage from "@/components/custom-image";
                             import { useLanguage } from "@/contexts/language-context";
                             import { useCart } from "@/contexts/cart-context";
