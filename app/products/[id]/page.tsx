@@ -22,6 +22,8 @@ pastas.
       "/tuniolive-1l/tuniolive-1l-main.jpeg",
       "/tuniolive-1l/tuniolive-1l-750ml-3l.jpeg",
       "/tuniolive-1l/tuniolive-ambiance.jpeg",
+      "/tuniolive-1l/tuniolive-1l-ingredients.png",
+      "/tuniolive-1l/tuniolive-1l-usage.png",
     ],
     specifications: {
       volume: "1L",
@@ -66,11 +68,10 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
 `,
     images: [
       "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
-      // "/tuniolive-750-ml/tuniolive-1l-750-ml-main-1.jpeg",
       "/tuniolive-750-ml/tuniolive-750-ml-olive.jpeg",
       "/tuniolive-750-ml/tuniolive-3l-1l-750-ml-2.jpeg",
-      // "/tuniolive-750-ml/tuniolive-750-ml-wood.jpeg",
-      // "/tuniolive-750-ml/tuniolive-750-ml-wood-1.jpeg",
+      "/tuniolive-750-ml/tuniolive-750ml-ingredients.png",
+      "/tuniolive-750-ml/tuniolive-750ml-usage.png",
     ],
     specifications: {
       volume: "500ml",
@@ -116,6 +117,8 @@ richness and authentic Tunisian character — in a format that lasts.
     images: [
       "/tuniolive-3l/tuniolive-3l-main.jpeg",
       "/tuniolive-3l/tuniolive-1l-750ml-3l.jpeg",
+      "/tuniolive-3l/tuniolive-3l-ingredient.png",
+      "/tuniolive-3l/tuniolive-3l-usage.png",
     ],
     specifications: {
       volume: "3 L",
