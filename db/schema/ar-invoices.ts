@@ -9,6 +9,7 @@ export const arInvoicesTable = pgTable("ar_invoices", {
   customerName: text("customer_name"),
   invoiceDate: timestamp("invoice_date", { withTimezone: true }).notNull(),
   dueDate: timestamp("due_date", { withTimezone: true }),
+  paymentTerms: text("payment_terms"),
   notes: text("notes"),
   paymentStatus: text("payment_status").default("Pending"),
   paymentDate: timestamp("payment_date", { withTimezone: true }),

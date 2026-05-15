@@ -59,7 +59,6 @@
         );
 
         const metadata = session.metadata || {};
-        console.log("KHALED EMAIL")
         await sendOrderNotification({
           sessionId: session.id,
           customerEmail: session.customer_details?.email || "N/A",

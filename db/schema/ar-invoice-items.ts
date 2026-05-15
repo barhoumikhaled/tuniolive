@@ -5,16 +5,12 @@ import { z } from "zod";
 export const arInvoiceItemsTable = pgTable("ar_invoice_items", {
   id: serial("id").primaryKey(),
   invoiceId: integer("invoice_id").notNull(),
-  itemType: text("item_type"),
-  itemId: text("item_id"),
+  item: text("item"),
   description: text("description"),
   qtyBox: numeric("qty_box", { precision: 10, scale: 3 }),
   priceBox: numeric("price_box", { precision: 18, scale: 6 }),
-  unitPrice: numeric("unit_price", { precision: 18, scale: 6 }),
-  gst: numeric("gst", { precision: 18, scale: 6 }),
-  qst: numeric("qst", { precision: 18, scale: 6 }),
+  priceUnit: numeric("price_unit", { precision: 18, scale: 6 }),
   totalAmount: numeric("total_amount", { precision: 18, scale: 6 }),
-  extendedPrice: numeric("extended_price", { precision: 18, scale: 6 }),
   glAccount: text("gl_account"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });

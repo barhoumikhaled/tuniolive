@@ -1,321 +1,248 @@
 "use client";
 
 import { useRef } from "react";
-import { fmtCad, fmtDate } from "@/lib/formatters";
 import { Button } from "@/components/ui/button";
 import { Printer } from "lucide-react";
 
-const GST_RATE = 0.05;
-const QST_RATE = 0.09975;
-
-function safeFloat(value: string | number | null | undefined): number {
-  const n = parseFloat(String(value ?? ""));
+function safeFloat(v: string | number | null | undefined): number {
+  const n = parseFloat(String(v ?? ""));
   return isNaN(n) ? 0 : n;
 }
 
 interface LineItem {
   id?: number;
+  item?: string | null;
   description?: string | null;
   qtyBox?: string | null;
   priceBox?: string | null;
-  gst?: string | null;
-  qst?: string | null;
-  extendedPrice?: string | null;
-}
-
-interface ComputedLine {
-  item: LineItem;
-  lineSubtotal: number;
-  lineGst: number;
-  lineQst: number;
-  lineTotal: number;
+  priceUnit?: string | null;
 }
 
 interface InvoiceData {
   invoiceNumber?: string | null;
   customerName?: string | null;
-  invoiceDate: string;
+  customerAddress?: string | null;
+  customerCity?: string | null;
+  invoiceDate: string; 
   dueDate?: string | null;
+  paymentTerms?: string | null;
   paymentStatus?: string | null;
   notes?: string | null;
   lineItems?: LineItem[];
 }
 
-interface InvoicePrintTemplateProps {
-  invoice: InvoiceData;
+function calcTotal(line: LineItem): number {
+  return safeFloat(line.qtyBox) * safeFloat(line.priceBox);
 }
 
-function computeLines(lineItems: LineItem[]): ComputedLine[] {
-  return lineItems.map((item) => {
-    const qty = safeFloat(item.qtyBox);
-    const price = safeFloat(item.priceBox);
-    const lineSubtotal = qty * price;
-    const lineGst = item.gst != null ? safeFloat(item.gst) : lineSubtotal * GST_RATE;
-    const lineQst = item.qst != null ? safeFloat(item.qst) : lineSubtotal * QST_RATE;
-    const lineTotal = item.extendedPrice != null ? safeFloat(item.extendedPrice) : lineSubtotal + lineGst + lineQst;
-    return { item, lineSubtotal, lineGst, lineQst, lineTotal };
-  });
+function fmtShortDate(s: string | null | undefined): string {
+  if (!s) return "";
+  const d = new Date(s);
+  return (
+    d.toLocaleString("en-US", { month: "short" }) +
+    " " +
+    d.getDate() +
+    " - " +
+    String(d.getFullYear()).slice(2)
+  );
 }
 
-function sumTotals(lines: ComputedLine[]) {
-  let subtotal = 0, gst = 0, qst = 0, total = 0;
-  for (const l of lines) {
-    subtotal += l.lineSubtotal;
-    gst += l.lineGst;
-    qst += l.lineQst;
-    total += l.lineTotal;
-  }
-  return { subtotal, gst, qst, total };
+function dollar(n: number | string | null | undefined): string {
+  return "$" + safeFloat(n).toFixed(2);
 }
 
-export function InvoicePrintTemplate({ invoice }: InvoicePrintTemplateProps) {
+export function InvoicePrintTemplate({ invoice }: { invoice: InvoiceData }) {
   const printRef = useRef<HTMLDivElement>(null);
-
   function handlePrint() {
-    const content = printRef.current;
-    if (!content) return;
+    const items = invoice.lineItems ?? [];
+    const grandTotal = items.reduce((s, l) => s + calcTotal(l), 0);
+    const logoUrl = window.location.origin + "/tuniolive-black.png";
 
-    const printWindow = window.open("", "_blank", "width=900,height=700");
-    if (!printWindow) return;
+    const rowsHtml =
+      items.length === 0
+        ? `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">No line items</td></tr>`
+        : items
+          .map(
+            (item, i) => `<tr>
+              <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.item ?? i + 1}</td>
+              <td style="border:1px solid #ccc;padding:6px 10px">${item.description ?? ""}</td>
+              <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.qtyBox ? item.qtyBox + " Box" : ""}</td>
+              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceBox ? dollar(item.priceBox) : ""}</td>
+              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceUnit ? dollar(item.priceUnit) : ""}</td>
+              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;font-weight:600">${calcTotal(item) > 0 ? dollar(calcTotal(item)) : ""}</td>
+            </tr>`
+          )
+          .join("");
 
-    printWindow.document.write(`<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Invoice ${invoice.invoiceNumber ?? ""}</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; color: #1a1a1a; background: #fff; }
-    .page { max-width: 820px; margin: 0 auto; padding: 40px; }
-
-    /* Header */
-    .inv-header { display: flex; justify-content: space-between; align-items: flex-start; background: #2d6a4f; color: #fff; padding: 28px 32px; border-radius: 4px 4px 0 0; }
-    .inv-header-left { display: flex; flex-direction: column; gap: 6px; }
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-icon { width: 36px; height: 36px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .brand-icon svg { width: 20px; height: 20px; fill: #2d6a4f; }
-    .brand-name { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
-    .brand-tagline { font-size: 11px; opacity: 0.8; margin-top: 2px; }
-    .inv-title { font-size: 28px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #fff; text-align: right; }
-    .inv-number { font-size: 14px; font-weight: 600; text-align: right; opacity: 0.9; margin-top: 4px; }
-
-    /* Meta row */
-    .inv-meta { display: flex; gap: 0; border: 1px solid #e0e0e0; border-top: none; }
-    .inv-meta-cell { flex: 1; padding: 14px 18px; border-right: 1px solid #e0e0e0; }
-    .inv-meta-cell:last-child { border-right: none; }
-    .inv-meta-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-bottom: 4px; }
-    .inv-meta-value { font-size: 13px; font-weight: 600; color: #111; }
-
-    /* Bill to */
-    .inv-bill { padding: 22px 18px; border: 1px solid #e0e0e0; border-top: none; background: #f9fafb; }
-    .inv-bill-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-bottom: 6px; }
-    .inv-bill-name { font-size: 16px; font-weight: 700; color: #111; }
-
-    /* Status badge */
-    .status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-    .status-paid { background: #d1fae5; color: #065f46; }
-    .status-pending { background: #fef9c3; color: #854d0e; }
-    .status-overdue { background: #fee2e2; color: #991b1b; }
-
-    /* Line items table */
-    .inv-table-section { padding: 0 0 0 0; border: 1px solid #e0e0e0; border-top: none; }
-    table { width: 100%; border-collapse: collapse; }
-    thead tr { background: #2d6a4f; color: #fff; }
-    thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    thead th.num { text-align: right; }
-    tbody tr { border-bottom: 1px solid #e8e8e8; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:nth-child(even) { background: #f9fafb; }
-    tbody td { padding: 9px 14px; font-size: 13px; color: #1a1a1a; vertical-align: middle; }
-    tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
-    tbody td.desc { font-weight: 500; }
-
-    /* Totals */
-    .inv-totals { display: flex; justify-content: flex-end; border: 1px solid #e0e0e0; border-top: none; padding: 0; }
-    .inv-totals-table { width: 300px; border-left: 1px solid #e0e0e0; }
-    .totals-row { display: flex; justify-content: space-between; padding: 8px 18px; border-bottom: 1px solid #e8e8e8; font-size: 13px; }
-    .totals-row:last-child { border-bottom: none; background: #2d6a4f; color: #fff; font-size: 15px; font-weight: 700; padding: 12px 18px; }
-    .totals-label { color: inherit; }
-    .totals-value { font-variant-numeric: tabular-nums; font-weight: 600; }
-
-    /* Notes */
-    .inv-notes { padding: 18px; border: 1px solid #e0e0e0; border-top: none; }
-    .inv-notes-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-bottom: 6px; }
-    .inv-notes-text { font-size: 13px; color: #374151; line-height: 1.5; }
-
-    /* Footer */
-    .inv-footer { margin-top: 32px; text-align: center; font-size: 11px; color: #9ca3af; border-top: 1px solid #e0e0e0; padding-top: 16px; }
-
-    @media print {
-      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .page { padding: 20px; }
-      .no-print { display: none !important; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<title>Invoice ${invoice.invoiceNumber ?? ""}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#111;background:#fff}
+  .page{max-width:860px;margin:0 auto;padding:32px 40px}
+  table{border-collapse:collapse;width:100%}
+  @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.page{padding:20px 24px}}
+</style>
 </head>
 <body>
-${content.innerHTML}
+<div class="page">
+
+  <!-- TOP: Logo + Company | Invoice Box -->
+  <table style="margin-bottom:20px">
+    <tr>
+      <td style="vertical-align:top;width:60%">
+        <img src="${logoUrl}" alt="TuniOlive"
+             style="height:70px;width:auto;object-fit:contain"
+             onerror="this.outerHTML='<span style=font-size:22px;font-weight:800>TuniOlive</span>'"/>
+        <div style="font-size:11px;color:#444;line-height:1.7;margin-top:8px">
+          3203 Rue Noorduyn, Saint-Laurent, QC H4R 1A1<br/>
+          Email: info@tuniolive.com<br/>
+          Email: Tuniolive518@gmail.com<br/>
+          Phone: (514) 601-0603
+        </div>
+      </td>
+      <td style="vertical-align:top;width:40%">
+        <table style="border:1px solid #000;float:right;width:230px">
+          <tr>
+            <td colspan="2" style="background:#000;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:5px 12px;letter-spacing:1px;text-transform:uppercase">
+              FACTURE / INVOICE
+            </td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #000;padding:5px 10px;font-weight:600">Facture / Invoice</td>
+            <td style="border:1px solid #000;padding:5px 10px;font-weight:700;text-align:right">${invoice.invoiceNumber ?? ""}</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #000;padding:5px 10px;font-weight:600">Date M/J-D/A-Y</td>
+            <td style="border:1px solid #000;padding:5px 10px;font-weight:700;text-align:right">${fmtShortDate(invoice.invoiceDate)}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+<!-- Bill to / Ship to -->
+  <table style="margin-bottom:16px">
+    <tr>
+      <td style="width:50%;vertical-align:top;padding-right:20px">
+        <div style="font-weight:700;margin-bottom:4px">Vendu a / Sold to:</div>
+        <div style="line-height:1.6">
+          ${invoice.customerName ?? ""}
+          ${invoice.customerAddress ? "<br/>" + invoice.customerAddress : ""}
+          ${invoice.customerCity ? "<br/>" + invoice.customerCity : ""}
+        </div>
+      </td>
+      <td style="width:50%;vertical-align:top">
+        <div style="font-weight:700;margin-bottom:4px">Expedie a / Shipped to:</div>
+        <div style="line-height:1.6">
+          ${invoice.customerName ?? ""}
+          ${invoice.customerAddress ? "<br/>" + invoice.customerAddress : ""}
+          ${invoice.customerCity ? "<br/>" + invoice.customerCity : ""}
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Notes -->
+  <div style="margin-bottom:14px">
+    <span style="font-weight:700">Notes:</span>
+    <span style="color:#444;margin-left:6px">${invoice.notes ?? ""}</span>
+  </div>
+
+  <!-- Delivery / Terms / Order -->
+  <table style="border:1px solid #ccc;margin-bottom:0">
+    <thead>
+      <tr style="background:#f0f0f0">
+        <th style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px">Instruction de laivraison<br/>delivery instruction</th>
+        <th style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px">Delai<br/>Terms</th>
+        <th style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px">No Commande de Client<br/>Customer Order no.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px"></td>
+        <td style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px">${invoice.paymentTerms ?? "Net 30"}</td>
+        <td style="border:1px solid #ccc;padding:5px 10px;text-align:center;font-size:11px"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Line items -->
+  <table style="border:1px solid #ccc;border-top:none">
+    <thead>
+      <tr style="background:#f0f0f0">
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:60px">Item #</th>
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px">Description</th>
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:110px">Quantite / Quantity</th>
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:110px">Price per Box</th>
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:110px">Price per Btl/Tin.</th>
+        <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:120px">Total Price/Prix</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rowsHtml}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5" style="text-align:right;border:1px solid #ccc;padding:6px 10px;background:#fafafa;font-weight:700">Subtotal:</td>
+        <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;background:#fafafa;font-weight:700">${dollar(grandTotal)}</td>
+      </tr>
+      <tr>
+        <td colspan="5" style="text-align:right;border:1px solid #ccc;padding:8px 10px;font-weight:800;font-size:14px">Total:</td>
+        <td style="text-align:right;border:1px solid #ccc;padding:8px 10px;font-weight:800;font-size:14px"><strong>${dollar(grandTotal)}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- Payment options + Signature -->
+  <table style="margin-top:28px">
+    <tr>
+      <td style="vertical-align:top;padding-right:20px">
+        <div style="font-weight:700;font-size:11px;margin-bottom:6px">Payment Options:</div>
+        <div style="font-size:11px;line-height:1.8;color:#333">
+          You can make an <strong>Interac e-transfer</strong> to tuniolive518@gmail.com<br/>
+          You can issue a cheque payable to TuniOlive Inc.<br/>
+          We also accept cash on delivery or cheque<br/>
+          You can also make a direct deposit. Direct deposit information is available upon request.
+        </div>
+      </td>
+      <td style="vertical-align:top;padding-right:20px">
+        <div style="font-weight:700;font-size:11px;margin-bottom:6px">Options de paiement :</div>
+        <div style="font-size:11px;line-height:1.8;color:#333">
+          Vous pouvez faire un <strong>virement Interac</strong> à tuniolive518@gmail.com<br/>
+          Vous pouvez émettre un chèque au nom de TuniOlive Inc.<br/>
+          Nous acceptons également le paiement comptant à la livraison ou par chèque<br/>
+          Vous pouvez aussi effectuer un dépôt direct. Les informations pour le dépôt direct sont disponibles sur demande.
+        </div>
+      </td>
+      <td style="vertical-align:bottom;text-align:center;width:130px">
+        <div style="border-top:1px solid #999;margin-top:56px;padding-top:4px;font-size:10px;color:#888">Authorized Signature</div>
+      </td>
+    </tr>
+  </table>
+
+  <div style="margin-top:24px;text-align:center;font-size:10px;color:#aaa;border-top:1px solid #eee;padding-top:12px">
+    TuniOlive Inc. &nbsp;&middot;&nbsp; Saint-Laurent, QC &nbsp;&middot;&nbsp; Thank you for your business! / Merci pour votre confiance!
+  </div>
+</div>
 </body>
-</html>`);
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-      printWindow.print();
-    }, 400);
+</html>`;
+
+    const win = window.open("", "_blank", "width=960,height=800");
+    if (!win) { alert("Please allow popups to print invoices."); return; }
+    win.document.write(html);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 600);
   }
 
-  const items = invoice.lineItems ?? [];
-  const computedLines = computeLines(items);
-  const { subtotal, gst, qst, total } = sumTotals(computedLines);
-  const statusClass =
-    invoice.paymentStatus === "Paid"
-      ? "status-paid"
-      : invoice.paymentStatus === "Overdue"
-        ? "status-overdue"
-        : "status-pending";
-
   return (
-    <div>
-      <Button variant="outline" size="sm" onClick={handlePrint} className="gap-1.5">
-        <Printer className="w-3.5 h-3.5" />
-        Print / PDF
-      </Button>
-
-      {/* Hidden print template — rendered in DOM but invisible on screen */}
-      <div className="hidden">
-        <div ref={printRef}>
-          <div className="page">
-            {/* Header */}
-            <div className="inv-header">
-              <div className="inv-header-left">
-                <div className="brand">
-                  <div className="brand-icon">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M17 8C8 10 5.9 16.17 3.82 19.82C3.17 20.95 1.5 20.5 1.5 19.18V4.5C1.5 3.4 2.4 2.5 3.5 2.5H12C14.76 2.5 17 4.74 17 7.5V8Z"/>
-                      <path d="M21.5 12C21.5 16.14 18.14 19.5 14 19.5L8 21.5L10 14.5C10 14.5 11 17.5 14 17.5C16.76 17.5 19 15.26 19 12.5C19 9.74 16.76 7.5 14 7.5H12V5.5H14C18.14 5.5 21.5 8.86 21.5 13V12Z" opacity="0.6"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="brand-name">TuniOlive</div>
-                    <div className="brand-tagline">Premium Olive Products</div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="inv-title">Invoice</div>
-                <div className="inv-number">{invoice.invoiceNumber ?? "—"}</div>
-              </div>
-            </div>
-
-            {/* Meta row */}
-            <div className="inv-meta">
-              <div className="inv-meta-cell">
-                <div className="inv-meta-label">Invoice Date</div>
-                <div className="inv-meta-value">{fmtDate(invoice.invoiceDate)}</div>
-              </div>
-              <div className="inv-meta-cell">
-                <div className="inv-meta-label">Due Date</div>
-                <div className="inv-meta-value">{fmtDate(invoice.dueDate)}</div>
-              </div>
-              <div className="inv-meta-cell">
-                <div className="inv-meta-label">Status</div>
-                <div className="inv-meta-value">
-                  <span className={`status-badge ${statusClass}`}>
-                    {invoice.paymentStatus ?? "Pending"}
-                  </span>
-                </div>
-              </div>
-              <div className="inv-meta-cell">
-                <div className="inv-meta-label">GST Reg.</div>
-                <div className="inv-meta-value" style={{ fontSize: "11px" }}>RT 0001 0001</div>
-              </div>
-              <div className="inv-meta-cell">
-                <div className="inv-meta-label">QST Reg.</div>
-                <div className="inv-meta-value" style={{ fontSize: "11px" }}>1000000000 TQ 0001</div>
-              </div>
-            </div>
-
-            {/* Bill To */}
-            <div className="inv-bill">
-              <div className="inv-bill-label">Bill To</div>
-              <div className="inv-bill-name">{invoice.customerName ?? "—"}</div>
-            </div>
-
-            {/* Line items */}
-            <div className="inv-table-section">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th className="num">Qty (Box)</th>
-                    <th className="num">Price / Box</th>
-                    <th className="num">Subtotal</th>
-                    <th className="num">GST (5%)</th>
-                    <th className="num">QST (9.975%)</th>
-                    <th className="num">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {computedLines.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} style={{ textAlign: "center", color: "#9ca3af", padding: "20px" }}>
-                        No line items
-                      </td>
-                    </tr>
-                  ) : (
-                    computedLines.map(({ item, lineSubtotal, lineGst, lineQst, lineTotal }, i) => (
-                      <tr key={item.id ?? i}>
-                        <td className="desc">{item.description ?? "—"}</td>
-                        <td className="num">{item.qtyBox ?? "—"}</td>
-                        <td className="num">{fmtCad(safeFloat(item.priceBox))}</td>
-                        <td className="num">{fmtCad(lineSubtotal)}</td>
-                        <td className="num">{fmtCad(lineGst)}</td>
-                        <td className="num">{fmtCad(lineQst)}</td>
-                        <td className="num">{fmtCad(lineTotal)}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Totals */}
-            <div className="inv-totals">
-              <div className="inv-totals-table">
-                <div className="totals-row">
-                  <span className="totals-label" style={{ color: "#6b7280" }}>Subtotal</span>
-                  <span className="totals-value">{fmtCad(subtotal)}</span>
-                </div>
-                <div className="totals-row">
-                  <span className="totals-label" style={{ color: "#6b7280" }}>GST (5%)</span>
-                  <span className="totals-value">{fmtCad(gst)}</span>
-                </div>
-                <div className="totals-row">
-                  <span className="totals-label" style={{ color: "#6b7280" }}>QST (9.975%)</span>
-                  <span className="totals-value">{fmtCad(qst)}</span>
-                </div>
-                <div className="totals-row">
-                  <span className="totals-label">Total Due</span>
-                  <span className="totals-value">{fmtCad(total)}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Notes */}
-            {invoice.notes && (
-              <div className="inv-notes">
-                <div className="inv-notes-label">Notes</div>
-                <div className="inv-notes-text">{invoice.notes}</div>
-              </div>
-            )}
-
-            {/* Footer */}
-            <div className="inv-footer">
-              <p>TuniOlive Inc. &nbsp;·&nbsp; Quebec, Canada &nbsp;·&nbsp; Thank you for your business!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Button variant="outline" size="sm" onClick={ handlePrint } className="gap-1.5">
+      <Printer className="w-3.5 h-3.5" />
+      Print / PDF
+    </Button>
   );
 }

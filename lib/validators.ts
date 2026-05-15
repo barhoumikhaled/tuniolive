@@ -87,15 +87,18 @@ export const CreateArInvoiceBody = z.object({
   customerName: z.string().nullish(),
   invoiceDate: z.string(),
   dueDate: z.string().nullish(),
+  paymentTerms: z.string().nullish(),
   notes: z.string().nullish(),
   paymentStatus: z.string().nullish(),
   paymentDate: z.string().nullish(),
   lineItems: z
     .array(
       z.object({
+        item: z.string().nullish(),
         description: z.string().nullish(),
         qtyBox: z.string().nullish(),
         priceBox: z.string().nullish(),
+        priceUnit: z.string().nullish(),
       })
     )
     .optional(),

@@ -196,34 +196,34 @@ async function seedArInvoices() {
     paymentDate: new Date("2024-04-10"),
   }).returning();
 
-  await db.insert(arInvoiceItemsTable).values([
-    {
-      invoiceId: arInvoice.id,
-      itemType: "Product",
-      description: "Extra Virgin Olive Oil 750ml",
-      qtyBox: "10",
-      priceBox: "120.00",
-      unitPrice: "12.00",
-      gst: "60.00",
-      qst: "119.70",
-      totalAmount: "1200.00",
-      extendedPrice: "1379.70",
-      glAccount: "4000",
-    },
-    {
-      invoiceId: arInvoice.id,
-      itemType: "Product",
-      description: "Olive Oil 1L Bottle",
-      qtyBox: "5",
-      priceBox: "180.00",
-      unitPrice: "18.00",
-      gst: "45.00",
-      qst: "89.78",
-      totalAmount: "900.00",
-      extendedPrice: "1034.78",
-      glAccount: "4000",
-    },
-  ]);
+  // await db.insert(arInvoiceItemsTable).values([
+  //   {
+  //     invoiceId: arInvoice.id,
+  //     itemType: "Product",
+  //     description: "Extra Virgin Olive Oil 750ml",
+  //     qtyBox: "10",
+  //     priceBox: "120.00",
+  //     unitPrice: "12.00",
+  //     gst: "60.00",
+  //     qst: "119.70",
+  //     totalAmount: "1200.00",
+  //     extendedPrice: "1379.70",
+  //     glAccount: "4000",
+  //   },
+  //   {
+  //     invoiceId: arInvoice.id,
+  //     itemType: "Product",
+  //     description: "Olive Oil 1L Bottle",
+  //     qtyBox: "5",
+  //     priceBox: "180.00",
+  //     unitPrice: "18.00",
+  //     gst: "45.00",
+  //     qst: "89.78",
+  //     totalAmount: "900.00",
+  //     extendedPrice: "1034.78",
+  //     glAccount: "4000",
+  //   },
+  // ]);
   console.log("AR Invoices seeded");
 }
 
