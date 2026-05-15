@@ -35,7 +35,6 @@ interface ArInvoiceDetail {
   invoiceNumber?: string | null;
   customerId?: number | null;
   customerName?: string | null;
-  customerAdress?: string | null;
   invoiceDate: string;
   dueDate?: string | null;
   paymentTerms?: string | null;
@@ -58,7 +57,6 @@ interface ArInvoice {
   invoiceNumber?: string | null;
   customerId?: number | null;
   customerName?: string | null;
-  customerAdress?: string | null;
   invoiceDate: string;
   dueDate?: string | null;
   paymentTerms?: string | null;
@@ -74,7 +72,6 @@ const emptyForm = {
   invoiceNumber: "",
   customerId: 0,
   customerName: "",
-  customerAdress: "",
   invoiceDate: "",
   dueDate: "",
   paymentTerms: "Net 30",
@@ -190,7 +187,6 @@ export default function ArInvoices() {
         invoiceNumber: inv.invoiceNumber ?? "",
         customerId: inv.customerId ?? 0,
         customerName: inv.customerName ?? "",
-        customerAdress: contacts[0].type ?? "",
         invoiceDate: inv.invoiceDate ? inv.invoiceDate.split("T")[0] : "",
         dueDate: inv.dueDate ? inv.dueDate.split("T")[0] : "",
         paymentTerms: d.paymentTerms ?? "Net 30",
