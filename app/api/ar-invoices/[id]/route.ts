@@ -76,12 +76,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     if (v !== undefined) update[k] = v; 
   }
 
-  // Safely convert date strings — guard against already-Date objects or invalid values
   function safeDate(val: unknown): Date | null {
     if (!val) return null;
     if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
-    const d = new Date(String(val));
-    return isNaN(d.getTime()) ? null : d;
+    const str = String(val).slice(0, 10); // take only "YYYY-MM-DD"
+    const [year, month, day] = str.split("-").map(Number);
+    // Use UTC explicitly so Postgres stores the correct date regardless of server TZ
+    return new Date(Date.UTC(year, month - 1, day));
   }
 
   if ("invoiceDate" in update) update.invoiceDate = safeDate(update.invoiceDate);

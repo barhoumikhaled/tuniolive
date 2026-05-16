@@ -41,9 +41,9 @@ export async function POST(req: NextRequest) {
   const { lineItems, ...invoiceData } = body;
   const [invoice] = await db.insert(arInvoicesTable).values({
     ...invoiceData,
-    invoiceDate: new Date(invoiceData.invoiceDate),
-    dueDate: invoiceData.dueDate ? new Date(invoiceData.dueDate) : null,
-    paymentDate: invoiceData.paymentDate ? new Date(invoiceData.paymentDate) : null,
+    invoiceDate: (() => { const [y, m, d] = body.invoiceDate.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); })(),
+    dueDate: body.dueDate ? (() => { const [y, m, d] = body.dueDate.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); })() : null,
+    paymentDate: body.paymentDate ? (() => { const [y, m, d] = body.paymentDate.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); })() : null,
   }).returning();
   if (lineItems && lineItems.length > 0) {
     const enriched = computeLineItemTotals(lineItems as { item?: string | null; description?: string | null; qtyBox?: string | null; priceBox?: string | null; priceUnit?: string | null }[]);

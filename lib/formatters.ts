@@ -8,10 +8,18 @@ export function fmtUsd(value: string | number | null | undefined): string {
   return n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
 
-export function fmtDate(value: string | Date | null | undefined): string {
-  if (!value) return "—";
-  const d = typeof value === "string" ? new Date(value) : value;
-  return d.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
+export function fmtDate(date: string | Date | null | undefined): string {
+  if (!date) return "—";
+  // If it's a date-only string like "2025-05-13" or starts with that,
+  // parse as local date to avoid UTC midnight shifting the day back
+  const str = typeof date === "string" ? date : date.toISOString();
+  const dateOnly = str.slice(0, 10); // "2025-05-13"
+  const [year, month, day] = dateOnly.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export function fmtDateInput(value: string | Date | null | undefined): string {
