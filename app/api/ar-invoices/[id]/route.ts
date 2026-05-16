@@ -62,25 +62,31 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   return NextResponse.json({ ...invoice, lineItems });
 }
 
-// export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-//   const unauth = await guard(); if (unauth) return unauth;
-//   const { id } = IdParam.parse(await params);
-//   const [invoice] = await db.select().from(arInvoicesTable).where(eq(arInvoicesTable.id, id));
-//   if (!invoice) return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
-//   const lineItems = await db.select().from(arInvoiceItemsTable).where(eq(arInvoiceItemsTable.invoiceId, id));
-//   return NextResponse.json({ ...invoice, lineItems });
-// }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const unauth = await guard(); if (unauth) return unauth;
   const { id } = IdParam.parse(await params);
   const body = UpdateArInvoiceBody.parse(await req.json());
-  const { lineItems, ...invoiceData } = body as typeof body & { lineItems?: { item?: string | null; description?: string | null; qtyBox?: string | null; priceBox?: string | null; priceUnit?: string | null }[] };
+  const { lineItems, ...invoiceData } = body as typeof body & { 
+    lineItems?: { qtyBox?: string | null; priceBox?: string | null; description?: string | null }[] 
+  };
+  
   const update: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(invoiceData)) { if (v !== undefined) update[k] = v; }
-  if (update.invoiceDate) update.invoiceDate = new Date(update.invoiceDate as string);
-  if (update.dueDate) update.dueDate = new Date(update.dueDate as string);
-  if (update.paymentDate) update.paymentDate = new Date(update.paymentDate as string);
+  for (const [k, v] of Object.entries(invoiceData)) { 
+    if (v !== undefined) update[k] = v; 
+  }
+
+  // Safely convert date strings — guard against already-Date objects or invalid values
+  function safeDate(val: unknown): Date | null {
+    if (!val) return null;
+    if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+    const d = new Date(String(val));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  if ("invoiceDate" in update) update.invoiceDate = safeDate(update.invoiceDate);
+  if ("dueDate" in update) update.dueDate = safeDate(update.dueDate);
+  if ("paymentDate" in update) update.paymentDate = safeDate(update.paymentDate);
 
   const [invoice] = await db.update(arInvoicesTable).set(update).where(eq(arInvoicesTable.id, id)).returning();
   if (!invoice) return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
@@ -92,9 +98,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       await db.insert(arInvoiceItemsTable).values(enriched.map((item) => ({ ...item, invoiceId: id })));
     }
   }
+
   const items = await db.select().from(arInvoiceItemsTable).where(eq(arInvoiceItemsTable.invoiceId, id));
   return NextResponse.json({ ...invoice, lineItems: items });
 }
+
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const unauth = await guard(); if (unauth) return unauth;

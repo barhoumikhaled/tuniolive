@@ -163,7 +163,7 @@ export default function Contacts() {
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="w-[95vw] sm:max-w-7xl max-h-[92vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{editing ? "Edit Contact" : "New Contact"}</DialogTitle>
           </DialogHeader>
@@ -173,7 +173,7 @@ export default function Contacts() {
                 <Label>Name *</Label>
                 <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
               </div>
-              <div>
+              <div className="col-span-2">
                 <Label>Type</Label>
                 <Select value={form.type} onValueChange={(v) => setForm({ ...form, type: v })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
@@ -182,6 +182,10 @@ export default function Contacts() {
                     <SelectItem value="Customer">Customer</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="col-span-2">
+                <Label>Address</Label>
+                <Input value={ form.address } onChange={ (e) => setForm({ ...form, address: e.target.value }) } />
               </div>
               <div>
                 <Label>Country</Label>
@@ -195,7 +199,7 @@ export default function Contacts() {
                 <Label>Phone</Label>
                 <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
               </div>
-              <div className="col-span-2">
+              <div>
                 <Label>Email</Label>
                 <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
               </div>

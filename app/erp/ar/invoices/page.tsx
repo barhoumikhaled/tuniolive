@@ -18,6 +18,7 @@ import { Plus, Pencil, Trash2, Eye, X, Search, Filter } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { InvoicePrintTemplate } from "@/components/erp/shared/InvoicePrintTemplate";
+import { SupplierCombobox } from "@/components/erp/shared/SupplierCombobox";
 
 interface Contact { id: number; name: string; type: string; }
 
@@ -67,7 +68,11 @@ interface ArInvoice {
 }
 
 const emptyLine = (): LineItem => ({ item: "", description: "", qtyBox: "", priceBox: "", priceUnit: "" });
-
+const PRODUCT_OPTIONS = [
+  "Extra Virgin Olive oil 1 Liter (1 Box* 12 Btl.)",
+  "Extra Virgin Olive oil 750 ML (1 Box* 12 Btl.)",
+  "Extra Virgin Olive oil 3 Liter (1 Box* 4 Tin.)",
+];
 const emptyForm = {
   invoiceNumber: "",
   customerId: 0,
@@ -87,6 +92,7 @@ function calculateDueDate(invoiceDate: string): string {
   if (!invoiceDate) return "";
   const date = new Date(invoiceDate);
   date.setMonth(date.getMonth() + 1);
+  console.log("Calculated due date:", invoiceDate);
   return date.toISOString().split("T")[0];
 }
 
@@ -317,12 +323,14 @@ export default function ArInvoices() {
               </div>
               <div className="col-span-3">
                 <Label>Customer *</Label>
-                <Select value={form.customerId?.toString() ?? ""} onValueChange={handleCustomerSelect}>
-                  <SelectTrigger className="mt-1"><SelectValue placeholder="Select customer from address book" /></SelectTrigger>
-                  <SelectContent>
-                    {contacts.map((c) => <SelectItem key={c.id} value={c.id.toString()}>{c.name}</SelectItem>)}
-                  </SelectContent>
-                </Select>
+                <div className="mt-1">
+                  <SupplierCombobox
+                    contacts={ contacts }
+                    value={ form.customerId?.toString() ?? "" }
+                    onChange={ handleCustomerSelect }
+                    placeholder="Search customers…"
+                  />
+                </div>
               </div>
               <div>
                 <Label>Invoice Date *</Label>
@@ -389,7 +397,23 @@ export default function ArInvoices() {
                       return (
                         <tr key={idx} className="border-t border-border hover:bg-muted/20">
                           <td className="px-3 py-2"><Input className="h-8 text-xs w-20" value={line.item} onChange={(e) => updateLine(idx, "item", e.target.value)} placeholder="1" /></td>
-                          <td className="px-3 py-2"><Input className="h-8 text-xs min-w-[240px]" value={line.description} onChange={(e) => updateLine(idx, "description", e.target.value)} placeholder="Extra Virgin Olive Oil 1L (1 Box × 12 Btl.)" /></td>
+                          <td className="px-3 py-2 min-w-[280px]">
+                            <Select
+                              value={ line.description }
+                              onValueChange={ (v) => updateLine(idx, "description", v) }
+                            >
+                              <SelectTrigger className="h-8 text-xs">
+                                <SelectValue placeholder="Select product…" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                { PRODUCT_OPTIONS.map((opt) => (
+                                  <SelectItem key={ opt } value={ opt } className="text-xs">
+                                    { opt }
+                                  </SelectItem>
+                                )) }
+                              </SelectContent>
+                            </Select>
+                          </td>
                           <td className="px-3 py-2"><Input className="h-8 text-xs text-right w-20" type="number" step="0.001" value={line.qtyBox} onChange={(e) => updateLine(idx, "qtyBox", e.target.value)} placeholder="0" /></td>
                           <td className="px-3 py-2"><Input className="h-8 text-xs text-right w-24" type="number" step="0.01" value={line.priceBox} onChange={(e) => updateLine(idx, "priceBox", e.target.value)} placeholder="0.00" /></td>
                           <td className="px-3 py-2"><Input className="h-8 text-xs text-right w-24" type="number" step="0.01" value={line.priceUnit} onChange={(e) => updateLine(idx, "priceUnit", e.target.value)} placeholder="0.00" /></td>
