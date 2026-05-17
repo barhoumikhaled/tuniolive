@@ -68,7 +68,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       const supplierId = (update.supplierId ?? current.supplierId) as number;
       const amountCad = String(update.amountCad ?? current.amountCad);
       const currency = String(update.currency ?? current.currency);
-      const { gst, qst } = await computeTaxes(supplierId, amountCad, currency);
+
+      // ← check applyTaxes flag
+      const applyTaxes = update.applyTaxes !== false;
+      const { gst, qst } = applyTaxes
+        ? await computeTaxes(supplierId, amountCad, currency)
+        : { gst: "0.00", qst: "0.00" };
+
       const newTotal = (parseFloat(amountCad) + parseFloat(gst) + parseFloat(qst)).toFixed(2);
       update.gst = gst; update.qst = qst; update.totalCad = newTotal;
       update.balance = (parseFloat(newTotal) - parseFloat(current.amountPaid ?? "0")).toFixed(2);

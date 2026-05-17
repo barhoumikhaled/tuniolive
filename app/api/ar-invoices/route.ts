@@ -4,6 +4,7 @@ import { arInvoicesTable, arInvoiceItemsTable, contactsTable } from "@/db/schema
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { ListArInvoicesQueryParams, CreateArInvoiceBody } from "@/lib/validators";
+import { sql } from "drizzle-orm";
 
 async function guard() {
   const { userId } = await auth();
@@ -31,8 +32,35 @@ function computeLineItemTotals(items: { item?: string | null; description?: stri
 export async function GET(req: NextRequest) {
   const unauth = await guard(); if (unauth) return unauth;
   const q = ListArInvoicesQueryParams.parse(Object.fromEntries(req.nextUrl.searchParams));
-  const rows = await db.select().from(arInvoicesTable).orderBy(arInvoicesTable.invoiceDate);
-  return NextResponse.json(q.status ? rows.filter((r) => r.paymentStatus === q.status) : rows);
+
+  const rows = await db
+    .select({
+      id: arInvoicesTable.id,
+      invoiceNumber: arInvoicesTable.invoiceNumber,
+      customerId: arInvoicesTable.customerId,
+      customerName: arInvoicesTable.customerName,
+      invoiceDate: arInvoicesTable.invoiceDate,
+      dueDate: arInvoicesTable.dueDate,
+      paymentTerms: arInvoicesTable.paymentTerms,
+      notes: arInvoicesTable.notes,
+      paymentStatus: arInvoicesTable.paymentStatus,
+      paymentDate: arInvoicesTable.paymentDate,
+      createdAt: arInvoicesTable.createdAt,
+      // Sum qty * price across all line items for this invoice
+      total: sql<number>`
+        (
+          select coalesce(sum(total_amount), 0)
+          from ar_invoice_items
+          where ar_invoice_items.invoice_id = ar_invoices.id
+        )
+      `,
+    })
+    .from(arInvoicesTable)
+    .orderBy(arInvoicesTable.invoiceDate);
+
+  return NextResponse.json(
+    q.status ? rows.filter((r) => r.paymentStatus === q.status) : rows
+  );
 }
 
 export async function POST(req: NextRequest) {

@@ -63,6 +63,7 @@ interface ArInvoice {
   paymentTerms?: string | null;
   notes?: string | null;
   paymentStatus?: string | null;
+  total?: number | null;
   paymentDate?: string | null;
   createdAt: string;
 }
@@ -263,7 +264,7 @@ export default function ArInvoices() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/50">
-                  {["Invoice #", "Customer", "Date", "Due Date", "Status", "Notes", ""].map((h) => (
+                  { ["Invoice #", "Customer", "Date", "Due Date", "Amount", "Status", "Notes", ""].map((h) => (
                     <th key={h} className="text-left px-3 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -283,10 +284,13 @@ export default function ArInvoices() {
                   )
                   : filtered.map((inv) => (
                       <tr key={inv.id} className="border-b border-border/50 hover:bg-muted/30 group">
-                        <td className="px-3 py-2.5 font-mono text-xs">{inv.invoiceNumber ?? "—"}</td>
+                      <td className="px-3 py-2.5 font-mono text-xs">{ inv.invoiceNumber ?? "—" }</td>
                         <td className="px-3 py-2.5 font-medium">{inv.customerName ?? "—"}</td>
                         <td className="px-3 py-2.5 text-muted-foreground whitespace-nowrap">{fmtDate(inv.invoiceDate)}</td>
                         <td className="px-3 py-2.5 text-muted-foreground whitespace-nowrap">{fmtDate(inv.dueDate)}</td>
+                      <td className="px-3 py-2.5 text-right font-mono font-semibold whitespace-nowrap">
+                        { inv.total != null ? fmtCad(inv.total) : "—" }
+                      </td>
                         <td className="px-3 py-2.5"><StatusBadge status={inv.paymentStatus ?? "Pending"} /></td>
                         <td className="px-3 py-2.5 text-muted-foreground text-xs max-w-[180px] truncate">{inv.notes ?? "—"}</td>
                         <td className="px-3 py-2.5">

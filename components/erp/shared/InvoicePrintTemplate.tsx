@@ -23,7 +23,7 @@ interface InvoiceData {
   customerName?: string | null;
   customerAddress?: string | null;
   customerCity?: string | null;
-  invoiceDate: string; 
+  invoiceDate: string;
   dueDate?: string | null;
   paymentTerms?: string | null;
   paymentStatus?: string | null;
@@ -37,7 +37,10 @@ function calcTotal(line: LineItem): number {
 
 function fmtShortDate(s: string | null | undefined): string {
   if (!s) return "";
-  const d = new Date(s);
+  const str = typeof s === "string" ? s : new Date(s).toISOString();
+  const dateOnly = str.slice(0, 10);
+  const [year, month, day] = dateOnly.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
   return (
     d.toLocaleString("en-US", { month: "short" }) +
     " " +
@@ -51,52 +54,53 @@ function dollar(n: number | string | null | undefined): string {
   return "$" + safeFloat(n).toFixed(2);
 }
 
-export function InvoicePrintTemplate({ invoice }: { invoice: InvoiceData }) {
-  const printRef = useRef<HTMLDivElement>(null);
-  function handlePrint() {
-    const items = invoice.lineItems ?? [];
-    const grandTotal = items.reduce((s, l) => s + calcTotal(l), 0);
-    const logoUrl = window.location.origin + "/tuniolive-black.png";
+function buildHtml(invoice: InvoiceData, logoUrl: string): string {
+  const items = invoice.lineItems ?? [];
+  const grandTotal = items.reduce((s, l) => s + calcTotal(l), 0);
 
-    const rowsHtml =
-      items.length === 0
-        ? `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">No line items</td></tr>`
-        : items
-          .map(
-            (item, i) => `<tr>
-              <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.item ?? i + 1}</td>
-              <td style="border:1px solid #ccc;padding:6px 10px">${item.description ?? ""}</td>
-              <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.qtyBox ? item.qtyBox + " Box" : ""}</td>
-              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceBox ? dollar(item.priceBox) : ""}</td>
-              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceUnit ? dollar(item.priceUnit) : ""}</td>
-              <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;font-weight:600">${calcTotal(item) > 0 ? dollar(calcTotal(item)) : ""}</td>
-            </tr>`
-          )
-          .join("");
+  const rowsHtml =
+    items.length === 0
+      ? `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">No line items</td></tr>`
+      : items
+        .map(
+          (item, i) => `<tr>
+            <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.item ?? i + 1}</td>
+            <td style="border:1px solid #ccc;padding:6px 10px">${item.description ?? ""}</td>
+            <td style="text-align:center;border:1px solid #ccc;padding:6px 10px">${item.qtyBox ? item.qtyBox + " Box" : ""}</td>
+            <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceBox ? dollar(item.priceBox) : ""}</td>
+            <td style="text-align:right;border:1px solid #ccc;padding:6px 10px">${item.priceUnit ? dollar(item.priceUnit) : ""}</td>
+            <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;font-weight:600">${calcTotal(item) > 0 ? dollar(calcTotal(item)) : ""}</td>
+          </tr>`
+        )
+        .join("");
 
-    const html = `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Invoice ${invoice.invoiceNumber ?? ""}</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#111;background:#fff}
-  .page{max-width:860px;margin:0 auto;padding:32px 40px}
-  table{border-collapse:collapse;width:100%}
-  @media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}.page{padding:20px 24px}}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #111; background: #fff; }
+  .page { max-width: 860px; margin: 0 auto; padding: 32px 40px; }
+  table { border-collapse: collapse; width: 100%; }
+  @media print {
+    html, body { width: 100%; height: 100%; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 20px 24px; }
+  }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- TOP: Logo + Company | Invoice Box -->
   <table style="margin-bottom:20px">
     <tr>
       <td style="vertical-align:top;width:60%">
         <img src="${logoUrl}" alt="TuniOlive"
-             style="height:70px;width:auto;object-fit:contain"
-             onerror="this.outerHTML='<span style=font-size:22px;font-weight:800>TuniOlive</span>'"/>
+          style="height:70px;width:auto;object-fit:contain"
+          onerror="this.outerHTML='<span style=font-size:22px;font-weight:800>TuniOlive</span>'"/>
         <div style="font-size:11px;color:#444;line-height:1.7;margin-top:8px">
           3203 Rue Noorduyn, Saint-Laurent, QC H4R 1A1<br/>
           Email: info@tuniolive.com<br/>
@@ -182,9 +186,7 @@ export function InvoicePrintTemplate({ invoice }: { invoice: InvoiceData }) {
         <th style="border:1px solid #ccc;padding:6px 10px;text-align:center;font-size:11px;width:120px">Total Price/Prix</th>
       </tr>
     </thead>
-    <tbody>
-      ${rowsHtml}
-    </tbody>
+    <tbody>${rowsHtml}</tbody>
     <tfoot>
       <tr>
         <td colspan="5" style="text-align:right;border:1px solid #ccc;padding:6px 10px;background:#fafafa;font-weight:700">Subtotal:</td>
@@ -230,19 +232,68 @@ export function InvoicePrintTemplate({ invoice }: { invoice: InvoiceData }) {
 </div>
 </body>
 </html>`;
+}
 
-    const win = window.open("", "_blank", "width=960,height=800");
-    if (!win) { alert("Please allow popups to print invoices."); return; }
-    win.document.write(html);
-    win.document.close();
-    win.focus();
-    setTimeout(() => win.print(), 600);
+export function InvoicePrintTemplate({ invoice }: { invoice: InvoiceData }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  function handlePrint() {
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+
+    const logoUrl = window.location.origin + "/tuniolive-black.png";
+    const html = buildHtml(invoice, logoUrl);
+
+    // Write into the hidden iframe
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) return;
+
+    doc.open();
+    doc.write(html);
+    doc.close();
+
+    // Wait for images to load before printing
+    const tryPrint = () => {
+      try {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      } catch {
+        // Safari fallback — use the parent window's print on the iframe
+        window.frames[0]?.print?.();
+      }
+    };
+
+    // Give Safari time to render
+    const img = doc.querySelector("img");
+    if (img && !img.complete) {
+      img.onload = () => setTimeout(tryPrint, 100);
+      img.onerror = () => setTimeout(tryPrint, 100);
+    } else {
+      setTimeout(tryPrint, 250);
+    }
   }
 
   return (
-    <Button variant="outline" size="sm" onClick={ handlePrint } className="gap-1.5">
-      <Printer className="w-3.5 h-3.5" />
-      Print / PDF
-    </Button>
+    <>
+      {/* Hidden iframe — never visible, used only for printing */ }
+      <iframe
+        ref={ iframeRef }
+        style={ {
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "1px",
+          height: "1px",
+          opacity: 0,
+          border: "none",
+          pointerEvents: "none",
+        } }
+        title="print-frame"
+      />
+      <Button variant="outline" size="sm" onClick={ handlePrint } className="gap-1.5">
+        <Printer className="w-3.5 h-3.5" />
+        Print / PDF
+      </Button>
+    </>
   );
 }

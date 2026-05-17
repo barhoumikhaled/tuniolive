@@ -50,6 +50,7 @@ export const CreateApInvoiceBody = z.object({
   expenseDescription: z.string().nullish(),
   referenceId: z.string().nullish(),
   referenceDescription: z.string().nullish(),
+  applyTaxes: z.boolean().default(true),
 });
 
 export const UpdateApInvoiceBody = CreateApInvoiceBody.partial();

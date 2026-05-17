@@ -60,7 +60,7 @@ const emptyForm = {
   supplierId: "", invoiceNumber: "", invoiceDate: "", dueDate: "", poNumber: "",
   amountCad: "", gst: "", qst: "", totalCad: "", currency: "CAD",
   amountUsd: "", exchangeRate: "", glAccount: "", expenseDescription: "",
-  referenceId: "", referenceDescription: "",
+  referenceId: "", referenceDescription: "", applyTaxes: true,
 };
 
 // const GL_ACCOUNTS = ["1200","1210","1250","5001","5010","5020","5050","5100","5200","5210","5300","5400","5500","6020","6050","6060"];
@@ -107,7 +107,7 @@ export default function ApInvoices() {
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: typeof emptyForm) => apiFetch("/ap-invoices", { method: "POST", body: JSON.stringify({ ...data, supplierId: parseInt(data.supplierId) }) }),
+    mutationFn: (data: typeof emptyForm) => apiFetch("/ap-invoices", { method: "POST", body: JSON.stringify({ ...data, applyTaxes: form.applyTaxes, supplierId: parseInt(data.supplierId) }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); toast.success("Invoice created"); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -118,6 +118,7 @@ export default function ApInvoices() {
         method: "PATCH",
         body: JSON.stringify({
           ...data,
+          applyTaxes: form.applyTaxes,
           supplierId: data.supplierId ? parseInt(data.supplierId) : undefined,
         }),
       }),
@@ -165,7 +166,7 @@ export default function ApInvoices() {
       qst: inv.qst ?? "", totalCad: inv.totalCad, currency: inv.currency,
       amountUsd: inv.amountUsd ?? "", exchangeRate: inv.exchangeRate ?? "",
       glAccount: inv.glAccount ?? "", expenseDescription: inv.expenseDescription ?? "",
-      referenceId: "", referenceDescription: "",
+      referenceId: "", referenceDescription: "", applyTaxes: form.applyTaxes
     });
     setDialogOpen(true);
   }
@@ -295,6 +296,18 @@ export default function ApInvoices() {
                 <Label>Amount CAD *</Label>
                 <Input type="number" step="0.01" value={form.amountCad} onChange={(e) => handleAmountChange(e.target.value)} required />
               </div>
+              <div className="col-span-2 flex items-center gap-3 pt-1">
+                <input
+                  type="checkbox"
+                  id="applyTaxes"
+                  checked={ form.applyTaxes }
+                  onChange={ (e) => setForm((prev) => ({ ...prev, applyTaxes: e.target.checked })) }
+                  className="w-4 h-4 accent-primary cursor-pointer"
+                />
+                <Label htmlFor="applyTaxes" className="cursor-pointer font-normal">
+                  Apply GST (5%) & QST (9.975%)
+                </Label>
+              </div>
               {form.currency === "USD" && (
                 <>
                   <div>
@@ -307,18 +320,36 @@ export default function ApInvoices() {
                   </div>
                 </>
               )}
-              <div>
-                <Label>GST</Label>
-                <Input type="number" step="0.01" value={form.gst} onChange={(e) => setForm({ ...form, gst: e.target.value })} />
-              </div>
-              <div>
-                <Label>QST</Label>
-                <Input type="number" step="0.01" value={form.qst} onChange={(e) => setForm({ ...form, qst: e.target.value })} />
-              </div>
-              <div>
-                <Label>Total CAD *</Label>
-                <Input type="number" step="0.01" value={form.totalCad} onChange={(e) => setForm({ ...form, totalCad: e.target.value })} required />
-              </div>
+              { form.applyTaxes && form.amountCad && (
+                <div className="col-span-2 bg-muted/40 rounded-lg px-4 py-3 text-sm grid grid-cols-3 gap-2">
+                  <div>
+                    <p className="text-xs text-muted-foreground">GST (5%)</p>
+                    <p className="font-mono font-semibold">
+                      { fmtCad((parseFloat(form.amountCad) || 0) * 0.05) }
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">QST (9.975%)</p>
+                    <p className="font-mono font-semibold">
+                      { fmtCad((parseFloat(form.amountCad) || 0) * 0.09975) }
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Total CAD</p>
+                    <p className="font-mono font-bold text-primary">
+                      { fmtCad((parseFloat(form.amountCad) || 0) * 1.14975) }
+                    </p>
+                  </div>
+                </div>
+              ) }
+              { !form.applyTaxes && form.amountCad && (
+                <div className="col-span-2 bg-muted/40 rounded-lg px-4 py-3 text-sm">
+                  <p className="text-xs text-muted-foreground">Total CAD (no taxes)</p>
+                  <p className="font-mono font-bold text-primary">
+                    { fmtCad(parseFloat(form.amountCad) || 0) }
+                  </p>
+                </div>
+              ) }
               <div className="col-span-2">
                 <Label>Expense Description</Label>
                 <Input value={form.expenseDescription} onChange={(e) => setForm({ ...form, expenseDescription: e.target.value })} />

@@ -57,7 +57,9 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const unauth = await guard(); if (unauth) return unauth;
   const body = CreateApInvoiceBody.parse(await req.json());
-  const { gst, qst } = await computeTaxes(body.supplierId, String(body.amountCad), body.currency);
+  const { gst, qst } = body.applyTaxes === false
+    ? { gst: "0.00", qst: "0.00" }
+    : await computeTaxes(body.supplierId, String(body.amountCad), body.currency);
   const a = parseFloat(String(body.amountCad));
   const totalCad = (a + parseFloat(gst) + parseFloat(qst)).toFixed(2);
   const [invoice] = await db.insert(apInvoicesTable).values({
