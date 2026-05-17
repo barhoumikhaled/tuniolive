@@ -37,9 +37,7 @@ export default function BlogListing({ posts, currentPage, totalPages, isConfigur
   if (!isConfigured) {
     return (
       <section className="container mx-auto px-4 py-16">
-        <header className="mb-10 text-center">
-          <h1 className="text-4xl font-semibold tracking-tight">{ t('blog.title') }</h1>
-        </header>
+        
         <div className="mx-auto max-w-xl rounded-lg border bg-muted/30 p-8 text-center">
           <p className="text-muted-foreground">{ t('blog.notConfigured') }</p>
         </div>
@@ -50,10 +48,7 @@ export default function BlogListing({ posts, currentPage, totalPages, isConfigur
   if (!posts || posts.length === 0) {
     return (
       <section className="container mx-auto px-4 py-16">
-        <header className="mb-10 text-center">
-          <h1 className="text-4xl font-semibold tracking-tight">{ t('blog.title') }</h1>
-          <p className="mt-3 text-muted-foreground">{ t('blog.subtitle') }</p>
-        </header>
+        
         <div className="mx-auto max-w-xl rounded-lg border bg-muted/30 p-12 text-center">
           <p className="text-lg">{ t('blog.empty') }</p>
         </div>
@@ -63,10 +58,6 @@ export default function BlogListing({ posts, currentPage, totalPages, isConfigur
 
   return (
     <section className="container mx-auto px-4 py-16" dir={ isRTL ? 'rtl' : 'ltr' }>
-      <header className="mb-10 text-center">
-        <h1 className="text-4xl font-semibold tracking-tight">{ t('blog.title') }</h1>
-        <p className="mt-3 text-muted-foreground">{ t('blog.subtitle') }</p>
-      </header>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         { posts.map((post) => {
