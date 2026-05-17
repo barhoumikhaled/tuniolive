@@ -19,3 +19,15 @@ export const client = isSanityConfigured
     token: readToken || undefined,
   })
   : null
+
+// Preview client — uses token and previewDrafts perspective
+export const previewClient = isSanityConfigured && readToken
+  ? createClient({
+    projectId,
+    dataset,
+    apiVersion,
+    useCdn: false,
+    perspective: 'previewDrafts',
+    token: readToken,
+  })
+  : null

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { draftMode } from 'next/headers'
 
 import BlogPostView from '@/components/blog/blog-post'
+import { PreviewBanner } from '@/components/blog/preview-banner'
 import { sanityFetch } from '@/sanity/lib/fetch'
-import { POST_BY_SLUG_QUERY, POST_SLUGS_QUERY } from '@/sanity/lib/queries'
+import { POST_BY_SLUG_QUERY, POST_BY_SLUG_PREVIEW_QUERY, POST_SLUGS_QUERY } from '@/sanity/lib/queries'
 import { urlForImage } from '@/sanity/lib/image'
 import { isSanityConfigured } from '@/sanity/env'
 import type { BlogPostDoc } from '@/sanity/lib/types'
@@ -36,14 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) return { title: 'Blog · TuniOlive' }
 
   const title = post.title_en || post.title_fr || post.title_ar || 'TuniOlive Blog'
-  const description =
-    post.seoDescription_en ||
-    post.excerpt_en ||
-    post.seoDescription_fr ||
-    post.excerpt_fr ||
-    post.seoDescription_ar ||
-    post.excerpt_ar ||
-    ''
+  const description = post.seoDescription_en || post.excerpt_en || post.seoDescription_fr || post.excerpt_fr || ''
   const builder = urlForImage(post.coverImage)
   const ogImage = builder ? builder.width(1200).height(630).url() : undefined
 
@@ -51,32 +46,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${title} · TuniOlive`,
     description,
     openGraph: {
-      title,
-      description,
-      type: 'article',
+      title, description, type: 'article',
       images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: title }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ogImage ? [ogImage] : undefined,
     },
   }
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params
+  const { isEnabled: isPreview } = await draftMode()
+
   const post = await sanityFetch<BlogPostDoc>({
-    query: POST_BY_SLUG_QUERY,
+    query: isPreview ? POST_BY_SLUG_PREVIEW_QUERY : POST_BY_SLUG_QUERY,
     params: { slug },
-    revalidate: 60,
+    revalidate: isPreview ? 0 : 60,
     tags: ['post', `post:${slug}`],
+    preview: isPreview,
   })
 
-  if (!post) {
-    notFound()
-  }
+  if (!post) notFound()
 
-  return <BlogPostView post={ post } />
+  return (
+    <>
+      { isPreview && <PreviewBanner slug={ slug } /> }
+      <BlogPostView post={ post } />
+    </>
+  )
 }

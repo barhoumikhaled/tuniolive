@@ -44,3 +44,25 @@ export const POST_BY_SLUG_QUERY = groq`
     coverImage
   }
 `
+
+// ← Preview version: no defined(publishedAt) filter so drafts are visible
+export const POST_BY_SLUG_PREVIEW_QUERY = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    "slug": slug.current,
+    title_en,
+    title_fr,
+    title_ar,
+    excerpt_en,
+    excerpt_fr,
+    excerpt_ar,
+    body_en,
+    body_fr,
+    body_ar,
+    seoDescription_en,
+    seoDescription_fr,
+    seoDescription_ar,
+    author, publishedAt,
+    coverImage
+  }
+`
