@@ -679,5 +679,10 @@ export const ar = {
     refund: "سياسة الاسترجاع",
     delivery: "سياسة التوصيل",
     terms: "شروط الخدمة"
+  },
+  blog: {
+    back: "العودة إلى المدونة",
+    byAuthor: "بواسطة",
+    readMore: "اقرأ المزيد",
   }
 };

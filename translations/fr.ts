@@ -690,5 +690,10 @@
       refund: "Remboursement",
       delivery: "Livraison",
       terms: "Conditions"
+    },
+    blog: {
+      back: "Retour aux Blogs",
+      byAuthor: "Par",
+      readMore: "Lire plus",
     }
   };
