@@ -10,7 +10,6 @@ const nextConfig = {
       },
     ],
   },
-  allowedDevOrigins: ['*.replit.dev', '*.kirk.replit.dev'],
 }
 
 module.exports = nextConfig
