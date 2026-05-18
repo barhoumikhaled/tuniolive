@@ -7,13 +7,15 @@
       send: "Envoyer",
       admin: "Admin",
       sending: "Envoi en cours...",
-      sendMessage: "Envoyer le message"
+      sendMessage: "Envoyer le message",
+      available: "Épuisé",
     },
     header: {
       products: "Produits",
       about: "À propos",
       quality: "Qualité",
-      contact: "Contact"
+      contact: "Contact",
+      blog: "Blog",
     },
     hero: {
       title: "La pure excellence tunisienne dans chaque goutte",

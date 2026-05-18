@@ -66,40 +66,7 @@
                               return (
                                 <div className="min-h-screen bg-background">
 
-                                  {/* <NextSeo
-                                    title={ `${product.name} - Premium ${product.origin} Olive Oil` }
-                                    description={ product.description }
-                                    openGraph={ {
-                                      title: `${product.name} - Premium ${product.origin} Olive Oil`,
-                                      description: product.description,
-                                      url: `https://yourdomain.com/products/${product.id}`,
-                                      images: [
-                                        {
-                                          url: product.images[0],
-                                          width: 800,
-                                          height: 600,
-                                          alt: product.name,
-                                        },
-                                      ],
-                                      site_name: "TuniOlive",
-                                    } }
-                                  /> */}
-
                                   <div className="container mx-auto px-4 py-8">
-                                    {/* Breadcrumb */ }
-                                    {/* <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">
-                                      <Link href="/" className="hover:text-primary">Home</Link>
-                                      <span>/</span>
-                                      <Link href="/#products" className="hover:text-primary">Products</Link>
-                                      <span>/</span>
-                                      <span className="text-foreground">{ product.name }{ t(`${translateString}.name`) }</span>
-                                    </div> */}
-
-                                    {/* Back Button */ }
-                                    {/* <Link href="/" className="inline-flex items-center space-x-2 text-sm hover:text-primary mb-6">
-                                      <ArrowLeft className="h-4 w-4" />
-                                      <span>Back to Products</span>
-                                    </Link> */}
 
                                     {/* Product Details */ }
                                     <div className="grid lg:grid-cols-2 gap-12 mb-16">
@@ -115,24 +82,6 @@
                                           <h1 className="text-3xl mb-2"> { t(`${translateString}.name`) }</h1>
                                           <p className="text-muted-foreground mb-4">{ t(`${translateString}.flavor`) }</p>
 
-                                          {/* <div className="flex items-center space-x-4 mb-4">
-                                            <div className="flex items-center space-x-1">
-                                              { [...Array(5)].map((_, i) => (
-                                                <Star
-                                                  key={ i }
-                                                  className={ `h-4 w-4 ${i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}` }
-                                                />
-                                              )) }
-                                              <span className="text-sm text-muted-foreground ml-2">({ product.rating }) • { product.reviewCount } reviews</span>
-                                            </div>
-                                          </div> */}
-
-                                          {/* <div className="flex items-center space-x-4 mb-6">
-                                            <span className="text-3xl text-green-600">${ product.price }</span>
-                                            { product.originalPrice && (
-                                              <span className="text-lg text-muted-foreground line-through">${ product.originalPrice }</span>
-                                            ) }
-                                          </div> */}
                                         </div>
 
                                         <p className="text-muted-foreground leading-relaxed">{ t(`${translateString}.description`) }</p>
@@ -170,6 +119,7 @@
 
                                           <div className="flex space-x-4">
                                             <Button
+                                              disabled={ !product.isAvailable }
                                               size="lg"
                                               className="flex-1 bg-green-600 hover:bg-green-700"
                                               onClick={ () => {
@@ -184,7 +134,8 @@
                                               } }
                                             >
                                               <ShoppingCart className="h-4 w-4 mr-2" />
-                                              { t("common.addToCart") }
+                                              { product.isAvailable ? t("common.addToCart") : t("common.available") }
+                                              
                                             </Button>
                                             <ShareButton
                                               url={ `/products/${product.id}` }
@@ -371,12 +322,7 @@
                                                   <div className="space-y-2">
                                                     <p className="text-sm text-muted-foreground">{ t(`${translateString}.origin`) }</p>
                                                     <p className="text-sm">{ t(`${translateString}.flavor`) }</p>
-                                                    {/* <div className="flex items-center space-x-1">
-                                                  { [...Array(5)].map((_, i) => (
-                                                    <Star key={ i } className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                                  )) }
-                                                  <span className="text-sm text-muted-foreground ml-2">({ relatedProduct.rating })</span>
-                                                </div> */}
+                                               
                                                   </div>
                                                 </CardHeader>
                                                 <CardContent>
@@ -393,6 +339,7 @@
                                                     {/* Row 1 - Add to Cart (FULL WIDTH) */ }
                                                     <Button
                                                       size="lg"
+                                                      disabled={ !relatedProduct.isAvailable }
                                                       className="w-full bg-green-600 hover:bg-green-700"
                                                       onClick={ () => {
                                                         addItem(
@@ -409,7 +356,8 @@
                                                       } }
                                                     >
                                                       <ShoppingCart className="h-4 w-4 mr-2" />
-                                                      { t("common.addToCart") }
+                                                      { relatedProduct.isAvailable ? t("common.addToCart") : t("common.available") }
+                                                      
                                                     </Button>
 
                                                     {/* Row 2 - View + Share */ }

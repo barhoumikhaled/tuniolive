@@ -31,6 +31,7 @@
       { href: "/#about", labelKey: "header.about" },
       { href: "/#quality", labelKey: "header.quality" },
       { href: "/#contact", labelKey: "header.contact" },
+      { href: "/blog", labelKey: "header.blog" },
     ];
 
     return (

@@ -5,6 +5,7 @@ import ProductDetail from "@/components/product-details";
 const products = {
   "tuniolive-1l-evoo": {
     id: "tuniolive-1l-evoo",
+    isAvailable: true,
     name: "TuniOlive Extra Virgin Olive Oil – 1 L Bottle",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
@@ -54,6 +55,7 @@ pastas.
   },
   "tuniolive-750ml-evoo": {
     id: "tuniolive-750ml-evoo",
+    isAvailable: true,
     name: "TuniOlive Extra Virgin Olive Oil – 750 mL Bottle",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",
@@ -102,6 +104,7 @@ freshness.Taste the golden balance between fruitiness and a subtle bite.
   },
   "tuniolive-3l-evoo": {
     id: "tuniolive-3l-evoo",
+    isAvailable: false,
     name: "TuniOlive Extra Virgin Olive Oil – 3L Tinc",
     origin: "Bouhajla, Kairouan, Tunisie",
     flavor: "Robust & Peppery",

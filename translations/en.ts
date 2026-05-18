@@ -7,13 +7,15 @@ export const en = {
     send: "Send",
     admin: "Admin",
     sending: "Sending...",
-    sendMessage: "Send Message"
+    sendMessage: "Send Message",
+    available:"Sold Out",
   },
   header: {
     products: "Products",
     about: "About",
     quality: "Quality",
-    contact: "Contact"
+    contact: "Contact",
+    blog: "Blog"
   },
   hero: {
     title: "Pure Tunisian Excellence in Every Drop",

@@ -7,13 +7,15 @@ export const ar = {
     send: "إرسال",
     admin: "الإدارة",
     sending: "جاري الإرسال...",
-    sendMessage: "إرسال الرسالة"
+    sendMessage: "إرسال الرسالة",
+    available: "تم بيع المنتج بالكامل",
   },
   header: {
     products: "المنتجات",
     about: "عن الشركة",
     quality: "الجودة",
-    contact: "اتصل بنا"
+    contact: "اتصل بنا",
+    blog: "المدونة",
   },
   hero: {
     title: "التميز التونسي الأصيل في كل قطرة",

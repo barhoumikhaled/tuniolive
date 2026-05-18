@@ -27,4 +27,5 @@ export interface Product {
   specifications: Specifications;
   tastingNotes: string[];
   features: Feature[];
+  isAvailable: boolean;
 }

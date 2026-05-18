@@ -69,7 +69,8 @@ export default function ClientHome() {
                 image: "/tuniolive-1l/tuniolive-1l-main.jpeg",
                 price: 20.99,
                 originalPrice: 24.99,
-                badge: "Best Seller"
+                badge: "Best Seller",
+                isAvailable: true
               },
               {
                 id: "tuniolive-750ml-evoo",
@@ -79,7 +80,8 @@ export default function ClientHome() {
                 image: "/tuniolive-750-ml/tuniolive-750-ml-main.jpeg",
                 originalPrice: 23.99,
                 price: 18.99,
-                badge: "Popular"
+                badge: "Popular",
+                isAvailable: true
               },
               {
                 id: "tuniolive-3l-evoo",
@@ -89,7 +91,8 @@ export default function ClientHome() {
                 image: "/tuniolive-3l/tuniolive-3l-main.jpeg",
                 price: 55.00,
                 originalPrice: 75.00,
-                badge: "Premium"
+                badge: "Premium",
+                isAvailable: false
               }
             ].map((product, index) => {
               var translateString = "products.tunioliveevoo1l"
@@ -154,6 +157,7 @@ export default function ClientHome() {
                       </Button>
                     </Link>
                     <Button
+                    disabled={ !product.isAvailable }
                       variant="outline"
                       className="w-full"
                       onClick={ () => {
@@ -167,7 +171,7 @@ export default function ClientHome() {
                       } }
                     >
                       <ShoppingCart className="h-4 w-4 mr-2" />
-                      { t("common.addToCart") }
+                      { product.isAvailable? t("common.addToCart"): t("common.available") }
                     </Button>
                   </CardContent>
                 </Card>
