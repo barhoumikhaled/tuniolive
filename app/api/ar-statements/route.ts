@@ -48,5 +48,6 @@ export async function GET() {
       invoiceCount: r.invoiceCount ?? 0,
       unpaidCount: r.unpaidCount ?? 0,
     }))
+      .sort((a, b) => b.balance - a.balance)
   );
 }

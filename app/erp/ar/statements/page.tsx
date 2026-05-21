@@ -5,11 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
 import { fmtCad, fmtDate } from "@/lib/formatters";
 import { AppLayout } from "@/components/erp/layout/AppLayout";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/erp/shared/StatusBadge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Printer, ChevronRight, Users } from "lucide-react";
+import { Printer, ChevronRight, Users, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface CustomerSummary {
   customerId: number | null;
@@ -45,6 +46,7 @@ interface CustomerStatement {
 
 export default function ArStatements() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [search, setSearch] = useState("");
   const printRef = useRef<HTMLDivElement>(null);
 
   const { data: customers = [], isLoading } = useQuery<CustomerSummary[]>({
@@ -59,9 +61,14 @@ export default function ArStatements() {
   });
 
   const selected = customers.find((c) => c.customerId === selectedId);
+  const filtered = customers.filter((c) => {
+    const matchSearch =
+      !search ||
+      c.customerName!.toLowerCase().includes(search.toLowerCase())
+    return matchSearch;
+  });
 
   function handlePrint() {
-    debugger
     if (!statement || !printRef.current) return;
     const logoUrl = window.location.origin + "/tuniolive-black.png";
     const today = new Date().toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" });
@@ -165,6 +172,12 @@ export default function ArStatements() {
             <span className="font-semibold text-sm">Customers</span>
             <span className="ml-auto text-xs text-muted-foreground">{ customers.length } total</span>
           </div>
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input placeholder="Search by name, city, country…" className="pl-9" value={ search } onChange={ (e) => setSearch(e.target.value) } />
+            </div>
+          </div>
           <div className="overflow-y-auto flex-1">
             { isLoading
               ? Array.from({ length: 5 }).map((_, i) => (
@@ -173,13 +186,13 @@ export default function ArStatements() {
                   <Skeleton className="h-3 w-1/2" />
                 </div>
               ))
-              : customers.length === 0
+              : filtered.length === 0
                 ? (
                   <div className="px-4 py-8 text-center text-sm text-muted-foreground">
                     No customers with invoices yet.
                   </div>
                 )
-                : customers.map((c) => (
+                : filtered.map((c) => (
                   <button
                     key={ c.customerId }
                     onClick={ () => setSelectedId(c.customerId) }
@@ -240,7 +253,7 @@ export default function ArStatements() {
               </div>
 
               {/* Summary cards */ }
-                  <div ref={ printRef } className="grid grid-cols-3 gap-3 px-6 py-4 border-b bg-muted/20">
+              <div ref={ printRef } className="grid grid-cols-3 gap-3 px-6 py-4 border-b bg-muted/20">
                 <div className="text-center">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Billed</p>
                   <p className="text-xl font-bold">{ fmtCad(statement.totalBilled) }</p>
