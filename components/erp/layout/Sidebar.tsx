@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/components/ui/utils";
 import {
   LayoutDashboard, Users, FileText, CreditCard, Receipt,
-  BookOpen, BookMarked, BarChart3, ChevronRight, Leaf, X, Menu,
+  BookOpen, BookMarked, BarChart3, ChevronRight, Leaf, X, Menu, ClipboardList
 } from "lucide-react";
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
   { href: "/erp/ap/invoices", label: "AP Invoices", icon: FileText },
   { href: "/erp/ap/payments", label: "AP Payments", icon: CreditCard },
   { href: "/erp/ar/invoices", label: "AR Invoices", icon: Receipt },
+  { href: "/erp/ar/statements", label: "AR Statements", icon: ClipboardList },
   { href: "/erp/gl/accounts", label: "Chart of Accounts", icon: BookOpen },
   { href: "/erp/gl/entries", label: "Journal Entries", icon: BookMarked },
   { href: "/erp/reports", label: "Reports", icon: BarChart3 },
