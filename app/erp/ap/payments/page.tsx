@@ -88,7 +88,7 @@ export default function ApPayments() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["ap-payments"] });
       qc.invalidateQueries({ queryKey: ["ap-invoices-unpaid"] }); // ← updated key
-      toast.success("Payment created");
+      setTimeout(() => toast.success("Payment created"), 0);
       setDialogOpen(false);
     },
     onError: (e: Error) => toast.error(e.message),
@@ -110,7 +110,7 @@ export default function ApPayments() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["ap-payments"] });
       qc.invalidateQueries({ queryKey: ["ap-invoices-unpaid"] }); // ← updated key
-      toast.success("Payment updated");
+      setTimeout(() => toast.success("Payment updated"), 0);
       setDialogOpen(false);
     },
     onError: (e: Error) => toast.error(e.message),
@@ -120,7 +120,7 @@ export default function ApPayments() {
     mutationFn: (id: number) => apiFetch(`/ap-payments/${id}`, { method: "DELETE" }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["ap-payments"] });
-      toast.success("Payment deleted");
+      setTimeout(() => toast.success("Payment deleted"), 0);
       setDeleteId(null);
     },
     onError: (e: Error) => toast.error(e.message),

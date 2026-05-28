@@ -4,6 +4,7 @@ import { apInvoicesTable, contactsTable, apPaymentsTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { IdParam, UpdateApInvoiceBody } from "@/lib/validators";
+import { postApInvoiceToGl, reverseGlEntries } from "@/lib/gl-posting";
 
 const GST_RATE = 0.05;
 const QST_RATE = 0.09975;
@@ -43,7 +44,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     exchangeRate: apInvoicesTable.exchangeRate, amountPaid: apInvoicesTable.amountPaid,
     balance: apInvoicesTable.balance, expenseDescription: apInvoicesTable.expenseDescription,
     referenceId: apInvoicesTable.referenceId, referenceDescription: apInvoicesTable.referenceDescription,
-    glAccount: apInvoicesTable.glAccount, createdAt: apInvoicesTable.createdAt, updatedAt: apInvoicesTable.updatedAt,
+    glAccount: apInvoicesTable.glAccount, glPosted: apInvoicesTable.glPosted,
+    createdAt: apInvoicesTable.createdAt, updatedAt: apInvoicesTable.updatedAt,
   }).from(apInvoicesTable).leftJoin(contactsTable, eq(apInvoicesTable.supplierId, contactsTable.id)).where(eq(apInvoicesTable.id, id));
   if (!row) return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
   const payments = await db.select().from(apPaymentsTable).where(eq(apPaymentsTable.linkedInvoiceId, id));
@@ -62,19 +64,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (update.invoiceDate) update.invoiceDate = new Date(update.invoiceDate as string);
   if (update.dueDate) update.dueDate = new Date(update.dueDate as string);
 
-  if (update.amountCad !== undefined || update.currency !== undefined || update.supplierId !== undefined) {
+  const amountChanged = update.amountCad !== undefined || update.currency !== undefined || update.supplierId !== undefined;
+
+  if (amountChanged) {
     const [current] = await db.select().from(apInvoicesTable).where(eq(apInvoicesTable.id, id));
     if (current) {
       const supplierId = (update.supplierId ?? current.supplierId) as number;
-      const amountCad = String(update.amountCad ?? current.amountCad);
-      const currency = String(update.currency ?? current.currency);
-
-      // ← check applyTaxes flag
+      const amountCad  = String(update.amountCad ?? current.amountCad);
+      const currency   = String(update.currency   ?? current.currency);
       const applyTaxes = update.applyTaxes !== false;
       const { gst, qst } = applyTaxes
         ? await computeTaxes(supplierId, amountCad, currency)
         : { gst: "0.00", qst: "0.00" };
-
       const newTotal = (parseFloat(amountCad) + parseFloat(gst) + parseFloat(qst)).toFixed(2);
       update.gst = gst; update.qst = qst; update.totalCad = newTotal;
       update.balance = (parseFloat(newTotal) - parseFloat(current.amountPaid ?? "0")).toFixed(2);
@@ -82,18 +83,41 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   } else if (update.totalCad !== undefined || update.amountPaid !== undefined) {
     const [current] = await db.select().from(apInvoicesTable).where(eq(apInvoicesTable.id, id));
     const total = parseFloat(String(update.totalCad ?? current?.totalCad ?? "0"));
-    const paid = parseFloat(String(update.amountPaid ?? current?.amountPaid ?? "0"));
+    const paid  = parseFloat(String(update.amountPaid ?? current?.amountPaid ?? "0"));
     update.balance = (total - paid).toFixed(2);
   }
 
   const [invoice] = await db.update(apInvoicesTable).set(update).where(eq(apInvoicesTable.id, id)).returning();
   if (!invoice) return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
+
+  // If financial amounts changed, reverse old GL entries and repost
+  if (amountChanged) {
+    try {
+      await reverseGlEntries("ap_invoice", String(id));
+      await postApInvoiceToGl({
+        id: invoice.id,
+        invoiceDate: invoice.invoiceDate,
+        invoiceNumber: invoice.invoiceNumber,
+        amountCad: invoice.amountCad,
+        gst: invoice.gst ?? "0",
+        qst: invoice.qst ?? "0",
+        totalCad: invoice.totalCad,
+        glAccount: invoice.glAccount,
+        currency: invoice.currency,
+      });
+    } catch (err) {
+      console.error("[GL re-posting] AP invoice:", err);
+    }
+  }
+
   return NextResponse.json({ ...invoice, status: computeStatus(invoice.totalCad, invoice.amountPaid) });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const unauth = await guard(); if (unauth) return unauth;
   const { id } = IdParam.parse(await params);
+  // Reverse GL entries before deleting
+  try { await reverseGlEntries("ap_invoice", String(id)); } catch (err) { console.error("[GL reversal]", err); }
   await db.delete(apInvoicesTable).where(eq(apInvoicesTable.id, id));
   return new NextResponse(null, { status: 204 });
 }

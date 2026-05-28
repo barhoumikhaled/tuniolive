@@ -50,20 +50,20 @@ export default function GlAccounts() {
 
   const createMutation = useMutation({
     mutationFn: (data: typeof emptyForm) => apiFetch("/gl-accounts", { method: "POST", body: JSON.stringify(data) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); toast.success("Account created"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); setTimeout(() => toast.success("Account created"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: Partial<typeof emptyForm> }) =>
       apiFetch(`/gl-accounts/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); toast.success("Account updated"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); setTimeout(() => toast.success("Account updated"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => apiFetch(`/gl-accounts/${id}`, { method: "DELETE" }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); toast.success("Account deleted"); setDeleteId(null); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-accounts"] }); setTimeout(() => toast.success("Account deleted"), 0); setDeleteId(null); },
     onError: (e: Error) => toast.error(e.message),
   });
 

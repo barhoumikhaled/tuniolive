@@ -59,20 +59,20 @@ export default function Contacts() {
 
   const createMutation = useMutation({
     mutationFn: (data: typeof emptyForm) => apiFetch("/contacts", { method: "POST", body: JSON.stringify(data) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); toast.success("Contact created"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); setTimeout(() => toast.success("Contact created"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: typeof emptyForm }) =>
       apiFetch(`/contacts/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); toast.success("Contact updated"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); setTimeout(() => toast.success("Contact updated"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => apiFetch(`/contacts/${id}`, { method: "DELETE" }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); toast.success("Contact deleted"); setDeleteId(null); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["contacts"] }); setTimeout(() => toast.success("Contact deleted"), 0); setDeleteId(null); },
     onError: (e: Error) => toast.error(e.message),
   });
 

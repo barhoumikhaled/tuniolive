@@ -21,6 +21,7 @@ interface GlEntry {
   id: number; entryNumber?: number | null; date: string; documentType?: string | null;
   documentNumber?: string | null; accountNumber: string; currency: string;
   debit?: string | null; credit?: string | null; description?: string | null; amountInCad?: string | null;
+  sourceType?: string | null; sourceId?: string | null; isReversing?: boolean | null;
 }
 
 interface Line {
@@ -30,15 +31,105 @@ interface Line {
 
 const emptyLine = (): Line => ({ accountNumber: "", currency: "CAD", debit: "", credit: "", description: "", amountInCad: "" });
 
+// ─── Entry Templates ─────────────────────────────────────────────────────────
+const ENTRY_TEMPLATES = [
+  {
+    id: "equity_injection",
+    label: "Equity Injection — Owner deposits cash",
+    documentType: "EQ",
+    lines: [
+      { accountNumber: "1010", description: "Owner equity injection — Bank CAD", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+      { accountNumber: "3100", description: "Owner equity injection — Equity", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr Bank CAD / Cr Owner Equity",
+    swapped: false,
+  },
+  {
+    id: "owner_withdrawal",
+    label: "Owner Withdrawal — Owner takes cash out",
+    documentType: "EQ",
+    lines: [
+      { accountNumber: "3100", description: "Owner withdrawal — Equity", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+      { accountNumber: "1010", description: "Owner withdrawal — Bank CAD", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr Owner Equity / Cr Bank CAD",
+    swapped: false,
+  },
+  {
+    id: "depreciation",
+    label: "Depreciation — Monthly asset write-down",
+    documentType: "DEP",
+    lines: [
+      { accountNumber: "6100", description: "Depreciation expense", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+      { accountNumber: "1510", description: "Accumulated depreciation", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr Depreciation Expense / Cr Accumulated Depreciation",
+    swapped: false,
+  },
+  {
+    id: "accrual",
+    label: "Accrual — Expense incurred, not yet invoiced",
+    documentType: "AC",
+    lines: [
+      { accountNumber: "5000", description: "Accrued expense", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+      { accountNumber: "2100", description: "Accrued liabilities", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr Expense / Cr Accrued Liabilities",
+    swapped: false,
+  },
+  {
+    id: "bank_transfer",
+    label: "Bank Transfer — CAD to USD",
+    documentType: "BT",
+    lines: [
+      { accountNumber: "1020", description: "Bank transfer — USD account", debit: "", credit: "", currency: "USD", amountInCad: "" },
+      { accountNumber: "1010", description: "Bank transfer — CAD account", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr Bank USD / Cr Bank CAD",
+    swapped: false,
+  },
+  {
+    id: "opening_balance",
+    label: "Opening Balance — Set initial account balance",
+    documentType: "OB",
+    lines: [
+      { accountNumber: "", description: "Opening balance", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+      { accountNumber: "3000", description: "Opening balance — Retained earnings", debit: "", credit: "", currency: "CAD", amountInCad: "" },
+    ],
+    hint: "Dr [Asset/Expense] / Cr Retained Earnings",
+    swapped: false,
+  },
+  {
+    id: "manual",
+    label: "Manual Entry — Blank entry",
+    documentType: "JE",
+    lines: [emptyLine(), emptyLine()],
+    hint: "Fully manual — fill in all fields",
+    swapped: false,
+  },
+];
+
 export default function GlEntries() {
   const qc = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("manual");
   const [form, setForm] = useState({
     date: "", documentType: "JE", documentNumber: "", lines: [emptyLine(), emptyLine()],
   });
+
+  function applyTemplate(templateId: string) {
+    const tmpl = ENTRY_TEMPLATES.find((t) => t.id === templateId);
+    if (!tmpl) return;
+    setSelectedTemplate(templateId);
+    setForm((prev) => ({
+      ...prev,
+      documentType: tmpl.documentType,
+      lines: tmpl.lines.map((l) => ({ ...l })),
+    }));
+  }
 
   const { data: entries = [], isLoading } = useQuery<GlEntry[]>({
     queryKey: ["gl-entries"],
@@ -78,13 +169,13 @@ export default function GlEntries() {
           })),
         }),
       }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-entries"] }); toast.success("Journal entry created"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-entries"] }); setTimeout(() => toast.success("Journal entry created"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => apiFetch(`/gl-entries/${id}`, { method: "DELETE" }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-entries"] }); toast.success("Entry deleted"); setDeleteId(null); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["gl-entries"] }); setTimeout(() => toast.success("Entry deleted"), 0); setDeleteId(null); },
     onError: (e: Error) => toast.error(e.message),
   });
 

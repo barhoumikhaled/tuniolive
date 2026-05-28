@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, numeric, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, numeric, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -23,6 +23,7 @@ export const apInvoicesTable = pgTable("ap_invoices", {
   referenceId: text("reference_id"),
   referenceDescription: text("reference_description"),
   glAccount: text("gl_account"),
+  glPosted: boolean("gl_posted").default(false), // Whether GL entries have been auto-posted
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

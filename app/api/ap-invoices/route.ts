@@ -4,6 +4,7 @@ import { apInvoicesTable, contactsTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { ListApInvoicesQueryParams, CreateApInvoiceBody } from "@/lib/validators";
+import { postApInvoiceToGl } from "@/lib/gl-posting";
 
 const GST_RATE = 0.05;
 const QST_RATE = 0.09975;
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
     currency: apInvoicesTable.currency, amountUsd: apInvoicesTable.amountUsd,
     exchangeRate: apInvoicesTable.exchangeRate, amountPaid: apInvoicesTable.amountPaid,
     balance: apInvoicesTable.balance, glAccount: apInvoicesTable.glAccount,
+    glPosted: apInvoicesTable.glPosted,
     expenseDescription: apInvoicesTable.expenseDescription, createdAt: apInvoicesTable.createdAt,
   }).from(apInvoicesTable).leftJoin(contactsTable, eq(apInvoicesTable.supplierId, contactsTable.id)).orderBy(apInvoicesTable.invoiceDate);
 
@@ -62,6 +64,7 @@ export async function POST(req: NextRequest) {
     : await computeTaxes(body.supplierId, String(body.amountCad), body.currency);
   const a = parseFloat(String(body.amountCad));
   const totalCad = (a + parseFloat(gst) + parseFloat(qst)).toFixed(2);
+
   const [invoice] = await db.insert(apInvoicesTable).values({
     supplierId: body.supplierId, invoiceNumber: body.invoiceNumber ?? null,
     invoiceDate: new Date(body.invoiceDate), dueDate: body.dueDate ? new Date(body.dueDate) : null,
@@ -72,6 +75,27 @@ export async function POST(req: NextRequest) {
     amountPaid: "0", balance: totalCad,
     glAccount: body.glAccount ?? null, expenseDescription: body.expenseDescription ?? null,
     referenceId: body.referenceId ?? null, referenceDescription: body.referenceDescription ?? null,
+    glPosted: false,
   }).returning();
-  return NextResponse.json({ ...invoice, status: computeStatus(invoice.totalCad, invoice.amountPaid) }, { status: 201 });
+
+  // Auto-post GL entries
+  try {
+    await postApInvoiceToGl({
+      id: invoice.id,
+      invoiceDate: invoice.invoiceDate,
+      invoiceNumber: invoice.invoiceNumber,
+      amountCad: invoice.amountCad,
+      gst: invoice.gst ?? "0",
+      qst: invoice.qst ?? "0",
+      totalCad: invoice.totalCad,
+      glAccount: invoice.glAccount,
+      currency: invoice.currency,
+    });
+    await db.update(apInvoicesTable).set({ glPosted: true }).where(eq(apInvoicesTable.id, invoice.id));
+  } catch (err) {
+    console.error("[GL posting] AP invoice:", err);
+    // Don't fail the invoice creation if GL posting fails
+  }
+
+  return NextResponse.json({ ...invoice, glPosted: true, status: computeStatus(invoice.totalCad, invoice.amountPaid) }, { status: 201 });
 }

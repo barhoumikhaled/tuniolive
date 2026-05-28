@@ -54,6 +54,7 @@ interface ApInvoice {
   qst?: string | null; totalCad: string; currency: string; amountUsd?: string | null;
   exchangeRate?: string | null; amountPaid?: string | null; balance?: string | null;
   glAccount?: string | null; expenseDescription?: string | null; status: string;
+  glPosted?: boolean | null;
 }
 
 const emptyForm = {
@@ -108,7 +109,7 @@ export default function ApInvoices() {
 
   const createMutation = useMutation({
     mutationFn: (data: typeof emptyForm) => apiFetch("/ap-invoices", { method: "POST", body: JSON.stringify({ ...data, applyTaxes: form.applyTaxes, supplierId: parseInt(data.supplierId) }) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); toast.success("Invoice created"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); setTimeout(() => toast.success("Invoice created"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -122,13 +123,13 @@ export default function ApInvoices() {
           supplierId: data.supplierId ? parseInt(data.supplierId) : undefined,
         }),
       }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); toast.success("Invoice updated"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); setTimeout(() => toast.success("Invoice updated"), 0); setDialogOpen(false); },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => apiFetch(`/ap-invoices/${id}`, { method: "DELETE" }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); toast.success("Invoice deleted"); setDeleteId(null); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ap-invoices"] }); setTimeout(() => toast.success("Invoice deleted"), 0); setDeleteId(null); },
     onError: (e: Error) => toast.error(e.message),
   });
 

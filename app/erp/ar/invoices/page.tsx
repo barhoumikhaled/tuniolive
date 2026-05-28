@@ -41,6 +41,7 @@ interface ArInvoiceDetail {
   paymentTerms?: string | null;
   paymentStatus?: string | null;
   notes?: string | null;
+  glRevenueAccount?: string | null;
   lineItems?: ArInvoiceLineItemDetail[];
 }
 
@@ -65,6 +66,8 @@ interface ArInvoice {
   paymentStatus?: string | null;
   total?: number | null;
   paymentDate?: string | null;
+  glRevenueAccount?: string | null;
+  glPosted?: boolean | null;
   createdAt: string;
 }
 
@@ -74,6 +77,10 @@ const PRODUCT_OPTIONS = [
   "Extra Virgin Olive oil 750 ML (1 Box* 12 Btl.)",
   "Extra Virgin Olive oil 3 Liter (1 Box* 4 Tin.)",
 ];
+interface GlAccount {
+  id: number; accountNumber: string; accountName: string; type: string; active: boolean;
+}
+
 const emptyForm = {
   invoiceNumber: "",
   customerId: 0,
@@ -84,6 +91,7 @@ const emptyForm = {
   notes: "",
   paymentStatus: "Pending",
   paymentDate: "",
+  glRevenueAccount: "",
   lineItems: [emptyLine()],
 };
 
@@ -125,6 +133,12 @@ export default function ArInvoices() {
     queryFn: () => apiFetch("/contacts"),
   });
 
+  const { data: glAccounts = [] } = useQuery<GlAccount[]>({
+    queryKey: ["gl-accounts"],
+    queryFn: () => apiFetch("/gl-accounts"),
+  });
+  const revenueAccounts = glAccounts.filter((a) => a.type === "Revenue" && a.active);
+
   const { data: detail } = useQuery<ArInvoiceDetail>({
     queryKey: ["ar-invoice", viewId],
     queryFn: () => apiFetch(`/ar-invoices/${viewId}`),
@@ -155,12 +169,13 @@ export default function ArInvoices() {
         method: "POST",
         body: JSON.stringify({
           ...data,
+          glRevenueAccount: data.glRevenueAccount || null,
           lineItems: data.lineItems
             .filter((l) => l.item || l.description || l.qtyBox || l.priceBox)
             .map((l) => ({ item: l.item, description: l.description, qtyBox: l.qtyBox, priceBox: l.priceBox, priceUnit: l.priceUnit })),
         }),
       }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ar-invoices"] }); toast.success("Invoice created"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ar-invoices"] }); setDialogOpen(false); setTimeout(() => toast.success("Invoice created"), 0); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -170,12 +185,13 @@ export default function ArInvoices() {
         method: "PATCH",
         body: JSON.stringify({
           ...data,
+          // glRevenueAccount: data.glRevenueAccount || null,
           lineItems: data.lineItems
             .filter((l) => l.item || l.description || l.qtyBox || l.priceBox)
             .map((l) => ({ item: l.item, description: l.description, qtyBox: l.qtyBox, priceBox: l.priceBox, priceUnit: l.priceUnit })),
         }),
       }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ar-invoices"] }); toast.success("Invoice updated"); setDialogOpen(false); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["ar-invoices"] }); setDialogOpen(false); setTimeout(() => toast.success("Invoice updated"), 0); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -190,6 +206,7 @@ export default function ArInvoices() {
   const openEdit = useCallback((inv: ArInvoice) => {
     setEditing(inv);
     apiFetch<ArInvoiceDetail>(`/ar-invoices/${inv.id}`).then((d) => {
+      console.log("Loaded invoice for editing:", d);
       setForm({
         invoiceNumber: inv.invoiceNumber ?? "",
         customerId: inv.customerId ?? 0,
@@ -200,6 +217,7 @@ export default function ArInvoices() {
         notes: inv.notes ?? "",
         paymentStatus: inv.paymentStatus ?? "Pending",
         paymentDate: inv.paymentDate ? inv.paymentDate.split("T")[0] : "",
+        glRevenueAccount: d.glRevenueAccount ?? "",
         lineItems: d.lineItems?.length
           ? d.lineItems.map((l) => ({ id: l.id, item: l.item ?? "", description: l.description ?? "", qtyBox: l.qtyBox ?? "", priceBox: l.priceBox ?? "", priceUnit: l.priceUnit ?? "" }))
           : [emptyLine()],
@@ -291,7 +309,16 @@ export default function ArInvoices() {
                       <td className="px-3 py-2.5 text-right font-mono font-semibold whitespace-nowrap">
                         { inv.total != null ? fmtCad(inv.total) : "—" }
                       </td>
-                        <td className="px-3 py-2.5"><StatusBadge status={inv.paymentStatus ?? "Pending"} /></td>
+                        <td className="px-3 py-2.5">
+                          <div className="flex items-center gap-1.5">
+                            <StatusBadge status={inv.paymentStatus ?? "Pending"} />
+                            {inv.glPosted && (
+                              <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full border border-blue-200">
+                                GL✓
+                              </span>
+                            )}
+                          </div>
+                        </td>
                         <td className="px-3 py-2.5 text-muted-foreground text-xs max-w-[180px] truncate">{inv.notes ?? "—"}</td>
                         <td className="px-3 py-2.5">
                           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -372,6 +399,30 @@ export default function ArInvoices() {
               <div>
                 <Label>Payment Date</Label>
                 <Input className="mt-1" type="date" value={form.paymentDate} onChange={(e) => setForm({ ...form, paymentDate: e.target.value })} />
+              </div>
+              <div>
+                <Label>Revenue GL Account</Label>
+                <Select
+                  value={form.glRevenueAccount}
+                  onValueChange={(v) => setForm((prev) => ({ ...prev, glRevenueAccount: v }))}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Select revenue account…" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="4000">4000 — Sales Revenue (default)</SelectItem>
+                    {revenueAccounts
+                      .filter((a) => a.accountNumber !== "4000")
+                      .map((a) => (
+                        <SelectItem key={a.accountNumber} value={a.accountNumber}>
+                          {a.accountNumber} — {a.accountName}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Account credited when GL entry is auto-posted. Defaults to 4000.
+                </p>
               </div>
               <div className="col-span-full">
                 <Label>Delivery Instructions / Notes</Label>

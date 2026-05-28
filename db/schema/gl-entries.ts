@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, numeric, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, numeric, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -18,6 +18,10 @@ export const glEntriesTable = pgTable("gl_entries", {
   amountInCad: numeric("amount_in_cad", { precision: 18, scale: 6 }),
   createdBy: text("created_by"),
   notes: text("notes"),
+  // Auto-posting fields
+  sourceType: text("source_type"), // 'ap_invoice' | 'ar_invoice' | 'ap_payment' | 'manual'
+  sourceId: text("source_id"),     // ID of the originating document
+  isReversing: boolean("is_reversing").default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

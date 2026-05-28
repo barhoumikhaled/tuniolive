@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { ErpProviders } from "./providers";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "TuniOlive ERP",
@@ -23,6 +24,8 @@ export default function ErpLayout({ children }: { children: React.ReactNode }) {
       }}
     >
       <ErpProviders>{children}</ErpProviders>
+      {/* Toaster lives outside the QueryClient/Dialog tree to avoid setState-during-render */}
+      <Toaster richColors position="top-right" />
     </ClerkProvider>
   );
 }

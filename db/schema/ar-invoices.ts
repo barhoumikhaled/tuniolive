@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -13,6 +13,8 @@ export const arInvoicesTable = pgTable("ar_invoices", {
   notes: text("notes"),
   paymentStatus: text("payment_status").default("Pending"),
   paymentDate: timestamp("payment_date", { withTimezone: true }),
+  glRevenueAccount: text("gl_revenue_account"), // Revenue account to credit (e.g. "4000")
+  glPosted: boolean("gl_posted").default(false), // Whether GL entries have been auto-posted
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

@@ -91,6 +91,7 @@ export const CreateArInvoiceBody = z.object({
   paymentTerms: z.string().nullish(),
   notes: z.string().nullish(),
   paymentStatus: z.string().nullish(),
+  glRevenueAccount: z.string().nullish(),
   paymentDate: z.string().nullish(),
   lineItems: z
     .array(
